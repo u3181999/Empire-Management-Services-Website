@@ -1,6 +1,7 @@
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import Link from 'next/link'
+import Image from 'next/image'
 import {
   Shield, Clock, BadgeCheck, Building2, Users, BarChart3,
   ArrowRight, Phone, CheckCircle2
@@ -28,13 +29,12 @@ export default function HomePage() {
       <main className="flex-1">
         {/* Hero */}
         <section className="relative bg-[#102a43] text-white overflow-hidden">
-          <div
-            className="absolute inset-0 opacity-10"
-            style={{
-              backgroundImage:
-                'repeating-linear-gradient(45deg, #d4a017 0, #d4a017 1px, transparent 0, transparent 50%)',
-              backgroundSize: '20px 20px',
-            }}
+          <Image
+            src="/hero-bg.png"
+            alt=""
+            fill
+            className="object-cover object-center opacity-30"
+            priority
             aria-hidden="true"
           />
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">

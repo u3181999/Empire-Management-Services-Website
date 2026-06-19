@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState } from 'react'
 import { Menu, X, Phone, MapPin } from 'lucide-react'
 import { NAV_ITEMS, COMPANY } from '@/lib/constants'
@@ -32,10 +33,14 @@ export default function Header() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 shrink-0">
-            <span className="text-[#d4a017] font-bold text-xl leading-tight">
-              Empire<br />
-              <span className="text-white text-sm font-medium">Management Services</span>
-            </span>
+            <Image
+              src="/logo.png"
+              alt="Empire Management Services"
+              width={140}
+              height={48}
+              className="h-10 w-auto object-contain"
+              priority
+            />
           </Link>
 
           {/* Desktop nav */}
