@@ -88,3 +88,96 @@ export async function saveBlogPost(
   revalidatePath('/admin/blog')
   return { success: true }
 }
+
+// ── Product CRUD ──────────────────────────────────────────────────────────────
+
+const productSchema = z.object({
+  name: z.string().min(2).max(200),
+  slug: z
+    .string()
+    .min(2)
+    .max(200)
+    .regex(/^[a-z0-9-]+$/, 'Slug must contain only lowercase letters, numbers and hyphens'),
+  description: z.string().min(5),
+  price: z.coerce.number().int().min(0),
+  category: z.enum(['toiletries', 'chemicals']),
+  isActive: z.preprocess((v) => v === 'true' || v === true, z.boolean()).default(true),
+})
+
+export async function createProduct(
+  _prev: { success: boolean; error?: string } | null,
+  formData: FormData
+): Promise<{ success: boolean; error?: string }> {
+  await requireAdmin()
+
+  const parsed = productSchema.safeParse({
+    name: formData.get('name'),
+    slug: formData.get('slug'),
+    description: formData.get('description'),
+    price: formData.get('price'),
+    category: formData.get('category'),
+    isActive: formData.get('isActive'),
+  })
+
+  if (!parsed.success) {
+    return { success: false, error: parsed.error.errors[0].message }
+  }
+
+  try {
+    await prisma.product.create({ data: parsed.data })
+  } catch (e: unknown) {
+    if ((e as { code?: string }).code === 'P2002') {
+      return { success: false, error: 'A product with this slug already exists.' }
+    }
+    throw e
+  }
+
+  revalidatePath('/admin/products')
+  revalidatePath('/shop')
+  return { success: true }
+}
+
+export async function updateProduct(
+  _prev: { success: boolean; error?: string } | null,
+  formData: FormData
+): Promise<{ success: boolean; error?: string }> {
+  await requireAdmin()
+
+  const id = formData.get('id') as string
+  if (!id) return { success: false, error: 'Missing product ID.' }
+
+  const parsed = productSchema.safeParse({
+    name: formData.get('name'),
+    slug: formData.get('slug'),
+    description: formData.get('description'),
+    price: formData.get('price'),
+    category: formData.get('category'),
+    isActive: formData.get('isActive'),
+  })
+
+  if (!parsed.success) {
+    return { success: false, error: parsed.error.errors[0].message }
+  }
+
+  try {
+    await prisma.product.update({ where: { id }, data: parsed.data })
+  } catch (e: unknown) {
+    if ((e as { code?: string }).code === 'P2002') {
+      return { success: false, error: 'A product with this slug already exists.' }
+    }
+    throw e
+  }
+
+  revalidatePath('/admin/products')
+  revalidatePath('/shop')
+  revalidatePath(`/shop/${parsed.data.slug}`)
+  return { success: true }
+}
+
+export async function deleteProduct(formData: FormData) {
+  await requireAdmin()
+  const id = z.string().parse(formData.get('id'))
+  await prisma.product.delete({ where: { id } })
+  revalidatePath('/admin/products')
+  revalidatePath('/shop')
+}

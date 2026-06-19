@@ -86,6 +86,7 @@ model Product {
   slug          String      @unique
   description   String
   price         Int
+  category      String      @default("toiletries")
   type          ProductType @default(PHYSICAL)
   imageUrl      String?
   stock         Int?
