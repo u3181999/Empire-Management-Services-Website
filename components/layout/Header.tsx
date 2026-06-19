@@ -2,13 +2,11 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { Menu, X, Phone, ChevronDown } from 'lucide-react'
-import { NAV_ITEMS, LOCATIONS, COMPANY } from '@/lib/constants'
+import { Menu, X, Phone, MapPin } from 'lucide-react'
+import { NAV_ITEMS, COMPANY } from '@/lib/constants'
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [locationOpen, setLocationOpen] = useState(false)
-  const [selectedLocation, setSelectedLocation] = useState(LOCATIONS[0])
 
   return (
     <header className="bg-[#102a43] text-white sticky top-0 z-50 shadow-lg">
@@ -22,41 +20,10 @@ export default function Header() {
             <Phone className="w-3.5 h-3.5" />
             {COMPANY.phone}
           </a>
-
-          {/* Location Picker */}
-          <div className="relative">
-            <button
-              onClick={() => setLocationOpen(!locationOpen)}
-              className="flex items-center gap-1 hover:text-[#d4a017] transition-colors"
-              aria-expanded={locationOpen}
-              aria-haspopup="listbox"
-            >
-              <span>{selectedLocation.name}</span>
-              <ChevronDown className={`w-3.5 h-3.5 transition-transform ${locationOpen ? 'rotate-180' : ''}`} />
-            </button>
-
-            {locationOpen && (
-              <div
-                role="listbox"
-                className="absolute right-0 top-full mt-1 bg-white text-[#102a43] rounded shadow-xl min-w-[220px] py-1 z-50"
-              >
-                {LOCATIONS.map((loc) => (
-                  <button
-                    key={loc.id}
-                    role="option"
-                    aria-selected={selectedLocation.id === loc.id}
-                    onClick={() => {
-                      setSelectedLocation(loc)
-                      setLocationOpen(false)
-                    }}
-                    className="w-full text-left px-4 py-2 hover:bg-navy-50 hover:text-[#102a43] text-sm transition-colors"
-                  >
-                    {loc.name}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
+          <span className="flex items-center gap-1.5 text-gray-400">
+            <MapPin className="w-3.5 h-3.5 text-[#d4a017]" />
+            Canberra (Head Office)
+          </span>
         </div>
       </div>
 
