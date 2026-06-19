@@ -20,7 +20,7 @@ const STATS = [
   { value: `${COMPANY.yearsExperience}+`, label: 'Years Experience', icon: Clock },
   { value: `${COMPANY.clientCount}+`, label: 'Active Clients', icon: Users },
   { value: '100,000m²', label: 'Sites Serviced', icon: Building2 },
-  { value: '3', label: 'States', icon: BarChart3 },
+  { value: '2', label: 'States', icon: BarChart3 },
 ]
 
 export default function HomePage() {

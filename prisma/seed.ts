@@ -34,17 +34,6 @@ async function main() {
         email: 'email@empirecleaning.com.au',
       },
     }),
-    prisma.location.upsert({
-      where: { slug: 'queensland' },
-      update: {},
-      create: {
-        name: 'Queensland',
-        slug: 'queensland',
-        phone: '02 6228 1777',
-        address: 'Servicing across QLD — contact head office',
-        email: 'email@empirecleaning.com.au',
-      },
-    }),
   ])
 
   // Services
@@ -132,42 +121,31 @@ async function main() {
     },
   })
 
-  // Products
-  await prisma.product.upsert({
-    where: { slug: 'gift-certificate-50' },
-    update: {},
-    create: {
-      name: '$50 Gift Certificate',
-      slug: 'gift-certificate-50',
-      description: 'A $50 Empire Management Services gift certificate, redeemable against any cleaning service. Delivered digitally via email. Valid for 12 months.',
-      price: 5000,
-      type: 'GIFT_CERTIFICATE',
-    },
-  })
+  // Products — toiletries & chemicals
+  const products = [
+    { slug: 'bulk-hand-soap-5l',             name: 'Bulk Hand Soap',               price: 4500,  description: 'Gentle antibacterial hand soap suitable for all skin types. Ideal for restroom dispensers in commercial and office environments.' },
+    { slug: 'paper-hand-towels-carton',      name: 'Paper Hand Towels',            price: 3800,  description: 'Commercial-grade C-fold and interfold paper towels. Carton of 2,400 sheets.' },
+    { slug: 'toilet-paper-commercial-carton', name: 'Commercial Toilet Paper',     price: 4200,  description: '2-ply commercial toilet paper rolls. Carton of 48 rolls for high-traffic restrooms.' },
+    { slug: 'hand-sanitiser-5l',             name: 'Hand Sanitiser',               price: 5500,  description: '70% ethanol hospital-grade hand sanitiser. 5 litre refill.' },
+    { slug: 'sanitiser-wipes-200pk',         name: 'Sanitiser Wipes',              price: 2200,  description: 'Pre-moistened disinfectant wipes. Pack of 200.' },
+    { slug: 'bin-liners-carton',             name: 'Bin Liners',                   price: 3200,  description: 'Heavy-duty bin liners in multiple sizes. Carton of 500.' },
+    { slug: 'multi-surface-disinfectant-5l', name: 'Multi-Surface Disinfectant',   price: 4800,  description: 'Broad-spectrum disinfectant effective against bacteria, viruses and fungi. 5 litre concentrate.' },
+    { slug: 'floor-cleaner-5l',              name: 'Commercial Floor Cleaner',     price: 5200,  description: 'Heavy-duty concentrated floor cleaner for tiles, vinyl and concrete. 5 litre.' },
+    { slug: 'glass-window-cleaner-5l',       name: 'Glass & Window Cleaner',       price: 3800,  description: 'Ammonia-free streak-free glass and window cleaning solution. 5 litre.' },
+    { slug: 'bathroom-toilet-cleaner-5l',    name: 'Bathroom & Toilet Cleaner',    price: 4400,  description: 'Acid-based cleaner for limescale, mineral deposits and soap scum. 5 litre.' },
+    { slug: 'heavy-duty-degreaser-5l',       name: 'Heavy-Duty Degreaser',         price: 5800,  description: 'Industrial-strength degreaser for kitchens, workshops and machinery. 5 litre.' },
+    { slug: 'carpet-stain-remover-5l',       name: 'Carpet Stain Remover',         price: 6200,  description: 'Enzyme-based carpet and upholstery stain remover. 5 litre.' },
+    { slug: 'stainless-steel-cleaner-1l',    name: 'Stainless Steel Cleaner',      price: 3600,  description: 'Polishing cleaner for stainless steel surfaces. 1 litre spray.' },
+    { slug: 'neutral-sanitiser-5l',          name: 'Neutral Sanitiser',            price: 4600,  description: 'pH-neutral TGA-listed sanitiser safe for food contact surfaces. 5 litre.' },
+  ]
 
-  await prisma.product.upsert({
-    where: { slug: 'gift-certificate-100' },
-    update: {},
-    create: {
-      name: '$100 Gift Certificate',
-      slug: 'gift-certificate-100',
-      description: 'A $100 Empire Management Services gift certificate, redeemable against any cleaning service. Delivered digitally via email. Valid for 12 months.',
-      price: 10000,
-      type: 'GIFT_CERTIFICATE',
-    },
-  })
-
-  await prisma.product.upsert({
-    where: { slug: 'gift-certificate-250' },
-    update: {},
-    create: {
-      name: '$250 Gift Certificate',
-      slug: 'gift-certificate-250',
-      description: 'A $250 Empire Management Services gift certificate, redeemable against any cleaning service. Delivered digitally via email. Valid for 12 months.',
-      price: 25000,
-      type: 'GIFT_CERTIFICATE',
-    },
-  })
+  for (const p of products) {
+    await prisma.product.upsert({
+      where: { slug: p.slug },
+      update: {},
+      create: { ...p, type: 'PHYSICAL' },
+    })
+  }
 
   // Admin user
   const hashedPassword = await bcrypt.hash(process.env.SEED_ADMIN_PASSWORD ?? 'ChangeMe123!', 12)

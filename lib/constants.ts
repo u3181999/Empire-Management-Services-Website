@@ -2,7 +2,7 @@ export const COMPANY = {
   name: 'Empire Management Services',
   tagline: 'Quality cleaning solutions for commercial and industrial clients',
   description:
-    'With over 30 years of experience, Empire Management Services provides tailored cleaning and maintenance services to 80+ clients across 100,000m² of commercial sites throughout Canberra, NSW, and Queensland.',
+    'With over 30 years of experience, Empire Management Services provides tailored cleaning and maintenance services to 80+ clients across 100,000m² of commercial sites throughout Canberra (ACT) and New South Wales.',
   email: 'email@empirecleaning.com.au',
   phone: '02 6228 1777',
   fax: '02 6228 1555',
@@ -32,14 +32,6 @@ export const LOCATIONS = [
     name: 'New South Wales',
     phone: '02 6228 1777',
     address: 'Servicing across NSW — contact head office',
-    email: 'email@empirecleaning.com.au',
-    isHeadOffice: false,
-  },
-  {
-    id: 'queensland',
-    name: 'Queensland',
-    phone: '02 6228 1777',
-    address: 'Servicing across QLD — contact head office',
     email: 'email@empirecleaning.com.au',
     isHeadOffice: false,
   },

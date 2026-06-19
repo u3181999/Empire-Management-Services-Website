@@ -60,7 +60,7 @@ export default function ClientsMarquee() {
           Our Clients
         </h2>
         <p className="mt-3 text-gray-500 text-sm max-w-xl mx-auto">
-          Proudly serving leading organisations across Canberra, NSW and QLD for over 30 years.
+          Proudly serving leading organisations across Canberra (ACT) and New South Wales for over 30 years.
         </p>
       </div>
 
