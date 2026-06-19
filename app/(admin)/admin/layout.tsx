@@ -1,18 +1,10 @@
-import { redirect } from 'next/navigation'
-import { auth } from '@/lib/auth'
 import AdminNav from '@/components/layout/AdminNav'
 
-export default async function AdminLayout({ children }: { children: React.ReactNode }) {
-  const session = await auth()
-
-  if (!session) {
-    redirect('/admin/login')
-  }
-
+export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-gray-100 flex">
       <AdminNav />
-      <main className="flex-1 p-8">{children}</main>
+      <main className="flex-1 p-8 overflow-auto">{children}</main>
     </div>
   )
 }
