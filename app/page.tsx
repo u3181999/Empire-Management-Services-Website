@@ -30,10 +30,10 @@ export default function HomePage() {
         {/* Hero */}
         <section className="relative bg-[#102a43] text-white overflow-hidden">
           <Image
-            src="/hero-bg.png"
+            src="/parliament-house.jpg"
             alt=""
             fill
-            className="object-cover object-center opacity-30"
+            className="object-cover object-center opacity-40"
             priority
             aria-hidden="true"
           />
