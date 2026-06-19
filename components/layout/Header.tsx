@@ -32,15 +32,17 @@ export default function Header() {
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Main navigation">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 shrink-0">
-            <Image
-              src="/logo.png"
-              alt="Empire Management Services"
-              width={140}
-              height={48}
-              className="h-10 w-auto object-contain"
-              priority
-            />
+          <Link href="/" className="flex items-center shrink-0">
+            <div className="bg-white/95 rounded-lg px-3 py-1.5 shadow-[0_0_16px_rgba(212,160,23,0.45)]">
+              <Image
+                src="/logo.png"
+                alt="Empire Management Services"
+                width={180}
+                height={64}
+                className="h-12 w-auto object-contain"
+                priority
+              />
+            </div>
           </Link>
 
           {/* Desktop nav */}
