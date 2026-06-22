@@ -84,6 +84,44 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* ISO Certifications */}
+        <section className="py-12 bg-white border-b border-gray-100">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p className="text-xs font-semibold tracking-[0.25em] text-gray-400 uppercase mb-10">
+              ISO Certified Commercial Cleaning Company
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-10 sm:gap-16">
+              {[
+                { code: '9001:2015', label: 'QUALITY', color: '#1a5fa8', ring: '#1a5fa8' },
+                { code: '14001:2015', label: 'ENVIRONMENTAL', color: '#2e7d32', ring: '#2e7d32' },
+                { code: '45001:2018', label: 'HEALTH & SAFETY', color: '#b71c1c', ring: '#b71c1c' },
+              ].map(({ code, label, color, ring }) => (
+                <div key={code} className="flex flex-col items-center gap-3">
+                  <div
+                    className="w-28 h-28 rounded-full flex items-center justify-center border-4 relative bg-white"
+                    style={{ borderColor: ring }}
+                  >
+                    <div
+                      className="absolute inset-1 rounded-full flex flex-col items-center justify-center border-2"
+                      style={{ borderColor: ring }}
+                    >
+                      <span className="text-[10px] font-bold tracking-widest uppercase" style={{ color }}>ISO</span>
+                      <svg viewBox="0 0 24 24" className="w-7 h-7 my-0.5" fill="none" stroke={color} strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                      <span className="text-[9px] font-semibold tracking-wider text-gray-500 uppercase">Certified</span>
+                    </div>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-sm text-gray-500">ISO {code}</p>
+                    <p className="text-sm font-bold" style={{ color }}>{label}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Services */}
         <section className="py-20 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
