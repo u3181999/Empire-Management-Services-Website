@@ -4,37 +4,36 @@ import { useState } from 'react'
 import Image from 'next/image'
 
 const CLIENTS = [
-  { name: 'UNSW Canberra Campus',                       domain: 'unsw.edu.au',                  abbr: 'UNSW' },
-  { name: 'Hellenic Club',                              domain: 'hellenicclub.com.au',           abbr: 'HC'   },
-  { name: 'Evri Group',                                 domain: 'evri.com.au',                  abbr: 'EG'   },
-  { name: 'Nikias Diamond',                             domain: 'nikiasdiamond.com.au',          abbr: 'ND'   },
-  { name: 'CBRE',                                       domain: 'cbre.com',                     abbr: 'CBRE' },
-  { name: 'Velocity Conveyancing',                      domain: 'velocityconveyancing.com.au',  abbr: 'VC'   },
-  { name: 'WOTSO Spaces',                               domain: 'wotso.com',                    abbr: 'WS'   },
-  { name: 'Canberra Trucks Group',                      domain: 'canberratrucksgroup.com.au',   abbr: 'CTG'  },
-  { name: 'Canberra Isuzu',                             domain: 'canberraisuzu.com.au',         abbr: 'CI'   },
-  { name: 'MTP Services',                               domain: 'mtpservices.com.au',            abbr: 'MTP'  },
-  { name: 'Pharmaceutical Society of Australia',        domain: 'psa.org.au',                   abbr: 'PSA'  },
-  { name: 'APVMA',                                      domain: 'apvma.gov.au',                 abbr: 'APV'  },
-  { name: 'ACT Cricket',                                domain: 'actcricket.com.au',            abbr: 'ACT'  },
-  { name: 'AFL Canberra',                               domain: 'aflcanberra.com.au',           abbr: 'AFL'  },
+  { name: 'UNSW Canberra Campus',                 logo: '/clients/unsw.png'                  },
+  { name: 'Hellenic Club',                         logo: '/clients/hellenic-club.webp'        },
+  { name: 'Evri Group',                            logo: '/clients/evri-group.webp'           },
+  { name: 'Nikias Diamond',                        logo: '/clients/nikias-diamond.webp'       },
+  { name: 'CBRE',                                  logo: '/clients/cbre.png'                  },
+  { name: 'Velocity Conveyancing',                 logo: '/clients/velocity-conveyancing.svg' },
+  { name: 'WOTSO Spaces',                          logo: '/clients/wotso.webp'                },
+  { name: 'Canberra Trucks & Repairs',             logo: '/clients/jll.png'                   },
+  { name: 'Canberra Isuzu',                        logo: '/clients/canberra-isuzu.png'        },
+  { name: 'Pharmaceutical Society of Australia',   logo: '/clients/psa.png'                   },
+  { name: 'APVMA',                                 logo: '/clients/apvma.webp'                },
+  { name: 'ACT Cricket',                           logo: '/clients/act-cricket.svg'           },
+  { name: 'AFL Canberra',                          logo: '/clients/afl-canberra.png'          },
 ]
 
-function ClientCard({ name, domain, abbr }: { name: string; domain: string; abbr: string }) {
+function ClientCard({ name, logo }: { name: string; logo: string }) {
   const [imgFailed, setImgFailed] = useState(false)
+  const abbr = name.split(' ').map(w => w[0]).join('').slice(0, 4).toUpperCase()
 
   return (
     <div className="flex flex-col items-center justify-center gap-3 mx-6 w-36 shrink-0 group">
       <div className="w-20 h-20 rounded-xl bg-white border border-gray-100 shadow-sm flex items-center justify-center p-2 group-hover:border-[#d4a017] group-hover:shadow-md transition-all">
         {!imgFailed ? (
           <Image
-            src={`https://logo.clearbit.com/${domain}`}
+            src={logo}
             alt={name}
             width={64}
             height={64}
             className="object-contain w-full h-full"
             onError={() => setImgFailed(true)}
-            unoptimized
           />
         ) : (
           <span className="text-sm font-bold text-[#102a43]">{abbr}</span>
@@ -71,7 +70,7 @@ export default function ClientsMarquee() {
 
         <div className="flex animate-marquee w-max">
           {doubled.map((client, i) => (
-            <ClientCard key={`${client.domain}-${i}`} {...client} />
+            <ClientCard key={`${client.name}-${i}`} {...client} />
           ))}
         </div>
       </div>
