@@ -41,7 +41,7 @@ export default function AboutPage() {
                 <p>
                   Today we serve over {COMPANY.clientCount} clients, representing the cleaning and servicing of over{' '}
                   {COMPANY.sitesM2.toLocaleString()}m² of office and commercial sites, with operations primarily
-                  in Canberra and additional work across NSW and Queensland.
+                  in Canberra and additional work across NSW.
                 </p>
                 <p>
                   We maintain constant communication with our clients through regular telephone and in-person
@@ -56,7 +56,7 @@ export default function AboutPage() {
                 { value: `${COMPANY.yearsExperience}+`, label: 'Years in Business' },
                 { value: `${COMPANY.clientCount}+`, label: 'Active Clients' },
                 { value: '100,000m²', label: 'Sites Cleaned' },
-                { value: '3', label: 'States Serviced' },
+                { value: '2', label: 'States Serviced' },
               ].map(({ value, label }) => (
                 <div
                   key={label}
