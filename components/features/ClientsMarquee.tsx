@@ -4,14 +4,12 @@ import { useState } from 'react'
 import Image from 'next/image'
 
 const CLIENTS = [
-  { name: 'UNSW Canberra Campus',                 logo: '/clients/unsw.png'                  },
-  { name: 'Hellenic Club',                         logo: '/clients/hellenic-club.webp'        },
+  { name: 'CBRE',                                  logo: '/clients/cbre.png'                  },
+  { name: 'JLL',                                   logo: '/clients/jll.png'                   },
   { name: 'Evri Group',                            logo: '/clients/evri-group.webp'           },
   { name: 'Nikias Diamond',                        logo: '/clients/nikias-diamond.webp'       },
-  { name: 'CBRE',                                  logo: '/clients/cbre.png'                  },
   { name: 'Velocity Conveyancing',                 logo: '/clients/velocity-conveyancing.svg' },
   { name: 'WOTSO Spaces',                          logo: '/clients/wotso.webp'                },
-  { name: 'Canberra Trucks & Repairs',             logo: '/clients/jll.png'                   },
   { name: 'Canberra Isuzu',                        logo: '/clients/canberra-isuzu.png'        },
   { name: 'Pharmaceutical Society of Australia',   logo: '/clients/psa.png'                   },
   { name: 'APVMA',                                 logo: '/clients/apvma.webp'                },
@@ -64,7 +62,6 @@ export default function ClientsMarquee() {
       </div>
 
       <div className="relative">
-        {/* Fade edges */}
         <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-gray-50 to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-gray-50 to-transparent z-10 pointer-events-none" />
 
