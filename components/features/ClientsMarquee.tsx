@@ -4,6 +4,8 @@ import { useState } from 'react'
 import Image from 'next/image'
 
 const CLIENTS = [
+  { name: 'UNSW Canberra Campus',                  logo: '/clients/unsw.png'                  },
+  { name: 'Hellenic Club',                         logo: '/clients/hellenic-club.webp'        },
   { name: 'CBRE',                                  logo: '/clients/cbre.png'                  },
   { name: 'JLL',                                   logo: '/clients/jll.png'                   },
   { name: 'Evri Group',                            logo: '/clients/evri-group.webp'           },
