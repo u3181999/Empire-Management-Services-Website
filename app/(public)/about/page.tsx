@@ -5,7 +5,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'About Us',
-  description: `Learn about Empire Management Services — ${COMPANY.yearsExperience}+ years of professional commercial cleaning in Canberra, NSW and QLD.`,
+  description: `Learn about Empire Management Services — ${COMPANY.yearsExperience}+ years of professional commercial cleaning in Canberra and NSW.`,
 }
 
 export default function AboutPage() {
