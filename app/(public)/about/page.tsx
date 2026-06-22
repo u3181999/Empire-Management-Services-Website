@@ -3,6 +3,34 @@ import { CheckCircle2, ArrowRight } from 'lucide-react'
 import { COMPANY, VALUES } from '@/lib/constants'
 import type { Metadata } from 'next'
 
+const TEAM = [
+  {
+    name: 'Alex',
+    role: 'Founder & Chief Executive Officer (CEO)',
+    bio: 'Alex founded Empire Management Services in 1995 with a vision to deliver commercial cleaning services built on integrity and results. With over 30 years at the helm, Alex has grown the company from a local Canberra operation to a trusted name across ACT and NSW, serving 80+ clients and maintaining relationships built on consistent, quality-driven outcomes.',
+  },
+  {
+    name: 'Helen',
+    role: 'Chief Finance Officer (CFO)',
+    bio: 'Helen oversees the financial operations of Empire Management Services, ensuring fiscal discipline and sustainable growth. With a strong background in business finance, Helen plays a critical role in strategic planning, budgeting, and ensuring the company remains well-positioned to deliver value to both clients and staff.',
+  },
+  {
+    name: 'Felicity Vercera',
+    role: 'Operations Manager',
+    bio: 'Felicity leads day-to-day operations across Empire\'s client sites, coordinating cleaning schedules, staff deployment, and quality assurance. Her attention to detail and hands-on management style ensure that every client receives consistent, high-standard service — on time, every time.',
+  },
+  {
+    name: 'Rinzin Dorji',
+    role: 'Supervisor',
+    bio: 'Rinzin brings dedication and a keen eye for quality to his supervisory role. He works closely with cleaning teams on the ground, ensuring site standards are met, staff are supported, and client expectations are exceeded across all assigned locations.',
+  },
+  {
+    name: 'Gregg O\'Brien',
+    role: 'Supervisor',
+    bio: 'Gregg is a dependable and experienced supervisor who takes pride in maintaining high standards across his sites. Known for his strong communication and problem-solving skills, Gregg ensures smooth daily operations and fosters a positive team environment.',
+  },
+]
+
 export const metadata: Metadata = {
   title: 'About Us',
   description: `Learn about Empire Management Services — ${COMPANY.yearsExperience}+ years of professional commercial cleaning in Canberra and NSW.`,
@@ -84,6 +112,35 @@ export default function AboutPage() {
                 <CheckCircle2 className="w-8 h-8 text-[#d4a017] mb-4" aria-hidden="true" />
                 <h3 className="text-xl font-bold text-[#102a43]">{v.title}</h3>
                 <p className="mt-3 text-gray-600 leading-relaxed">{v.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Meet the Team */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-[#102a43]">Meet the Team</h2>
+            <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
+              The people behind Empire Management Services — experienced professionals committed to delivering excellence every day.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {TEAM.map((member) => (
+              <div
+                key={member.name}
+                className="bg-gray-50 rounded-xl p-8 border border-gray-100 flex flex-col"
+              >
+                <div className="w-16 h-16 rounded-full bg-[#102a43] flex items-center justify-center mb-5 shrink-0">
+                  <span className="text-[#d4a017] text-xl font-bold">
+                    {member.name.charAt(0)}
+                  </span>
+                </div>
+                <h3 className="text-lg font-bold text-[#102a43]">{member.name}</h3>
+                <p className="text-sm font-medium text-[#d4a017] mt-0.5 mb-3">{member.role}</p>
+                <p className="text-sm text-gray-600 leading-relaxed">{member.bio}</p>
               </div>
             ))}
           </div>
