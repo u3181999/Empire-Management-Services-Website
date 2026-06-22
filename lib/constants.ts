@@ -11,7 +11,7 @@ export const COMPANY = {
   state: 'ACT',
   postcode: '2609',
   poBox: 'PO Box 105 Fyshwick ACT 2609',
-  abn: '',
+  abn: '89 117 860 009',
   founded: 1995,
   yearsExperience: 30,
   clientCount: 80,
