@@ -118,6 +118,96 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* ISO Certifications */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-xs font-semibold tracking-[0.25em] text-gray-400 uppercase mb-10">
+            ISO Certified Commercial Cleaning Company
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-12">
+            {[
+              { code: '9001:2015', label: 'QUALITY', color: '#1a5fa8', ring: '#1a5fa8' },
+              { code: '14001:2015', label: 'ENVIRONMENTAL', color: '#2e7d32', ring: '#2e7d32' },
+              { code: '45001:2018', label: 'HEALTH & SAFETY', color: '#b71c1c', ring: '#b71c1c' },
+            ].map(({ code, label, color, ring }) => (
+              <div key={code} className="flex flex-col items-center gap-3">
+                {/* Badge */}
+                <div
+                  className="w-28 h-28 rounded-full flex flex-col items-center justify-center border-4 relative"
+                  style={{ borderColor: ring, background: '#fff' }}
+                >
+                  <div
+                    className="absolute inset-1 rounded-full flex flex-col items-center justify-center border-2"
+                    style={{ borderColor: ring }}
+                  >
+                    <span className="text-[10px] font-bold tracking-widest uppercase" style={{ color }}>ISO</span>
+                    <svg viewBox="0 0 24 24" className="w-7 h-7 my-0.5" fill="none" stroke={color} strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                    <span className="text-[9px] font-semibold tracking-wider text-gray-500 uppercase">Certified</span>
+                  </div>
+                </div>
+                {/* Label */}
+                <div className="text-center">
+                  <p className="text-sm text-gray-500">ISO {code}</p>
+                  <p className="text-sm font-bold" style={{ color }}>
+                    {label}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Eco-Friendly */}
+      <section className="py-16 bg-green-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <span className="inline-block text-xs font-semibold tracking-widest uppercase text-green-700 bg-green-100 px-3 py-1 rounded-full mb-4">
+                Eco-Friendly
+              </span>
+              <h2 className="text-3xl font-bold text-[#102a43]">
+                We also provide tailored Eco-Friendly Cleaning Services
+              </h2>
+              <div className="mt-5 space-y-4 text-gray-600 leading-relaxed">
+                <p>
+                  At Empire Management Services, we are committed to delivering exceptional cleaning services
+                  while protecting the health of our clients and the environment. We use environmentally
+                  friendly cleaning methods and only utilise certified cleaning chemicals and high-quality
+                  cleaning equipment that meet industry standards.
+                </p>
+                <p>
+                  Our eco-conscious approach ensures effective cleaning and disinfection without compromising
+                  safety, making our services suitable for homes, offices, healthcare settings, and commercial
+                  facilities.
+                </p>
+                <p>
+                  By choosing our services, you can enjoy a clean, healthy, and sustainable environment while
+                  reducing your environmental footprint. We are dedicated to providing reliable, professional,
+                  and responsible cleaning solutions that support a greener future.
+                </p>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                { icon: '🌿', title: 'Certified Chemicals', desc: 'Only eco-certified, biodegradable cleaning products used on every site.' },
+                { icon: '♻️', title: 'Reduced Waste', desc: 'Waste minimisation practices embedded in every cleaning program.' },
+                { icon: '🏥', title: 'Safe for All Settings', desc: 'Suitable for healthcare, offices, homes, and commercial facilities.' },
+                { icon: '🌍', title: 'Greener Future', desc: 'Committed to responsible cleaning that supports environmental sustainability.' },
+              ].map(({ icon, title, desc }) => (
+                <div key={title} className="bg-white rounded-xl p-5 border border-green-100 shadow-sm">
+                  <span className="text-2xl">{icon}</span>
+                  <h4 className="font-bold text-[#102a43] mt-2 text-sm">{title}</h4>
+                  <p className="text-xs text-gray-500 mt-1 leading-relaxed">{desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Meet the Team */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
