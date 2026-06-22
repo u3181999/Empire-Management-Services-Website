@@ -45,7 +45,7 @@ export default function AboutPage() {
           <h1 className="text-4xl sm:text-5xl font-bold">About Us</h1>
           <p className="mt-4 text-gray-300 max-w-2xl text-lg">
             Over three decades of delivering quality, reliability and accountability to commercial clients
-            across Canberra, NSW and Queensland.
+            across Canberra and NSW.
           </p>
         </div>
       </section>
