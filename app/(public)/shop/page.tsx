@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { ShoppingCart, Droplets, Phone } from 'lucide-react'
 import type { Metadata } from 'next'
 import { prisma } from '@/lib/prisma'
@@ -66,7 +67,7 @@ export default async function ShopPage() {
   )
 }
 
-type Product = { id: string; slug: string; name: string; description: string; price: number }
+type Product = { id: string; slug: string; name: string; description: string; price: number; imageUrl?: string | null }
 
 function ProductSection({
   title,
@@ -105,8 +106,12 @@ function ProductCard({ product, category }: { product: Product; category: string
       href={`/shop/${product.slug}`}
       className="group bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 hover:border-[#d4a017] hover:shadow-md transition-all flex flex-col"
     >
-      <div className="h-40 bg-gradient-to-br from-[#102a43] to-[#1e3a5f] flex items-center justify-center">
-        <ShoppingCart className="w-12 h-12 text-white/30" />
+      <div className="h-40 bg-gradient-to-br from-[#102a43] to-[#1e3a5f] flex items-center justify-center relative overflow-hidden">
+        {product.imageUrl ? (
+          <Image src={product.imageUrl} alt={product.name} fill className="object-cover" />
+        ) : (
+          <ShoppingCart className="w-12 h-12 text-white/30" />
+        )}
       </div>
       <div className="p-5 flex-1 flex flex-col">
         <span className="text-xs font-semibold text-[#d4a017] uppercase tracking-wider">{category}</span>

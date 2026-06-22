@@ -1,7 +1,8 @@
 'use client'
 
-import { useActionState, useEffect, useRef } from 'react'
+import { useActionState, useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 
 type State = { success: boolean; error?: string } | null
 
@@ -13,6 +14,7 @@ type Product = {
   price: number
   category: string
   isActive: boolean
+  imageUrl?: string | null
 }
 
 export default function ProductForm({
@@ -26,6 +28,11 @@ export default function ProductForm({
   const router = useRouter()
   const nameRef = useRef<HTMLInputElement>(null)
   const slugRef = useRef<HTMLInputElement>(null)
+  const imageUrlRef = useRef<HTMLInputElement>(null)
+
+  const [preview, setPreview] = useState<string | null>(product?.imageUrl ?? null)
+  const [uploading, setUploading] = useState(false)
+  const [uploadError, setUploadError] = useState<string | null>(null)
 
   useEffect(() => {
     if (state?.success) router.push('/admin/products')
@@ -42,9 +49,33 @@ export default function ProductForm({
     }
   }
 
+  async function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    setUploadError(null)
+    setUploading(true)
+
+    const fd = new FormData()
+    fd.append('file', file)
+
+    try {
+      const res = await fetch('/api/upload', { method: 'POST', body: fd })
+      const json = await res.json()
+      if (!res.ok) throw new Error(json.error ?? 'Upload failed')
+      setPreview(json.url)
+      if (imageUrlRef.current) imageUrlRef.current.value = json.url
+    } catch (err) {
+      setUploadError(err instanceof Error ? err.message : 'Upload failed')
+    } finally {
+      setUploading(false)
+    }
+  }
+
   return (
     <form action={dispatch} className="space-y-6 max-w-2xl">
       {product && <input type="hidden" name="id" value={product.id} />}
+      <input ref={imageUrlRef} type="hidden" name="imageUrl" defaultValue={product?.imageUrl ?? ''} />
 
       {state?.error && (
         <div className="bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded-lg">
@@ -132,6 +163,50 @@ export default function ProductForm({
           />
         </div>
 
+        {/* Image upload */}
+        <div className="sm:col-span-2">
+          <label className="block text-sm font-medium text-gray-700 mb-1">Product Image</label>
+          <div className="flex items-start gap-4">
+            {preview ? (
+              <div className="relative w-28 h-28 rounded-lg overflow-hidden border border-gray-200 shrink-0">
+                <Image src={preview} alt="Product preview" fill className="object-cover" />
+              </div>
+            ) : (
+              <div className="w-28 h-28 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center shrink-0 bg-gray-50">
+                <span className="text-xs text-gray-400 text-center px-2">No image</span>
+              </div>
+            )}
+            <div className="flex-1 space-y-2">
+              <label className="flex items-center justify-center w-full px-4 py-2.5 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors text-sm text-gray-600 font-medium">
+                {uploading ? 'Uploading…' : preview ? 'Replace image' : 'Upload image'}
+                <input
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp,image/gif"
+                  className="sr-only"
+                  onChange={handleImageChange}
+                  disabled={uploading}
+                />
+              </label>
+              <p className="text-xs text-gray-400">JPEG, PNG, WebP or GIF · max 5 MB</p>
+              {uploadError && (
+                <p className="text-xs text-red-600">{uploadError}</p>
+              )}
+              {preview && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setPreview(null)
+                    if (imageUrlRef.current) imageUrlRef.current.value = ''
+                  }}
+                  className="text-xs text-red-500 hover:text-red-700"
+                >
+                  Remove image
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+
         <div className="sm:col-span-2 flex items-center gap-3">
           <input
             type="checkbox"
@@ -150,7 +225,7 @@ export default function ProductForm({
       <div className="flex items-center gap-3 pt-2">
         <button
           type="submit"
-          disabled={isPending}
+          disabled={isPending || uploading}
           className="px-6 py-2.5 bg-[#102a43] text-white text-sm font-semibold rounded-lg hover:bg-[#0b1f31] disabled:opacity-60 transition-colors"
         >
           {isPending ? 'Saving…' : product ? 'Save Changes' : 'Add Product'}

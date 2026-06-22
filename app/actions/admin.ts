@@ -102,6 +102,7 @@ const productSchema = z.object({
   price: z.coerce.number().int().min(0),
   category: z.enum(['toiletries', 'chemicals']),
   isActive: z.preprocess((v) => v === 'true' || v === true, z.boolean()).default(true),
+  imageUrl: z.string().optional().or(z.literal('')),
 })
 
 export async function createProduct(
@@ -117,14 +118,17 @@ export async function createProduct(
     price: formData.get('price'),
     category: formData.get('category'),
     isActive: formData.get('isActive'),
+    imageUrl: formData.get('imageUrl') || undefined,
   })
 
   if (!parsed.success) {
     return { success: false, error: parsed.error.issues[0].message }
   }
 
+  const createData = { ...parsed.data, imageUrl: parsed.data.imageUrl || null }
+
   try {
-    await prisma.product.create({ data: parsed.data })
+    await prisma.product.create({ data: createData })
   } catch (e: unknown) {
     if ((e as { code?: string }).code === 'P2002') {
       return { success: false, error: 'A product with this slug already exists.' }
@@ -153,14 +157,17 @@ export async function updateProduct(
     price: formData.get('price'),
     category: formData.get('category'),
     isActive: formData.get('isActive'),
+    imageUrl: formData.get('imageUrl') || undefined,
   })
 
   if (!parsed.success) {
     return { success: false, error: parsed.error.issues[0].message }
   }
 
+  const updateData = { ...parsed.data, imageUrl: parsed.data.imageUrl || null }
+
   try {
-    await prisma.product.update({ where: { id }, data: parsed.data })
+    await prisma.product.update({ where: { id }, data: updateData })
   } catch (e: unknown) {
     if ((e as { code?: string }).code === 'P2002') {
       return { success: false, error: 'A product with this slug already exists.' }
