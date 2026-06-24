@@ -35,3 +35,4 @@ export function rateLimit(options?: Options) {
 export const contactLimiter = rateLimit({ interval: 60_000, limit: 5 })
 export const bookingLimiter = rateLimit({ interval: 60_000, limit: 10 })
 export const checkoutLimiter = rateLimit({ interval: 60_000, limit: 20 })
+export const authLimiter = rateLimit({ interval: 15 * 60_000, limit: 5 })

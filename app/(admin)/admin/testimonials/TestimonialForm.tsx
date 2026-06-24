@@ -3,6 +3,7 @@
 import { useActionState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
+import Link from 'next/link'
 import type { Testimonial } from '@prisma/client'
 
 type Action = (
@@ -157,12 +158,12 @@ export default function TestimonialForm({
         >
           {pending ? 'Saving…' : testimonial ? 'Update Testimonial' : 'Add Testimonial'}
         </button>
-        <a
+        <Link
           href="/admin/testimonials"
           className="px-5 py-2.5 border border-gray-300 text-gray-600 font-medium text-sm rounded-lg hover:bg-gray-50 transition-colors"
         >
           Cancel
-        </a>
+        </Link>
       </div>
     </form>
   )

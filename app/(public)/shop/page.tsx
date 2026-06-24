@@ -33,7 +33,7 @@ export default async function ShopPage() {
 
       <div className="bg-[#d4a017]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col sm:flex-row items-center justify-between gap-2 text-sm font-medium text-[#102a43]">
-          <span>Need a custom bulk order or can't find what you're looking for?</span>
+          <span>Need a custom bulk order or can&apos;t find what you&apos;re looking for?</span>
           <a
             href="tel:0262281777"
             className="flex items-center gap-1.5 underline underline-offset-2 hover:no-underline whitespace-nowrap"

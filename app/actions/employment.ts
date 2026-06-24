@@ -14,6 +14,9 @@ const schema = z.object({
   hasExperience: z.string().optional(),
   message: z.string().max(1000).optional(),
   days: z.union([z.string(), z.array(z.string())]).optional(),
+  privacyConsent: z
+    .preprocess((v) => v === 'true' || v === true, z.boolean())
+    .refine((v) => v === true, { message: 'You must accept the privacy policy.' }),
 })
 
 export async function submitEmploymentApplication(
@@ -39,6 +42,7 @@ export async function submitEmploymentApplication(
     hasExperience: formData.get('hasExperience') || undefined,
     message: formData.get('message') || undefined,
     days,
+    privacyConsent: formData.get('privacyConsent'),
   })
 
   if (!parsed.success) {

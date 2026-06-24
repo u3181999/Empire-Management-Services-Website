@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
+import DOMPurify from 'isomorphic-dompurify'
 import type { Metadata } from 'next'
 
 export async function generateMetadata(props: PageProps<'/blog/[slug]'>): Promise<Metadata> {
@@ -23,9 +24,11 @@ export default async function BlogPostPage(props: PageProps<'/blog/[slug]'>) {
 
   if (!post) notFound()
 
+  const safeContent = DOMPurify.sanitize(post.content)
+
   return (
     <>
-      <section className="bg-[#102a43] text-white py-14">
+      <section className="bg-navy-900 text-white py-14">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link
             href="/blog"
@@ -34,7 +37,7 @@ export default async function BlogPostPage(props: PageProps<'/blog/[slug]'>) {
             <ArrowLeft className="w-4 h-4" /> Back to Blog
           </Link>
           {post.category && (
-            <span className="block text-xs font-semibold text-[#d4a017] uppercase tracking-wider mb-2">
+            <span className="block text-xs font-semibold text-gold-500 uppercase tracking-wider mb-2">
               {post.category.name}
             </span>
           )}
@@ -61,7 +64,7 @@ export default async function BlogPostPage(props: PageProps<'/blog/[slug]'>) {
           )}
           <div
             className="prose prose-lg max-w-none text-gray-700 leading-relaxed"
-            dangerouslySetInnerHTML={{ __html: post.content }}
+            dangerouslySetInnerHTML={{ __html: safeContent }}
           />
         </div>
       </article>

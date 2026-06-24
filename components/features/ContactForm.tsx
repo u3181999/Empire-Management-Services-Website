@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from 'react'
 import { useActionState } from 'react'
 import { submitContact } from '@/app/actions/contact'
 

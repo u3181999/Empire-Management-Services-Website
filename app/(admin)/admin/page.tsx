@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma'
-import { Calendar, ShoppingBag, FileText, TrendingUp } from 'lucide-react'
+import { Calendar, ShoppingBag, FileText } from 'lucide-react'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = { title: 'Admin Dashboard' }

@@ -19,6 +19,7 @@ export default function CartPageClient() {
 
   useEffect(() => {
     const stored = localStorage.getItem('empire-cart')
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (stored) setCart(JSON.parse(stored))
   }, [])
 

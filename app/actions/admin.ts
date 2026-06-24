@@ -34,7 +34,7 @@ export async function updateBookingStatus(formData: FormData) {
 }
 
 const blogPostSchema = z.object({
-  id: z.string().optional(),
+  id: z.string().cuid().optional(),
   title: z.string().min(3).max(200),
   slug: z.string().min(3).max(200),
   excerpt: z.string().min(10).max(500),
@@ -147,8 +147,9 @@ export async function updateProduct(
 ): Promise<{ success: boolean; error?: string }> {
   await requireAdmin()
 
-  const id = formData.get('id') as string
-  if (!id) return { success: false, error: 'Missing product ID.' }
+  const idResult = z.string().cuid().safeParse(formData.get('id'))
+  if (!idResult.success) return { success: false, error: 'Invalid product ID.' }
+  const id = idResult.data
 
   const parsed = productSchema.safeParse({
     name: formData.get('name'),
@@ -183,7 +184,7 @@ export async function updateProduct(
 
 export async function deleteProduct(formData: FormData) {
   await requireAdmin()
-  const id = z.string().parse(formData.get('id'))
+  const id = z.string().cuid().parse(formData.get('id'))
   await prisma.product.delete({ where: { id } })
   revalidatePath('/admin/products')
   revalidatePath('/shop')
@@ -243,8 +244,9 @@ export async function updateTestimonial(
 ): Promise<{ success: boolean; error?: string }> {
   await requireAdmin()
 
-  const id = formData.get('id') as string
-  if (!id) return { success: false, error: 'Missing testimonial ID.' }
+  const idResult = z.string().cuid().safeParse(formData.get('id'))
+  if (!idResult.success) return { success: false, error: 'Invalid testimonial ID.' }
+  const id = idResult.data
 
   const parsed = testimonialSchema.safeParse({
     authorName: formData.get('authorName'),
@@ -277,7 +279,7 @@ export async function updateTestimonial(
 
 export async function deleteTestimonial(formData: FormData) {
   await requireAdmin()
-  const id = z.string().parse(formData.get('id'))
+  const id = z.string().cuid().parse(formData.get('id'))
   await prisma.testimonial.delete({ where: { id } })
   revalidatePath('/admin/testimonials')
   revalidatePath('/')

@@ -4,6 +4,7 @@ import { authConfig } from './auth.config'
 import { prisma } from './prisma'
 import bcrypt from 'bcryptjs'
 import { z } from 'zod'
+import { authLimiter } from './rate-limit'
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
@@ -19,6 +20,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           .safeParse(credentials)
 
         if (!parsed.success) return null
+
+        const { success: allowed } = authLimiter.check(5, parsed.data.email)
+        if (!allowed) throw new Error('Too many login attempts. Try again later.')
 
         const admin = await prisma.admin.findUnique({
           where: { email: parsed.data.email },

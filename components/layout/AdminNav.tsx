@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { LayoutDashboard, Calendar, ShoppingBag, FileText, LogOut, Star } from 'lucide-react'
+import { LayoutDashboard, Calendar, FileText, LogOut, Star } from 'lucide-react'
 import { signOut } from 'next-auth/react'
 
 const NAV = [

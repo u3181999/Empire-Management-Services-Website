@@ -1,6 +1,7 @@
 'use client'
 
 import { useActionState } from 'react'
+import Link from 'next/link'
 import { submitEmploymentApplication } from '@/app/actions/employment'
 
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
@@ -150,6 +151,27 @@ export default function EmploymentForm() {
           className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#d4a017] focus:border-transparent resize-none"
           placeholder="Tell us about your experience or anything else relevant..."
         />
+      </div>
+
+      <div>
+        <label className="flex items-start gap-3 text-sm cursor-pointer">
+          <input
+            type="checkbox"
+            name="privacyConsent"
+            value="true"
+            required
+            className="w-4 h-4 mt-0.5 text-[#d4a017] border-gray-300 rounded focus:ring-[#d4a017] shrink-0"
+          />
+          <span className="text-gray-600">
+            I consent to Empire Management Services storing and using my personal information to
+            process this employment application. Data will be retained for 6 months if unsuccessful.
+            Read our{' '}
+            <Link href="/privacy" className="text-[#d4a017] hover:underline">
+              Privacy Policy
+            </Link>
+            . <span aria-hidden="true">*</span>
+          </span>
+        </label>
       </div>
 
       <button

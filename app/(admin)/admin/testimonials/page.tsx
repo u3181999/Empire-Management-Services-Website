@@ -2,6 +2,7 @@ import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
 import { Plus, Edit, Eye, EyeOff, Star } from 'lucide-react'
 import { deleteTestimonial } from '@/app/actions/admin'
+import DeleteButton from '@/components/features/DeleteButton'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = { title: 'Testimonials — Admin' }
@@ -71,16 +72,14 @@ export default async function AdminTestimonialsPage() {
                     >
                       <Edit className="w-3.5 h-3.5" /> Edit
                     </Link>
-                    <form action={deleteTestimonial}>
-                      <input type="hidden" name="id" value={t.id} />
-                      <button
-                        type="submit"
-                        className="text-xs text-red-500 hover:underline"
-                        onClick={(e) => { if (!confirm('Delete this testimonial?')) e.preventDefault() }}
-                      >
-                        Delete
-                      </button>
-                    </form>
+                    <DeleteButton
+                      action={deleteTestimonial}
+                      id={t.id}
+                      confirmMessage="Delete this testimonial?"
+                      className="text-xs text-red-500 hover:underline disabled:opacity-40"
+                    >
+                      Delete
+                    </DeleteButton>
                   </div>
                 </td>
               </tr>
