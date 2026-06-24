@@ -1,6 +1,7 @@
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import ClientsMarquee from '@/components/features/ClientsMarquee'
+import TestimonialsSection from '@/components/features/TestimonialsSection'
 import Link from 'next/link'
 import Image from 'next/image'
 import {
@@ -204,6 +205,9 @@ export default function HomePage() {
 
         {/* Clients */}
         <ClientsMarquee />
+
+        {/* Testimonials */}
+        <TestimonialsSection />
 
         {/* CTA */}
         <section className="py-16 bg-[#d4a017]">

@@ -2,13 +2,13 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { LayoutDashboard, Calendar, ShoppingBag, FileText, LogOut } from 'lucide-react'
+import { LayoutDashboard, Calendar, ShoppingBag, FileText, LogOut, Star } from 'lucide-react'
 import { signOut } from 'next-auth/react'
 
 const NAV = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard, exact: true },
   { href: '/admin/bookings', label: 'Bookings', icon: Calendar, exact: false },
-  { href: '/admin/products', label: 'Products', icon: ShoppingBag, exact: false },
+  { href: '/admin/testimonials', label: 'Testimonials', icon: Star, exact: false },
   { href: '/admin/blog', label: 'Blog', icon: FileText, exact: false },
 ]
 

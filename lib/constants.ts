@@ -146,8 +146,6 @@ export const NAV_ITEMS = [
   { label: 'Home', href: '/' },
   { label: 'About', href: '/about' },
   { label: 'Services', href: '/services' },
-  { label: 'Commercial', href: '/commercial' },
-  { label: 'Shop', href: '/shop' },
   { label: 'Blog', href: '/blog' },
   { label: 'Employment', href: '/employment' },
   { label: 'Contact', href: '/contact' },

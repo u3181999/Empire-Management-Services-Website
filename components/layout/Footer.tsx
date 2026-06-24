@@ -106,7 +106,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-10 pt-6 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-gray-500">
-          <p>© {year} {COMPANY.name}. All rights reserved. ABN {COMPANY.abn}</p>
+          <p>© {year} {COMPANY.name}. All rights reserved.</p>
           <div className="flex gap-4">
             <Link href="/privacy" className="hover:text-[#d4a017] transition-colors">Privacy Policy</Link>
             <Link href="/terms" className="hover:text-[#d4a017] transition-colors">Terms of Service</Link>

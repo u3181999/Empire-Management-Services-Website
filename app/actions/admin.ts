@@ -188,3 +188,97 @@ export async function deleteProduct(formData: FormData) {
   revalidatePath('/admin/products')
   revalidatePath('/shop')
 }
+
+// ── Testimonial CRUD ──────────────────────────────────────────────────────────
+
+const testimonialSchema = z.object({
+  authorName: z.string().min(2).max(100),
+  authorTitle: z.string().max(100).optional().or(z.literal('')),
+  company: z.string().max(100).optional().or(z.literal('')),
+  content: z.string().min(10).max(1000),
+  rating: z.coerce.number().int().min(1).max(5).default(5),
+  source: z.string().min(1).max(50).default('Google'),
+  reviewUrl: z.string().url().optional().or(z.literal('')),
+  isPublished: z.preprocess((v) => v === 'true' || v === true, z.boolean()).default(false),
+  sortOrder: z.coerce.number().int().default(0),
+})
+
+export async function createTestimonial(
+  _prev: { success: boolean; error?: string } | null,
+  formData: FormData
+): Promise<{ success: boolean; error?: string }> {
+  await requireAdmin()
+
+  const parsed = testimonialSchema.safeParse({
+    authorName: formData.get('authorName'),
+    authorTitle: formData.get('authorTitle') || undefined,
+    company: formData.get('company') || undefined,
+    content: formData.get('content'),
+    rating: formData.get('rating'),
+    source: formData.get('source'),
+    reviewUrl: formData.get('reviewUrl') || undefined,
+    isPublished: formData.get('isPublished'),
+    sortOrder: formData.get('sortOrder'),
+  })
+
+  if (!parsed.success) return { success: false, error: parsed.error.issues[0].message }
+
+  await prisma.testimonial.create({
+    data: {
+      ...parsed.data,
+      authorTitle: parsed.data.authorTitle || null,
+      company: parsed.data.company || null,
+      reviewUrl: parsed.data.reviewUrl || null,
+    },
+  })
+
+  revalidatePath('/admin/testimonials')
+  revalidatePath('/')
+  return { success: true }
+}
+
+export async function updateTestimonial(
+  _prev: { success: boolean; error?: string } | null,
+  formData: FormData
+): Promise<{ success: boolean; error?: string }> {
+  await requireAdmin()
+
+  const id = formData.get('id') as string
+  if (!id) return { success: false, error: 'Missing testimonial ID.' }
+
+  const parsed = testimonialSchema.safeParse({
+    authorName: formData.get('authorName'),
+    authorTitle: formData.get('authorTitle') || undefined,
+    company: formData.get('company') || undefined,
+    content: formData.get('content'),
+    rating: formData.get('rating'),
+    source: formData.get('source'),
+    reviewUrl: formData.get('reviewUrl') || undefined,
+    isPublished: formData.get('isPublished'),
+    sortOrder: formData.get('sortOrder'),
+  })
+
+  if (!parsed.success) return { success: false, error: parsed.error.issues[0].message }
+
+  await prisma.testimonial.update({
+    where: { id },
+    data: {
+      ...parsed.data,
+      authorTitle: parsed.data.authorTitle || null,
+      company: parsed.data.company || null,
+      reviewUrl: parsed.data.reviewUrl || null,
+    },
+  })
+
+  revalidatePath('/admin/testimonials')
+  revalidatePath('/')
+  return { success: true }
+}
+
+export async function deleteTestimonial(formData: FormData) {
+  await requireAdmin()
+  const id = z.string().parse(formData.get('id'))
+  await prisma.testimonial.delete({ where: { id } })
+  revalidatePath('/admin/testimonials')
+  revalidatePath('/')
+}
