@@ -5,24 +5,25 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { Menu, X, Phone, MapPin } from 'lucide-react'
 import { NAV_ITEMS, COMPANY } from '@/lib/constants'
+import Button from '@/components/ui/Button'
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
 
   return (
-    <header className="bg-[#102a43] text-white sticky top-0 z-50 shadow-lg">
+    <header className="bg-navy-900 text-white sticky top-0 z-50 shadow-lg">
       {/* Top bar */}
-      <div className="bg-[#0b1f31] py-1.5">
+      <div className="bg-navy-950 py-1.5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center text-sm">
           <a
             href={`tel:${COMPANY.phone.replace(/\s/g, '')}`}
-            className="flex items-center gap-1.5 hover:text-[#d4a017] transition-colors"
+            className="flex items-center gap-1.5 hover:text-gold-500 transition-colors"
           >
             <Phone className="w-3.5 h-3.5" />
             {COMPANY.phone}
           </a>
           <span className="flex items-center gap-1.5 text-gray-400">
-            <MapPin className="w-3.5 h-3.5 text-[#d4a017]" />
+            <MapPin className="w-3.5 h-3.5 text-gold-500" />
             Canberra (Head Office)
           </span>
         </div>
@@ -31,7 +32,6 @@ export default function Header() {
       {/* Main nav */}
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Main navigation">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
           <Link href="/" className="flex items-center shrink-0">
             <Image
               src="/logo.png"
@@ -49,17 +49,14 @@ export default function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="px-3 py-2 text-sm font-medium hover:text-[#d4a017] hover:bg-white/5 rounded transition-colors"
+                className="px-3 py-2 text-sm font-medium hover:text-gold-500 hover:bg-white/5 rounded transition-colors"
               >
                 {item.label}
               </Link>
             ))}
-            <Link
-              href="/booking"
-              className="ml-2 px-4 py-2 bg-[#d4a017] text-[#102a43] font-bold text-sm rounded hover:bg-[#e8b81a] transition-colors"
-            >
+            <Button href="/booking" size="sm" className="ml-2">
               Book Now
-            </Link>
+            </Button>
           </div>
 
           {/* Mobile menu button */}
@@ -80,19 +77,19 @@ export default function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="block px-2 py-3 text-sm font-medium hover:text-[#d4a017] hover:bg-white/5 rounded transition-colors"
+                className="block px-2 py-3 text-sm font-medium hover:text-gold-500 hover:bg-white/5 rounded transition-colors"
                 onClick={() => setMobileOpen(false)}
               >
                 {item.label}
               </Link>
             ))}
-            <Link
+            <Button
               href="/booking"
-              className="block mt-2 px-4 py-3 bg-[#d4a017] text-[#102a43] font-bold text-sm text-center rounded hover:bg-[#e8b81a] transition-colors"
+              className="mt-2 w-full"
               onClick={() => setMobileOpen(false)}
             >
               Book Now
-            </Link>
+            </Button>
           </div>
         )}
       </nav>
