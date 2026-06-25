@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Plus_Jakarta_Sans } from 'next/font/google'
 import SessionProvider from '@/components/layout/SessionProvider'
+import ChatBot from '@/components/features/ChatBot'
 import './globals.css'
 
 const jakarta = Plus_Jakarta_Sans({
@@ -56,6 +57,7 @@ export default function RootLayout({
     <html lang="en-AU" className={`${jakarta.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <SessionProvider>{children}</SessionProvider>
+        <ChatBot />
       </body>
     </html>
   )
