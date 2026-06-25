@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { CheckCircle2, ArrowRight } from 'lucide-react'
 import { COMPANY, VALUES } from '@/lib/constants'
 import type { Metadata } from 'next'
@@ -8,26 +9,31 @@ const TEAM = [
     name: 'Alex',
     role: 'Founder & Chief Executive Officer (CEO)',
     bio: 'Alex founded Empire Management Services in 1995 with a vision to deliver commercial cleaning services built on integrity and results. With over 30 years at the helm, Alex has grown the company from a local Canberra operation to a trusted name across ACT and NSW, serving 80+ clients and maintaining relationships built on consistent, quality-driven outcomes.',
+    photo: null as string | null,
   },
   {
     name: 'Helen',
     role: 'Chief Finance Officer (CFO)',
     bio: 'Helen oversees the financial operations of Empire Management Services, ensuring fiscal discipline and sustainable growth. With a strong background in business finance, Helen plays a critical role in strategic planning, budgeting, and ensuring the company remains well-positioned to deliver value to both clients and staff.',
+    photo: null as string | null,
   },
   {
     name: 'Felicity Vercera',
     role: 'Operations Manager',
-    bio: 'Felicity leads day-to-day operations across Empire\'s client sites, coordinating cleaning schedules, staff deployment, and quality assurance. Her attention to detail and hands-on management style ensure that every client receives consistent, high-standard service — on time, every time.',
+    bio: "Felicity leads day-to-day operations across Empire's client sites, coordinating cleaning schedules, staff deployment, and quality assurance. Her attention to detail and hands-on management style ensure that every client receives consistent, high-standard service — on time, every time.",
+    photo: null as string | null,
   },
   {
     name: 'Rinzin Dorji',
     role: 'Supervisor',
     bio: 'Rinzin brings dedication and a keen eye for quality to his supervisory role. He works closely with cleaning teams on the ground, ensuring site standards are met, staff are supported, and client expectations are exceeded across all assigned locations.',
+    photo: null as string | null,
   },
   {
-    name: 'Gregg O\'Brien',
+    name: "Gregg O'Brien",
     role: 'Supervisor',
-    bio: 'Gregg is a dependable and experienced supervisor who takes pride in maintaining high standards across his sites. Known for his strong communication and problem-solving skills, Gregg ensures smooth daily operations and fosters a positive team environment.',
+    bio: "Gregg is a dependable and experienced supervisor who takes pride in maintaining high standards across his sites. Known for his strong communication and problem-solving skills, Gregg ensures smooth daily operations and fosters a positive team environment.",
+    photo: null as string | null,
   },
 ]
 
@@ -221,16 +227,65 @@ export default function AboutPage() {
             {TEAM.map((member) => (
               <div
                 key={member.name}
-                className="bg-gray-50 rounded-xl p-8 border border-gray-100 flex flex-col"
+                className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col"
               >
-                <div className="w-16 h-16 rounded-full bg-[#102a43] flex items-center justify-center mb-5 shrink-0">
-                  <span className="text-[#d4a017] text-xl font-bold">
-                    {member.name.charAt(0)}
-                  </span>
+                {/* Photo container */}
+                <div className="relative w-full aspect-[4/3] bg-[#102a43] overflow-hidden">
+                  {member.photo ? (
+                    <Image
+                      src={member.photo}
+                      alt={member.name}
+                      fill
+                      className="object-cover object-top"
+                    />
+                  ) : (
+                    /* Uniform draft placeholder — replace src above when photo is ready */
+                    <div className="absolute inset-0 flex flex-col items-center justify-end">
+                      {/* subtle grid pattern */}
+                      <div
+                        className="absolute inset-0 opacity-[0.06]"
+                        style={{
+                          backgroundImage:
+                            'repeating-linear-gradient(0deg,transparent,transparent 39px,#d4a017 39px,#d4a017 40px),repeating-linear-gradient(90deg,transparent,transparent 39px,#d4a017 39px,#d4a017 40px)',
+                        }}
+                      />
+                      {/* person silhouette */}
+                      <svg
+                        viewBox="0 0 200 200"
+                        className="w-full max-w-[220px] mb-0"
+                        aria-hidden="true"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        {/* head */}
+                        <circle cx="100" cy="68" r="32" fill="#d4a017" fillOpacity="0.25" />
+                        {/* body / shoulders */}
+                        <path
+                          d="M30 200 C30 150 70 130 100 130 C130 130 170 150 170 200Z"
+                          fill="#d4a017"
+                          fillOpacity="0.2"
+                        />
+                      </svg>
+                      {/* initials badge */}
+                      <div className="absolute top-4 right-4 w-9 h-9 rounded-full bg-[#d4a017] flex items-center justify-center">
+                        <span className="text-[#102a43] text-sm font-bold leading-none">
+                          {member.name.split(' ').map((n) => n[0]).join('').slice(0, 2).toUpperCase()}
+                        </span>
+                      </div>
+                      {/* "Photo coming soon" label */}
+                      <span className="absolute bottom-3 left-1/2 -translate-x-1/2 text-[10px] font-medium tracking-widest text-white/30 uppercase whitespace-nowrap">
+                        Photo coming soon
+                      </span>
+                    </div>
+                  )}
                 </div>
-                <h3 className="text-lg font-bold text-[#102a43]">{member.name}</h3>
-                <p className="text-sm font-medium text-[#d4a017] mt-0.5 mb-3">{member.role}</p>
-                <p className="text-sm text-gray-600 leading-relaxed">{member.bio}</p>
+
+                {/* Details */}
+                <div className="p-6 flex flex-col flex-1">
+                  <h3 className="text-lg font-bold text-[#102a43]">{member.name}</h3>
+                  <p className="text-sm font-medium text-[#d4a017] mt-0.5 mb-3">{member.role}</p>
+                  <p className="text-sm text-gray-600 leading-relaxed">{member.bio}</p>
+                </div>
               </div>
             ))}
           </div>
