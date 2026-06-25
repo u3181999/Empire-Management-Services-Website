@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next'
 import { prisma } from '@/lib/prisma'
+import { LOCATIONS } from '@/lib/constants'
 
 const BASE_URL = 'https://empirecleaning.com.au'
 
@@ -41,5 +42,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }))
 
-  return [...staticRoutes, ...blogRoutes, ...serviceRoutes]
+  const locationRoutes: MetadataRoute.Sitemap = LOCATIONS.map((loc) => ({
+    url: `${BASE_URL}/locations/${loc.id}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly' as const,
+    priority: loc.isHeadOffice ? 0.8 : 0.6,
+  }))
+
+  return [...staticRoutes, ...locationRoutes, ...blogRoutes, ...serviceRoutes]
 }

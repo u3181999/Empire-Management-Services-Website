@@ -1,6 +1,7 @@
-import { MapPin, Phone, Mail, Clock } from 'lucide-react'
+import { MapPin, Phone, Mail, Clock, ArrowRight } from 'lucide-react'
 import { COMPANY, LOCATIONS } from '@/lib/constants'
 import ContactForm from '@/components/features/ContactForm'
+import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -92,10 +93,19 @@ export default function ContactPage() {
               <h3 className="text-xl font-bold text-[#102a43] mt-10 mb-4">Service Locations</h3>
               <div className="space-y-3">
                 {LOCATIONS.map((loc) => (
-                  <div key={loc.id} className="bg-gray-50 rounded-lg p-4">
-                    <p className="font-semibold text-[#102a43] text-sm">{loc.name}</p>
-                    <p className="text-gray-500 text-xs mt-0.5">{loc.address}</p>
-                  </div>
+                  <Link
+                    key={loc.id}
+                    href={`/locations/${loc.id}`}
+                    className="group flex items-start justify-between bg-gray-50 rounded-lg p-4 hover:bg-[#d4a017]/5 transition-colors"
+                  >
+                    <div>
+                      <p className="font-semibold text-[#102a43] text-sm group-hover:text-[#d4a017] transition-colors">
+                        {loc.name}
+                      </p>
+                      <p className="text-gray-500 text-xs mt-0.5">{loc.address}</p>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-[#d4a017] shrink-0 mt-0.5 transition-colors" />
+                  </Link>
                 ))}
               </div>
             </div>
