@@ -54,7 +54,7 @@ export default async function ProductPage(props: PageProps<'/shop/[slug]'>) {
 
               <div className="mt-8 space-y-3">
                 <a
-                  href={`mailto:info@empiremanagement.com.au?subject=Order Enquiry — ${encodeURIComponent(product.name)}&body=Hi, I'd like to enquire about ordering: ${encodeURIComponent(product.name)}%0A%0AQuantity:%0ADelivery address:%0AContact name:%0APhone:`}
+                  href={`mailto:info@empirecleaning.com.au?subject=Order Enquiry — ${encodeURIComponent(product.name)}&body=Hi, I'd like to enquire about ordering: ${encodeURIComponent(product.name)}%0A%0AQuantity:%0ADelivery address:%0AContact name:%0APhone:`}
                   className="flex items-center justify-center gap-2 w-full py-3 bg-[#102a43] text-white font-bold rounded-lg hover:bg-[#0b1f31] transition-colors"
                 >
                   <ShoppingCart className="w-4 h-4" />
@@ -68,7 +68,7 @@ export default async function ProductPage(props: PageProps<'/shop/[slug]'>) {
                   Call to Order — 02 6228 1777
                 </a>
                 <a
-                  href={`mailto:info@empiremanagement.com.au?subject=Bulk Quote — ${encodeURIComponent(product.name)}`}
+                  href={`mailto:info@empirecleaning.com.au?subject=Bulk Quote — ${encodeURIComponent(product.name)}`}
                   className="flex items-center justify-center gap-2 w-full py-3 text-sm text-gray-500 hover:text-[#d4a017] transition-colors"
                 >
                   <Mail className="w-4 h-4" />

@@ -53,8 +53,8 @@ export async function POST(req: NextRequest) {
       },
     })
 
-    const giftCertItems = orderItems.filter((_: unknown, idx: number) => {
-      const p = products[idx]
+    const giftCertItems = orderItems.filter((item: { productId: string; quantity: number; unitPrice: number }) => {
+      const p = products.find((p) => p.id === item.productId)
       return p?.type === 'GIFT_CERTIFICATE'
     })
 

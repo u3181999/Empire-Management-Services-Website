@@ -8,10 +8,13 @@ const STATUSES = ['PENDING', 'CONFIRMED', 'COMPLETED', 'CANCELLED'] as const
 
 export default async function AdminBookingsPage(props: PageProps<'/admin/bookings'>) {
   const searchParams = await props.searchParams
-  const statusFilter = typeof searchParams?.status === 'string' ? searchParams.status : undefined
+  const rawStatus = typeof searchParams?.status === 'string' ? searchParams.status : undefined
+  const statusFilter = STATUSES.includes(rawStatus as typeof STATUSES[number])
+    ? (rawStatus as typeof STATUSES[number])
+    : undefined
 
   const bookings = await prisma.booking.findMany({
-    where: statusFilter ? { status: statusFilter as 'PENDING' | 'CONFIRMED' | 'COMPLETED' | 'CANCELLED' } : {},
+    where: statusFilter ? { status: statusFilter } : {},
     include: { service: true, location: true },
     orderBy: { createdAt: 'desc' },
   })

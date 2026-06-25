@@ -11,6 +11,7 @@ const jakarta = Plus_Jakarta_Sans({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://empirecleaning.com.au'),
   title: {
     default: 'Empire Management Services | Commercial Cleaning Canberra',
     template: '%s | Empire Management Services',
@@ -41,6 +42,12 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_AU',
     siteName: 'Empire Management Services',
+    url: 'https://empirecleaning.com.au',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Empire Management Services' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/og-image.png'],
   },
   robots: {
     index: true,

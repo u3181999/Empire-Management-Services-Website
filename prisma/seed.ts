@@ -163,7 +163,7 @@ async function main() {
 
   console.log('✅ Seed complete.')
   console.log('   Admin login: admin@empirecleaning.com.au')
-  console.log(`   Admin password: ${process.env.SEED_ADMIN_PASSWORD ?? 'ChangeMe123!'}`)
+  console.log(`   Admin password: ${process.env.SEED_ADMIN_PASSWORD ? '(from SEED_ADMIN_PASSWORD env var)' : 'ChangeMe123! — SET SEED_ADMIN_PASSWORD before running in production'}`)
 }
 
 main()

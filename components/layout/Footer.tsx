@@ -19,7 +19,9 @@ export default function Footer() {
             <p className="mt-1 text-xs text-gray-400">ABN {COMPANY.abn}</p>
             <div className="mt-4 flex gap-3">
               <a
-                href="#"
+                href="https://www.facebook.com/empirecleaningservices"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="Facebook"
                 className="p-2 bg-white/5 rounded hover:bg-[#d4a017] hover:text-[#102a43] transition-colors"
               >
@@ -28,7 +30,9 @@ export default function Footer() {
                 </svg>
               </a>
               <a
-                href="#"
+                href="https://www.linkedin.com/company/empire-management-services"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="LinkedIn"
                 className="p-2 bg-white/5 rounded hover:bg-[#d4a017] hover:text-[#102a43] transition-colors"
               >

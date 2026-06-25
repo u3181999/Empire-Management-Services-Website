@@ -5,7 +5,7 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Employment',
   description:
-    'Join the Empire Management Services team. Apply now for cleaning positions across Canberra, NSW and Queensland.',
+    'Join the Empire Management Services team. Apply now for cleaning positions across Canberra and NSW.',
 }
 
 const BENEFITS = [

@@ -13,7 +13,11 @@ const schema = z.object({
   customerPhone: z.string().min(6).max(20),
   locationId: z.string().min(1),
   serviceId: z.string().min(1),
-  date: z.string().min(1),
+  date: z.string().min(1).refine((d) => {
+    const parsed = new Date(d)
+    const today = new Date(); today.setHours(0,0,0,0)
+    return !isNaN(parsed.getTime()) && parsed >= today
+  }, { message: 'Please select a valid future date.' }),
   timeSlot: z.string().min(1),
   notes: z.string().max(1000).optional(),
 })

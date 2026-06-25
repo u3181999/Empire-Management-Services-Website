@@ -5,7 +5,7 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Commercial Cleaning Solutions',
   description:
-    'Specialist commercial cleaning for large-scale buildings, government facilities, and corporate environments across Canberra, NSW and QLD.',
+    'Specialist commercial cleaning for large-scale buildings, government facilities, and corporate environments across Canberra and NSW.',
 }
 
 const CASE_STUDIES = [
