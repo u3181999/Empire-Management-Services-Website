@@ -1,7 +1,12 @@
 import { Resend } from 'resend'
 import { COMPANY } from './constants'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+let _resend: Resend | null = null
+
+function getResend(): Resend {
+  if (!_resend) _resend = new Resend(process.env.RESEND_API_KEY)
+  return _resend
+}
 
 const FROM = `${COMPANY.name} <noreply@empirecleaning.com.au>`
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL ?? COMPANY.email
@@ -32,7 +37,7 @@ export async function sendBookingConfirmationToCustomer({
   time: string
   bookingRef: string
 }) {
-  return resend.emails.send({
+  return getResend().emails.send({
     from: FROM,
     to: customerEmail,
     subject: `Booking Confirmed – ${service} on ${date}`,
@@ -74,7 +79,7 @@ export async function sendBookingNotificationToAdmin({
   notes?: string
   bookingRef: string
 }) {
-  return resend.emails.send({
+  return getResend().emails.send({
     from: FROM,
     to: ADMIN_EMAIL,
     subject: `New Booking: ${service} – ${date} ${time}`,
@@ -108,7 +113,7 @@ export async function sendContactEmail({
   message: string
   subject: string
 }) {
-  return resend.emails.send({
+  return getResend().emails.send({
     from: FROM,
     to: ADMIN_EMAIL,
     replyTo: email,
@@ -144,7 +149,7 @@ export async function sendOrderConfirmation({
     .map((i) => `<li>${escapeHtml(i.name)} × ${i.quantity} — $${(i.price / 100).toFixed(2)}</li>`)
     .join('')
 
-  return resend.emails.send({
+  return getResend().emails.send({
     from: FROM,
     to: customerEmail,
     subject: `Order Confirmed – #${orderNumber}`,

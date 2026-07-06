@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { stripe } from '@/lib/stripe'
+import { getStripe } from '@/lib/stripe'
 import { prisma } from '@/lib/prisma'
 import { checkoutLimiter } from '@/lib/rate-limit'
 import { z } from 'zod'
@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
 
   const orderNumber = `ORD-${Date.now()}`
 
-  const session = await stripe.checkout.sessions.create({
+  const session = await getStripe().checkout.sessions.create({
     mode: 'payment',
     payment_method_types: ['card'],
     line_items: lineItems,
