@@ -2,6 +2,7 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import ClientsMarquee from '@/components/features/ClientsMarquee'
 import TestimonialsSection from '@/components/features/TestimonialsSection'
+import BackToTop from '@/components/features/BackToTop'
 import { Button, Card, SectionHeading } from '@/components/ui'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -227,6 +228,7 @@ export default function HomePage() {
 
       </main>
       <Footer />
+      <BackToTop />
     </>
   )
 }
