@@ -9,12 +9,11 @@ const CLIENTS = [
   { name: 'CBRE',                                  logo: '/clients/cbre.png'                  },
   { name: 'JLL',                                   logo: '/clients/jll.png'                   },
   { name: 'Evri Group',                            logo: '/clients/evri-group.webp'           },
-{ name: 'Velocity Conveyancing',                 logo: '/clients/velocity-conveyancing.svg' },
+  { name: 'Velocity Conveyancing',                 logo: '/clients/velocity-conveyancing.svg' },
   { name: 'WOTSO Spaces',                          logo: '/clients/wotso.webp'                },
-  { name: 'Canberra Isuzu',                        logo: '/clients/canberra-isuzu.png'        },
   { name: 'Pharmaceutical Society of Australia',   logo: '/clients/psa.png'                   },
   { name: 'APVMA',                                 logo: '/clients/apvma.webp'                },
-  { name: 'ACT Cricket',                           logo: '/clients/act-cricket.svg'           },
+  { name: 'ACT Cricket',                           logo: '/clients/act-cricket.png'           },
   { name: 'AFL Canberra',                          logo: '/clients/afl-canberra.png'          },
 ]
 
