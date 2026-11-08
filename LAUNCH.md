@@ -1,10 +1,10 @@
 # Launch Checklist — empirecleaning.com.au
 
-Hosting: Vercel · Database: Neon (PostgreSQL, Sydney) · Email: Resend · Shop: enquiry-only (no Stripe at launch)
+Hosting: Vercel · Database: Neon (PostgreSQL, Sydney) · Email: Resend
 
 Code status: `npm run lint`, `npx tsc --noEmit` and `npm run build` pass. Database migrations are applied.
 Already prepared in the repo: Sydney region + `www` → apex redirect (`vercel.json`), sitemap/robots/SEO and the
-email sender all read the domain from one place (`lib/site.ts`), a link-preview image, and Vercel Blob uploads.
+email sender all read the domain from one place (`lib/site.ts`) and a link-preview image.
 
 The domain lives in one setting: `NEXT_PUBLIC_SITE_URL`. If the domain ever changes, change that variable
 (and `NEXTAUTH_URL`, and the `www` redirect host in `vercel.json`).
@@ -32,9 +32,7 @@ $env:NEW_ADMIN_PASSWORD = "choose-a-long-unique-password"; npm run admin:set-pas
 | `ADMIN_EMAIL` | `email@empirecleaning.com.au` |
 | `RESEND_API_KEY` | From resend.com → API Keys |
 
-   Leave `STRIPE_*` unset — checkout stays off.
-3. **Storage → Create → Blob** (Public, Sydney) → connect to the project. This adds `BLOB_STORE_ID`, which is enough for admin image uploads (the site uses OIDC; `BLOB_READ_WRITE_TOKEN` is optional).
-4. Deploy.
+3. Deploy.
 
 ## 3. Domain
 
@@ -50,20 +48,12 @@ $env:NEW_ADMIN_PASSWORD = "choose-a-long-unique-password"; npm run admin:set-pas
 
 ## 5. After deploy — smoke test
 
-- [ ] Home, About, Services, Contact, Blog, Shop, Terms, Privacy load over https; `www` redirects to apex
+- [ ] Home, About, Services, Contact, Blog, Terms, Privacy load over https; `www` redirects to apex
 - [ ] Contact form → email arrives at `email@empirecleaning.com.au`
 - [ ] Booking → customer confirmation + admin notification arrive
-- [ ] `/admin/login` works with the new password; upload a product image
-- [ ] `/shop/cart` shows 404 and `/api/checkout` returns 404 (expected while Stripe is off)
+- [ ] `/admin/login` works with the new password; the dashboard shows your bookings
 - [ ] `/sitemap.xml`, `/robots.txt` load; paste the site into a chat app to see the link preview
 - [ ] Submit the sitemap in Google Search Console
-
-## Later: turning on card payments
-
-Add `STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET` in Vercel, create a webhook to
-`https://empirecleaning.com.au/api/webhooks/stripe` for `checkout.session.completed`, and add a
-`/shop/success` page (checkout redirects there; it does not exist yet). Shop pages also need
-"Add to cart" buttons wired back in (`components/features/AddToCartButton.tsx` exists but is unused).
 
 ## Known limitations
 

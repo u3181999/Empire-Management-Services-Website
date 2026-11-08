@@ -19,11 +19,9 @@ A website like this is made of several services, each doing one job:
 |---|---|---|
 | **GitHub** | Stores the website's code and every past version | The filing cabinet |
 | **Vercel** | Runs the website on the internet and rebuilds it whenever the code changes | The shopfront |
-| **Neon** | Stores the data: bookings, products, blog posts, the admin login | The records room |
+| **Neon** | Stores the data: bookings, blog posts, testimonials, the admin login | The records room |
 | **Resend** | Sends emails: contact form messages, booking confirmations | The mail room |
 | **Your domain** (`empirecleaning.com.au`) | The address people type to find the site | The street address |
-| **Vercel Blob** | Stores images you upload in the admin area (product photos) | The photo album |
-| **Stripe** | Card payments. **Not used at launch**; the shop is enquiry-only | The cash register (switched off) |
 
 **How changes reach the website:** you (or Claude) change the code, it is saved to GitHub, and Vercel
 automatically rebuilds and publishes the new version within a couple of minutes. You never copy files to a server.
@@ -49,7 +47,7 @@ plus waiting time for DNS (see step 5).
 
 ### Step 1: Change the admin password (do this first)
 
-The admin area (where you manage the shop and bookings) is created with a **default password that anyone
+The admin area (where you manage bookings and the blog) is created with a **default password that anyone
 could guess**. Change it before the site is public.
 
 1. Open **PowerShell** and go to the project folder.
@@ -77,20 +75,13 @@ $env:NEW_ADMIN_PASSWORD = "your-long-unique-password"; npm run admin:set-passwor
 | `NEXT_PUBLIC_SITE_URL` | `https://empirecleaning.com.au` | Your domain |
 | `ADMIN_EMAIL` | `email@empirecleaning.com.au` | The inbox that receives contact and booking emails |
 
-   Add these **later** (steps 4 and 5): `NEXTAUTH_URL` and `RESEND_API_KEY`.
-   Do **not** add `STRIPE_*` or `SEED_ADMIN_PASSWORD`; the shop is enquiry-only and the seed is only for your computer.
+   Add these **later** (steps 3 and 4): `NEXTAUTH_URL` and `RESEND_API_KEY`.
+   Do **not** add `SEED_ADMIN_PASSWORD`; the seed is only used on your own computer.
 
 5. Click **Deploy**. After a minute or two you get a temporary address like
    `empire-management-services-xxxx.vercel.app`. Open it; the site should load.
 
-### Step 3: Turn on image uploads (Vercel Blob)
-
-1. In your Vercel project, open the **Storage** tab.
-2. Click **Create** and choose **Blob**, then connect it to this project.
-3. When asked for access, choose **Public**, keep the Sydney region, and connect it to this project. Vercel adds a setting called `BLOB_STORE_ID` automatically (the site then proves its identity to the store with Vercel's own token, so there is no password to manage). Do not choose "Private"; product photos must be public.
-4. Open the **Deployments** tab, click the three dots on the latest deployment, and choose **Redeploy**.
-
-### Step 4: Set up email (Resend)
+### Step 3: Set up email (Resend)
 
 Without this, **the contact form and booking emails will not send.**
 
@@ -103,7 +94,7 @@ Without this, **the contact form and booking emails will not send.**
 6. In Vercel: **Settings**, then **Environment Variables**, and add `RESEND_API_KEY` with that key.
 7. Redeploy (Deployments tab, three dots, Redeploy).
 
-### Step 5: Connect your domain
+### Step 4: Connect your domain
 
 1. In Vercel: **Settings**, then **Domains**, and add `empirecleaning.com.au` and `www.empirecleaning.com.au`.
 2. Vercel shows the DNS records to add (usually an `A` record for the main domain and a `CNAME` for `www`).
@@ -113,15 +104,14 @@ Without this, **the contact form and booking emails will not send.**
 5. `www.empirecleaning.com.au` automatically forwards to `empirecleaning.com.au`, and the padlock (HTTPS)
    is set up for you.
 
-### Step 6: Final check
+### Step 5: Final check
 
 Open the live site and tick off each item:
 
-- [ ] Home, About, Services, Contact, Blog, Shop, Terms and Privacy all load
+- [ ] Home, About, Services, Contact, Blog, Terms and Privacy all load
 - [ ] Send a test message through the Contact form; it arrives at `email@empirecleaning.com.au`
 - [ ] Make a test booking; both the customer confirmation and the admin notification arrive
-- [ ] Log in at `/admin/login` with the new password and upload a test product image
-- [ ] `empirecleaning.com.au/shop/cart` shows a "not found" page (expected; checkout is off)
+- [ ] Log in at `/admin/login` with the new password; the dashboard shows your bookings
 - [ ] `www.empirecleaning.com.au` forwards to `empirecleaning.com.au`
 - [ ] Paste the site address into WhatsApp or Facebook; a preview image appears
 
@@ -137,7 +127,7 @@ unsure where your domain is managed, look up `empirecleaning.com.au` at a "whois
 ## Everyday tasks
 
 ### Log in to the admin area
-Go to `https://empirecleaning.com.au/admin/login`. From there you can manage bookings, blog posts, products
+Go to `https://empirecleaning.com.au/admin/login`. From there you can manage bookings, blog posts
 and testimonials.
 
 ### Change text on the website (for example the Meet the Team section)
@@ -159,11 +149,6 @@ Other common places:
 If a change breaks the site, Vercel keeps the previous version running. In **Deployments** you can re-publish
 an older version with one click.
 
-### Turn on online card payments later
-The shop currently works by "Order via Email" and "Call to Order". To add card payments later, create a Stripe
-account, add `STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET` in Vercel, and ask a developer to finish the
-checkout (a "payment successful" page and "Add to cart" buttons are not built yet). See [LAUNCH.md](LAUNCH.md).
-
 ---
 
 ## For developers
@@ -173,7 +158,7 @@ checkout (a "payment successful" page and "Add to cart" buttons are not built ye
 - **Framework:** Next.js 16 (App Router, Turbopack), TypeScript, Tailwind CSS v4
 - **Database:** PostgreSQL (Neon) via Prisma
 - **Auth:** NextAuth v5 (credentials-based admin login)
-- **Email:** Resend. **Images:** Vercel Blob. **Payments:** Stripe (optional, off by default)
+- **Email:** Resend
 - **Hosting:** Vercel, Sydney region (`vercel.json`)
 
 ### Run it on your own computer
@@ -188,7 +173,7 @@ Create a file named `.env` (copy `.env.example`) and fill it in. Then:
 
 ```bash
 npx prisma migrate deploy   # create the database tables
-npm run db:seed             # add starting data (services, products, admin user)
+npm run db:seed             # add starting data (services, blog posts, admin user)
 npm run dev                 # start at http://localhost:3000
 ```
 
@@ -205,9 +190,6 @@ Other commands: `npm run build`, `npm run lint`, `npx tsc --noEmit`, `npx prisma
 | `NEXT_PUBLIC_SITE_URL` | Production | Public domain; drives sitemap, SEO and the email sender address |
 | `ADMIN_EMAIL` | Yes | Receives contact and booking notifications |
 | `RESEND_API_KEY` | Yes | Sends email (domain must be verified in Resend) |
-| `BLOB_STORE_ID` | Production | Added automatically when the Blob store is connected (OIDC auth). Alternatively set `BLOB_READ_WRITE_TOKEN`; either enables uploads |
-| `STRIPE_SECRET_KEY` | No | Setting it turns on cart, checkout and the webhook. Unset = enquiry-only |
-| `STRIPE_WEBHOOK_SECRET` | If Stripe on | Webhook signing secret |
 | `SEED_ADMIN_PASSWORD` | Local seed only | Password given to the admin when seeding |
 
 ### Main routes
@@ -218,15 +200,12 @@ Other commands: `npm run build`, `npm run lint`, `npx tsc --noEmit`, `npx prisma
 | `/services`, `/services/[slug]`, `/commercial` | Services |
 | `/locations/[slug]` | Canberra (head office) and NSW (service area, no NSW office) |
 | `/booking` | Online booking form |
-| `/shop`, `/shop/[slug]` | Product catalogue with email/phone ordering |
 | `/blog`, `/blog/[slug]` | Blog |
-| `/admin/*` | Protected admin: bookings, blog, products, testimonials |
-| `/shop/cart`, `/api/checkout`, `/api/webhooks/stripe` | Stripe checkout; return 404 unless `STRIPE_SECRET_KEY` is set |
+| `/admin/*` | Protected admin: bookings, blog, testimonials |
 
 ### Notes
 
 - Rate limiting is an in-memory cache, so on Vercel it is a soft protection only. Use Redis (Upstash) if spam becomes a problem.
-- Gift certificates are generated by the Stripe webhook after payment.
 - Blog search uses PostgreSQL LIKE queries; add a `tsvector` GIN index for large-scale search.
 - Never commit `.env` files; only `.env.example` (placeholders) is tracked.
 - Launch checklist and known limitations: [LAUNCH.md](LAUNCH.md). Project conventions: [CLAUDE.md](CLAUDE.md).

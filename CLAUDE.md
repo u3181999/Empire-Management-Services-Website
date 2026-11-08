@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Full-stack website for **Empire Management Services** — a commercial cleaning company based in Fyshwick, ACT, Australia (30+ years, 80+ clients). Built with Next.js 16 App Router, PostgreSQL via Prisma, Stripe payments, and Resend for email.
+Full-stack website for **Empire Management Services** — a commercial cleaning company based in Fyshwick, ACT, Australia (30+ years, 80+ clients). Built with Next.js 16 App Router, PostgreSQL via Prisma, and Resend for email. There is no online shop or payment processing.
 
 ## Commands
 
@@ -34,14 +34,13 @@ npx prisma db seed                     # Run seed script
 app/
   (public)/          # Public-facing pages wrapped in site layout
   (admin)/           # Admin dashboard, NextAuth-protected
-  api/               # Route Handlers (contact, booking, checkout, stripe webhook)
+  api/               # Route Handlers (NextAuth)
 components/
   layout/            # Header, Footer, Nav
   ui/                # Reusable primitives (Button, Card, Input, etc.)
-  features/          # Domain components (BookingForm, ProductCard, etc.)
+  features/          # Domain components (BookingForm, ContactForm, etc.)
 lib/
   prisma.ts          # Singleton Prisma client
-  stripe.ts          # Stripe instance
   email.ts           # Resend email helpers
   rate-limit.ts      # In-memory rate limiter (swap for Redis in production)
 prisma/
@@ -53,9 +52,6 @@ prisma/
 - `Location` — Canberra, NSW, QLD (each with phone, address, service availability)
 - `Service` — 12 cleaning service types
 - `Booking` — customer bookings with time slots, location, service, status
-- `Product` — physical and digital (gift certificates)
-- `Order` / `OrderItem` — Stripe-backed purchases
-- `GiftCertificate` — unique codes, redeemable at checkout
 - `BlogPost` / `BlogCategory` — full-text search via PostgreSQL tsvector
 - `Admin` — NextAuth credentials-based login
 
@@ -63,7 +59,6 @@ prisma/
 See `.env.example` for all required keys. Critical ones:
 - `DATABASE_URL` — PostgreSQL connection string (Neon recommended)
 - `NEXTAUTH_SECRET` — random 32-char string
-- `STRIPE_SECRET_KEY` / `STRIPE_WEBHOOK_SECRET`
 - `RESEND_API_KEY`
 
 ## Git Workflow
