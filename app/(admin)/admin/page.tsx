@@ -1,13 +1,15 @@
 import { prisma } from '@/lib/prisma'
-import { Calendar, ShoppingBag, FileText } from 'lucide-react'
+import { Calendar, FileText } from 'lucide-react'
 import type { Metadata } from 'next'
+
+// Always read live data (otherwise Next prerenders this page at build time).
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = { title: 'Admin Dashboard' }
 
 export default async function AdminDashboard() {
-  const [bookingCount, orderCount, postCount, pendingBookings] = await Promise.all([
+  const [bookingCount, postCount, pendingBookings] = await Promise.all([
     prisma.booking.count(),
-    prisma.order.count({ where: { status: 'PAID' } }),
     prisma.blogPost.count({ where: { isPublished: true } }),
     prisma.booking.count({ where: { status: 'PENDING' } }),
   ])
@@ -21,7 +23,6 @@ export default async function AdminDashboard() {
   const stats = [
     { label: 'Total Bookings', value: bookingCount, icon: Calendar, color: 'text-blue-600 bg-blue-50' },
     { label: 'Pending Bookings', value: pendingBookings, icon: Calendar, color: 'text-orange-600 bg-orange-50' },
-    { label: 'Orders (Paid)', value: orderCount, icon: ShoppingBag, color: 'text-green-600 bg-green-50' },
     { label: 'Published Posts', value: postCount, icon: FileText, color: 'text-purple-600 bg-purple-50' },
   ]
 
@@ -29,7 +30,7 @@ export default async function AdminDashboard() {
     <div>
       <h1 className="text-2xl font-bold text-gray-900 mb-8">Dashboard</h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
         {stats.map(({ label, value, icon: Icon, color }) => (
           <div key={label} className="bg-white rounded-xl p-6 shadow-sm">
             <div className={`w-10 h-10 rounded-lg flex items-center justify-center mb-3 ${color}`}>
