@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { writeFile, mkdir } from 'fs/promises'
 import { join } from 'path'
 import { nanoid } from 'nanoid'
+import { put } from '@vercel/blob'
 import { auth } from '@/lib/auth'
 
 export async function POST(req: NextRequest) {
@@ -23,6 +24,18 @@ export async function POST(req: NextRequest) {
 
   const ext = file.name.split('.').pop()?.toLowerCase() ?? 'jpg'
   const filename = `${nanoid()}.${ext}`
+
+  // Production (Vercel) has a read-only filesystem, so uploads go to Vercel Blob.
+  if (process.env.BLOB_READ_WRITE_TOKEN) {
+    const blob = await put(`products/${filename}`, file, { access: 'public' })
+    return NextResponse.json({ url: blob.url })
+  }
+
+  if (process.env.NODE_ENV === 'production') {
+    return NextResponse.json({ error: 'Image storage is not configured' }, { status: 500 })
+  }
+
+  // Local development fallback
   const dir = join(process.cwd(), 'public', 'products')
   await mkdir(dir, { recursive: true })
   await writeFile(join(dir, filename), Buffer.from(await file.arrayBuffer()))
