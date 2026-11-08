@@ -17,7 +17,7 @@ export default async function IndustryNews() {
           </h2>
         </div>
         <p className="text-gray-500 text-sm mb-8 sm:ml-9">
-          The latest headlines from trusted cleaning industry publications, updated automatically.
+          The latest Australian cleaning industry headlines, updated automatically.
         </p>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">

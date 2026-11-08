@@ -1,6 +1,7 @@
-// Automatic cleaning-industry headlines from the publishers' own public RSS feeds.
+// Automatic Australian cleaning-industry headlines from the publishers' own public RSS feeds.
 // We only keep the headline, a short teaser, the date and a link back to the
 // publisher's article (never the article text), and always credit the source.
+// To add another Australian publisher, add a line to FEEDS (WordPress sites use <site>/feed/).
 
 export type NewsItem = {
   title: string
@@ -10,20 +11,19 @@ export type NewsItem = {
   summary: string
 }
 
+// `pages`: each feed page holds only a few stories, so we read several pages.
 const FEEDS = [
-  { name: 'Cleaning Business Today', url: 'https://www.cleaningbusinesstoday.com/feed/' },
-  { name: 'Cleanfax', url: 'https://www.cleanfax.com/feed/' },
-  { name: 'ISSA', url: 'https://www.issa.com/feed/' },
+  { name: 'INCLEAN', url: 'https://incleanmag.com.au/feed/', pages: 4 },
 ] as const
 
 const REVALIDATE_SECONDS = 3 * 60 * 60 // refresh about every 3 hours
-const MAX_AGE_DAYS = 45
-const MAX_PER_SOURCE = 3
+const MAX_AGE_DAYS = 60
+const MAX_PER_SOURCE = 6
 
-// Skip stories that would not look right on a company website: bad-news stories
-// and politics (the publishers are mostly American).
+// Skip stories that would not look right on a company website: bad-news, court and
+// enforcement stories, and politics.
 const BLOCKED =
-  /\b(lawsuits?|sued|sues|recalls?|deaths?|died|dies|killed|kills|injur\w*|poison\w*|fatal\w*|arrest\w*|scandal|bankrupt\w*|layoffs?|fraud|abuse|assault\w*|mistaken|outbreaks?|contaminat\w*|hospitali[sz]ed|midterms?|elections?|democrats?|republicans?|congress\w*|senate|white house|trump|biden|tariffs?|canberra corporation)\b/i
+  /\b(lawsuits?|sued|sues|recalls?|deaths?|died|dies|killed|kills|injur\w*|poison\w*|fatal\w*|arrest\w*|scandal|bankrupt\w*|layoffs?|fraud|abuse|assault\w*|mistaken|outbreaks?|contaminat\w*|hospitali[sz]ed|sentenced|convict\w*|jail\w*|prosecut\w*|fined|guilty|court|underpa\w*|wage theft|exploit\w*|midterms?|elections?|democrats?|republicans?|congress\w*|senate|white house|trump|biden|tariffs?)\b/i
 
 const NAMED_ENTITIES: Record<string, string> = {
   amp: '&',
@@ -105,8 +105,15 @@ export function parseFeed(xml: string, feed: { name: string; url: string }): New
 }
 
 async function fetchFeed(feed: (typeof FEEDS)[number]): Promise<NewsItem[]> {
+  const pages = await Promise.all(
+    Array.from({ length: feed.pages }, (_, i) => fetchFeedPage(feed, i === 0 ? feed.url : `${feed.url}?paged=${i + 1}`))
+  )
+  return pages.flat()
+}
+
+async function fetchFeedPage(feed: (typeof FEEDS)[number], url: string): Promise<NewsItem[]> {
   try {
-    const res = await fetch(feed.url, {
+    const res = await fetch(url, {
       headers: {
         'User-Agent': 'Mozilla/5.0 (compatible; EmpireManagementBot/1.0; +https://empirecleaning.com.au)',
         Accept: 'application/rss+xml, application/xml, text/xml',
