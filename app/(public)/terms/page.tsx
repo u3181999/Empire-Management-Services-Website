@@ -4,7 +4,7 @@ import Link from 'next/link'
 export const metadata: Metadata = {
   title: 'Terms and Conditions | Empire Management Services',
   description:
-    'Terms and Conditions for Empire Management Services — bookings, cancellations, payments, gift certificates and governing law.',
+    'Terms and Conditions for Empire Management Services — bookings, cancellations, payments and governing law.',
 }
 
 export default function TermsPage() {
@@ -80,12 +80,6 @@ export default function TermsPage() {
 
           <h2>4. Payments</h2>
           <p>
-            Payments for online orders (including gift certificates) are processed securely by{' '}
-            <strong>Stripe</strong>. By providing your payment details, you authorise the charge
-            for the amount shown. All prices are in Australian Dollars (AUD) and inclusive of GST
-            where applicable.
-          </p>
-          <p>
             For ongoing commercial contracts, invoicing and payment terms will be as agreed in your
             service agreement. Standard terms are 30 days from invoice date unless otherwise
             stated.
@@ -95,24 +89,7 @@ export default function TermsPage() {
             the <em>Penalty Interest Rates Act 1983</em> (Vic) or applicable ACT legislation.
           </p>
 
-          <h2>5. Gift Certificates</h2>
-          <ul>
-            <li>Gift certificates are valid for 3 years from the date of purchase.</li>
-            <li>
-              Gift certificates are non-refundable except as required by Australian Consumer Law.
-            </li>
-            <li>
-              Gift certificates may not be exchanged for cash and have no cash value beyond
-              redemption against Empire services.
-            </li>
-            <li>Lost or stolen gift certificates cannot be replaced.</li>
-            <li>
-              Gift certificates can only be redeemed by the bearer and are not transferable for
-              commercial purposes.
-            </li>
-          </ul>
-
-          <h2>6. Liability</h2>
+          <h2>5. Liability</h2>
           <p>
             To the maximum extent permitted by law, Empire&apos;s total liability arising from any
             claim related to the provision of services is limited to the amount paid for the
@@ -127,7 +104,7 @@ export default function TermsPage() {
             under the <em>Australian Consumer Law</em> that cannot lawfully be excluded.
           </p>
 
-          <h2>7. Our Responsibility for Your Premises</h2>
+          <h2>6. Our Responsibility for Your Premises</h2>
           <p>
             Our staff are trained professionals. In the unlikely event of damage caused by our
             negligence during service delivery, please notify us in writing within 48 hours of the
@@ -140,7 +117,7 @@ export default function TermsPage() {
             restricted access.
           </p>
 
-          <h2>8. Privacy</h2>
+          <h2>7. Privacy</h2>
           <p>
             We handle your personal information in accordance with our{' '}
             <Link href="/privacy" className="text-gold-500 hover:underline">
@@ -149,7 +126,7 @@ export default function TermsPage() {
             , which forms part of these Terms.
           </p>
 
-          <h2>9. Intellectual Property</h2>
+          <h2>8. Intellectual Property</h2>
           <p>
             All content on this website — including text, images, logos, and code — is the
             property of Empire Management Services or its licensors and is protected by Australian
@@ -157,28 +134,28 @@ export default function TermsPage() {
             our written permission.
           </p>
 
-          <h2>10. Website Use</h2>
+          <h2>9. Website Use</h2>
           <p>
             You agree not to use our website for any unlawful purpose or in a way that may damage,
             disable, or impair the website. You must not attempt to gain unauthorised access to any
             part of our systems.
           </p>
 
-          <h2>11. Governing Law</h2>
+          <h2>10. Governing Law</h2>
           <p>
             These Terms are governed by the laws of the{' '}
             <strong>Australian Capital Territory, Australia</strong>. Any disputes will be subject
             to the exclusive jurisdiction of the courts of the ACT.
           </p>
 
-          <h2>12. Changes to These Terms</h2>
+          <h2>11. Changes to These Terms</h2>
           <p>
             We may update these Terms at any time. The current version will be published on this
             page. Continued use of our services after any change constitutes acceptance of the
             updated Terms.
           </p>
 
-          <h2>13. Contact</h2>
+          <h2>12. Contact</h2>
           <p>For questions about these Terms:</p>
           <ul>
             <li>

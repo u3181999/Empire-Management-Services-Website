@@ -41,10 +41,6 @@ export default function PrivacyPage() {
               location, special instructions
             </li>
             <li>
-              <strong>Payment information</strong> — billing details processed by Stripe (we do not
-              store card numbers)
-            </li>
-            <li>
               <strong>Employment applications</strong> — résumé, availability, work history,
               references
             </li>
@@ -67,7 +63,7 @@ export default function PrivacyPage() {
               website
             </li>
             <li>
-              From third parties — such as Stripe (payment processing) or recruitment referrals
+              From third parties — such as recruitment referrals
             </li>
           </ul>
 
@@ -75,7 +71,7 @@ export default function PrivacyPage() {
           <p>We use your personal information to:</p>
           <ul>
             <li>Process and manage your service bookings</li>
-            <li>Process payments and issue receipts</li>
+            <li>Issue invoices and manage your account</li>
             <li>Communicate with you about your bookings, enquiries, or applications</li>
             <li>Assess employment applications</li>
             <li>Send service-related notifications (we do not send unsolicited marketing without
@@ -88,12 +84,7 @@ export default function PrivacyPage() {
           <p>We may share your personal information with:</p>
           <ul>
             <li>
-              <strong>Stripe</strong> — payment processing. Stripe&apos;s privacy policy governs
-              its handling of payment data.
-            </li>
-            <li>
-              <strong>Resend</strong> — transactional email delivery (booking confirmations,
-              receipts).
+              <strong>Resend</strong> — transactional email delivery (booking confirmations and enquiry notifications).
             </li>
             <li>
               <strong>Neon (PostgreSQL)</strong> — our database provider. Data is stored on servers
