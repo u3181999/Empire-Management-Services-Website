@@ -130,6 +130,25 @@ unsure where your domain is managed, look up `empirecleaning.com.au` at a "whois
 Go to `https://empirecleaning.com.au/admin/login`. From there you can manage bookings, blog posts
 and testimonials.
 
+### Write or edit a blog post
+1. Log in, click **Blog** in the left menu, then **New Post** (or **Edit** next to an existing post).
+2. Fill in the **Title**. The web address fills itself in; leave it as it is.
+3. Write a short **Summary** (shown on the blog page and in Google results).
+4. Write the **Post body**. Select some text and click a button above the box (Heading, Bold, Bullet list,
+   Link) to format it. Plain text works too: leave a blank line between paragraphs. Click **Preview** to see
+   how it will look.
+5. Tick **Published** to put it on the website, or leave it unticked to save a draft. Click **Save Post**.
+
+On the posts list, **View** opens the live post and **Delete** removes a post (it asks first).
+
+### Cleaning industry news (automatic)
+The bottom of the public **Blog** page shows a "Cleaning Industry News" section. It pulls the latest
+headlines from the public feeds of three cleaning industry publications (Cleaning Business Today, Cleanfax
+and ISSA) about every 3 hours, with no work from you. Each card shows the headline, a short teaser and a
+link to the publisher's own article; nothing is copied. Stories about lawsuits, recalls, injuries, US politics
+and similar are filtered out. If the feeds are ever unreachable, the section hides itself.
+Developers: the feed list and filter are in `lib/news.ts`.
+
 ### Change text on the website (for example the Meet the Team section)
 1. Open the file on GitHub. The team list is in
    [`app/(public)/about/page.tsx`](https://github.com/u3181999/Empire-Management-Services-Website/blob/main/app/(public)/about/page.tsx).
