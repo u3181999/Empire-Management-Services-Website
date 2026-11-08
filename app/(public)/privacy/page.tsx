@@ -193,8 +193,8 @@ export default function PrivacyPage() {
           </ul>
           <p>
             To exercise any of these rights, contact us at{' '}
-            <a href="mailto:info@empirecleaning.com.au" className="text-gold-500 hover:underline">
-              info@empirecleaning.com.au
+            <a href="mailto:email@empirecleaning.com.au" className="text-gold-500 hover:underline">
+              email@empirecleaning.com.au
             </a>
             . We will respond within 30 days.
           </p>
@@ -226,8 +226,8 @@ export default function PrivacyPage() {
           <ul>
             <li>
               <strong>Email:</strong>{' '}
-              <a href="mailto:info@empirecleaning.com.au" className="text-gold-500 hover:underline">
-                info@empirecleaning.com.au
+              <a href="mailto:email@empirecleaning.com.au" className="text-gold-500 hover:underline">
+                email@empirecleaning.com.au
               </a>
             </li>
             <li>

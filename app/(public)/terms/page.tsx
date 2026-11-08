@@ -72,8 +72,8 @@ export default function TermsPage() {
           <p>
             We understand that genuine emergencies arise. Cancellation fees may be waived at our
             discretion in exceptional circumstances. Contact us as soon as possible at{' '}
-            <a href="mailto:info@empirecleaning.com.au" className="text-gold-500 hover:underline">
-              info@empirecleaning.com.au
+            <a href="mailto:email@empirecleaning.com.au" className="text-gold-500 hover:underline">
+              email@empirecleaning.com.au
             </a>
             .
           </p>
@@ -183,8 +183,8 @@ export default function TermsPage() {
           <ul>
             <li>
               <strong>Email:</strong>{' '}
-              <a href="mailto:info@empirecleaning.com.au" className="text-gold-500 hover:underline">
-                info@empirecleaning.com.au
+              <a href="mailto:email@empirecleaning.com.au" className="text-gold-500 hover:underline">
+                email@empirecleaning.com.au
               </a>
             </li>
             <li>
