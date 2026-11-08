@@ -18,7 +18,7 @@ const FEEDS = [
 
 const REVALIDATE_SECONDS = 3 * 60 * 60 // refresh about every 3 hours
 const MAX_AGE_DAYS = 60
-const MAX_PER_SOURCE = 6
+const MAX_PER_SOURCE = 12 // keeps one publisher from filling the page once there are several
 
 // Skip stories that would not look right on a company website: bad-news, court and
 // enforcement stories, and politics.
