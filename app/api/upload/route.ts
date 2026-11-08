@@ -26,7 +26,9 @@ export async function POST(req: NextRequest) {
   const filename = `${nanoid()}.${ext}`
 
   // Production (Vercel) has a read-only filesystem, so uploads go to Vercel Blob.
-  if (process.env.BLOB_READ_WRITE_TOKEN) {
+  // Auth is either a read-write token or, when the store is connected via OIDC,
+  // BLOB_STORE_ID (the SDK then signs requests with Vercel's own identity token).
+  if (process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOB_STORE_ID) {
     const blob = await put(`products/${filename}`, file, { access: 'public' })
     return NextResponse.json({ url: blob.url })
   }
