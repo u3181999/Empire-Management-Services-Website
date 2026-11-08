@@ -16,13 +16,23 @@ const TEAM = [
   },
   {
     name: 'Felicity Vercera',
-    role: 'Operations Manager',
+    role: 'Chief Operating Officer',
     bio: "Felicity leads day-to-day operations across Empire's client sites, coordinating cleaning schedules, staff deployment, and quality assurance. Her attention to detail and hands-on management style ensure that every client receives consistent, high-standard service — on time, every time.",
   },
   {
+    name: 'Matthew Kelly',
+    role: 'Business Operations Manager',
+    bio: "Matthew oversees daily business operations, ensuring efficient service delivery, high-quality cleaning standards, and strong client satisfaction across a diverse portfolio of commercial facilities. With a focus on operational excellence, team leadership, and continuous improvement, Matthew works closely with staff and clients to maintain reliable, professional, and cost-effective cleaning solutions while supporting the company's ongoing growth and commitment to exceptional service.",
+  },
+  {
     name: 'Rinzin Dorji',
-    role: 'Supervisor',
+    role: 'Operations Supervisor',
     bio: 'Rinzin brings dedication and a keen eye for quality to his supervisory role. He works closely with cleaning teams on the ground, ensuring site standards are met, staff are supported, and client expectations are exceeded across all assigned locations.',
+  },
+  {
+    name: 'Lauren Woodward',
+    role: 'Administration Support Officer',
+    bio: 'Lauren plays a key role in supporting the day-to-day administrative operations of the business, helping to ensure efficient communication, accurate record management, and seamless coordination between clients, management, and cleaning teams.',
   },
 ]
 
