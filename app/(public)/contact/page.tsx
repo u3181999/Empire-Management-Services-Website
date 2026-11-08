@@ -92,7 +92,7 @@ export default function ContactPage() {
               {/* Locations */}
               <h3 className="text-xl font-bold text-[#102a43] mt-10 mb-4">Service Locations</h3>
               <div className="space-y-3">
-                {LOCATIONS.map((loc) => (
+                {LOCATIONS.filter((loc) => loc.id !== 'nsw').map((loc) => (
                   <Link
                     key={loc.id}
                     href={`/locations/${loc.id}`}
