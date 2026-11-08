@@ -61,7 +61,7 @@ export default async function LocationPage(props: PageProps<'/locations/[slug]'>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2 text-gold-500 text-sm font-medium mb-3">
             <MapPin className="w-4 h-4" />
-            {location.name}{location.isHeadOffice ? ' — Head Office' : ''}
+            {location.name}
           </div>
           <h1 className="text-4xl sm:text-5xl font-bold">{content.headline}</h1>
           <p className="mt-4 text-gray-300 max-w-2xl text-lg">{content.description}</p>
