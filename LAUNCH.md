@@ -33,7 +33,7 @@ $env:NEW_ADMIN_PASSWORD = "choose-a-long-unique-password"; npm run admin:set-pas
 | `RESEND_API_KEY` | From resend.com → API Keys |
 
    Leave `STRIPE_*` unset — checkout stays off.
-3. **Storage → Create → Blob** → connect to the project (adds `BLOB_READ_WRITE_TOKEN`, needed for admin image uploads).
+3. **Storage → Create → Blob** (Public, Sydney) → connect to the project. This adds `BLOB_STORE_ID`, which is enough for admin image uploads (the site uses OIDC; `BLOB_READ_WRITE_TOKEN` is optional).
 4. Deploy.
 
 ## 3. Domain

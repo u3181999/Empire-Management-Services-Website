@@ -87,7 +87,7 @@ $env:NEW_ADMIN_PASSWORD = "your-long-unique-password"; npm run admin:set-passwor
 
 1. In your Vercel project, open the **Storage** tab.
 2. Click **Create** and choose **Blob**, then connect it to this project.
-3. Vercel adds a setting called `BLOB_READ_WRITE_TOKEN` automatically.
+3. When asked for access, choose **Public**, keep the Sydney region, and connect it to this project. Vercel adds a setting called `BLOB_STORE_ID` automatically (the site then proves its identity to the store with Vercel's own token, so there is no password to manage). Do not choose "Private"; product photos must be public.
 4. Open the **Deployments** tab, click the three dots on the latest deployment, and choose **Redeploy**.
 
 ### Step 4: Set up email (Resend)
@@ -205,7 +205,7 @@ Other commands: `npm run build`, `npm run lint`, `npx tsc --noEmit`, `npx prisma
 | `NEXT_PUBLIC_SITE_URL` | Production | Public domain; drives sitemap, SEO and the email sender address |
 | `ADMIN_EMAIL` | Yes | Receives contact and booking notifications |
 | `RESEND_API_KEY` | Yes | Sends email (domain must be verified in Resend) |
-| `BLOB_READ_WRITE_TOKEN` | Production | Added automatically by Vercel Blob; stores uploaded images |
+| `BLOB_STORE_ID` | Production | Added automatically when the Blob store is connected (OIDC auth). Alternatively set `BLOB_READ_WRITE_TOKEN`; either enables uploads |
 | `STRIPE_SECRET_KEY` | No | Setting it turns on cart, checkout and the webhook. Unset = enquiry-only |
 | `STRIPE_WEBHOOK_SECRET` | If Stripe on | Webhook signing secret |
 | `SEED_ADMIN_PASSWORD` | Local seed only | Password given to the admin when seeding |
