@@ -1,8 +1,9 @@
 import { MetadataRoute } from 'next'
 import { prisma } from '@/lib/prisma'
 import { LOCATIONS } from '@/lib/constants'
+import { SITE_URL } from '@/lib/site'
 
-const BASE_URL = 'https://empirecleaning.com.au'
+const BASE_URL = SITE_URL
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [blogPosts, services] = await Promise.all([

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Plus_Jakarta_Sans } from 'next/font/google'
 import SessionProvider from '@/components/layout/SessionProvider'
 import ChatBot from '@/components/features/ChatBot'
+import { SITE_URL } from '@/lib/site'
 import './globals.css'
 
 const jakarta = Plus_Jakarta_Sans({
@@ -11,7 +12,7 @@ const jakarta = Plus_Jakarta_Sans({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://empirecleaning.com.au'),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: 'Empire Management Services | Commercial Cleaning Canberra',
     template: '%s | Empire Management Services',
@@ -42,12 +43,10 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_AU',
     siteName: 'Empire Management Services',
-    url: 'https://empirecleaning.com.au',
-    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Empire Management Services' }],
+    url: SITE_URL,
   },
   twitter: {
     card: 'summary_large_image',
-    images: ['/og-image.png'],
   },
   robots: {
     index: true,

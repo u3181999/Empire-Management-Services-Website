@@ -1,5 +1,6 @@
 import { Resend } from 'resend'
 import { COMPANY } from './constants'
+import { SITE_DOMAIN } from './site'
 
 let _resend: Resend | null = null
 
@@ -8,7 +9,7 @@ function getResend(): Resend {
   return _resend
 }
 
-const FROM = `${COMPANY.name} <noreply@empirecleaning.com.au>`
+const FROM = `${COMPANY.name} <noreply@${SITE_DOMAIN}>`
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL ?? COMPANY.email
 
 function escapeHtml(str: string): string {
