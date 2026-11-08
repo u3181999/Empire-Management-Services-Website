@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { prisma } from '@/lib/prisma'
 import { Search } from 'lucide-react'
+import IndustryNews from '@/components/features/IndustryNews'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -152,6 +153,9 @@ export default async function BlogPage(props: PageProps<'/blog'>) {
           )}
         </div>
       </section>
+
+      {/* Automatic industry headlines (hidden while searching or filtering) */}
+      {!query && !categorySlug && <IndustryNews />}
     </>
   )
 }
