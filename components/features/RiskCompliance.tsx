@@ -1,13 +1,36 @@
 import Link from 'next/link'
-import { ClipboardCheck, HardHat, Leaf, ShieldCheck, UserCheck, FileCheck, ArrowRight } from 'lucide-react'
+import {
+  ClipboardCheck, ClipboardList, HardHat, Leaf, ShieldCheck, FileCheck, CheckCircle2, ArrowRight,
+} from 'lucide-react'
 import { SectionHeading } from '@/components/ui'
 
-const PILLARS = [
+// Documents prepared for every site we service.
+const SITE_DOCUMENTS = [
   {
     icon: ClipboardCheck,
-    title: 'Site-specific risk assessment',
-    desc: 'Hazards are identified and controls put in place for each site before work begins, as part of our safety management system.',
+    title: 'Safe Work Method Statement (SWMS)',
+    desc: 'Before we start on any site, we prepare a SWMS for the cleaning work there. It sets out the tasks involved, the hazards that come with them, and the controls we use to prevent and minimise risk.',
+    points: [
+      'Tasks and hazards identified for the site',
+      'Controls to prevent and minimise risk',
+      'Our team briefed before they start',
+      'Reviewed when the site or the work changes',
+    ],
   },
+  {
+    icon: ClipboardList,
+    title: 'Site Duty Statement',
+    desc: 'Every site also has a Duty Statement: a clear written scope of exactly what we clean, how often, to what standard and who is responsible. It keeps expectations clear and gives you something to hold us to.',
+    points: [
+      'What is cleaned, and how often',
+      'The standard expected',
+      'Who is responsible for each task',
+      'The benchmark for our quality audits',
+    ],
+  },
+] as const
+
+const PILLARS = [
   {
     icon: HardHat,
     title: 'Health & safety (ISO 45001)',
@@ -25,13 +48,8 @@ const PILLARS = [
   },
   {
     icon: ShieldCheck,
-    title: 'Fully insured',
-    desc: 'Comprehensive insurance and public liability cover, so your organisation is protected on every contract.',
-  },
-  {
-    icon: UserCheck,
-    title: 'Vetted, trained people',
-    desc: 'Staff are vetted and cleared, with security-cleared teams available for government and other sensitive sites.',
+    title: 'Insured, vetted people',
+    desc: 'Comprehensive insurance and public liability cover, and vetted staff, with security-cleared teams for government and other sensitive sites.',
   },
 ] as const
 
@@ -42,11 +60,38 @@ export default function RiskCompliance() {
         <div className="mb-12">
           <SectionHeading
             heading="Risk Management & Compliance"
-            subtext="Cleaning done properly is about more than clean floors. We manage the risks and meet the standards that matter to your organisation."
+            subtext="Cleaning done properly is about more than clean floors. For every site we look after, we put the right paperwork and controls in place to prevent and minimise risk and keep you compliant."
           />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Prepared for every site */}
+        <div className="rounded-2xl bg-[#102a43] text-white p-6 sm:p-10">
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#d4a017]">
+            For every site we service
+          </p>
+          <div className="mt-6 grid md:grid-cols-2 gap-8">
+            {SITE_DOCUMENTS.map(({ icon: Icon, title, desc, points }) => (
+              <div key={title} className="bg-white/5 border border-white/10 rounded-xl p-6">
+                <div className="w-11 h-11 bg-[#d4a017]/15 rounded-lg flex items-center justify-center mb-4">
+                  <Icon className="w-5 h-5 text-[#d4a017]" aria-hidden="true" />
+                </div>
+                <h3 className="text-lg font-bold">{title}</h3>
+                <p className="mt-2 text-sm text-gray-300 leading-relaxed">{desc}</p>
+                <ul className="mt-4 space-y-2">
+                  {points.map((point) => (
+                    <li key={point} className="flex items-start gap-2 text-sm text-gray-200">
+                      <CheckCircle2 className="w-4 h-4 mt-0.5 shrink-0 text-[#d4a017]" aria-hidden="true" />
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Supporting standards */}
+        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {PILLARS.map(({ icon: Icon, title, desc }) => (
             <div
               key={title}
