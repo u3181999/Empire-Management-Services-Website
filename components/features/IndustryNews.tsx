@@ -27,9 +27,9 @@ export default async function IndustryNews({ limit = 12 }: { limit?: number }) {
             <span className="text-xs font-semibold text-[#d4a017] uppercase tracking-wider">
               {item.source}
             </span>
-            <h2 className="mt-2 font-bold text-[#102a43] group-hover:text-[#d4a017] transition-colors line-clamp-3">
+            <h3 className="mt-2 font-bold text-[#102a43] group-hover:text-[#d4a017] transition-colors line-clamp-3">
               {item.title}
-            </h2>
+            </h3>
             {item.summary && (
               <p className="mt-2 text-sm text-gray-500 line-clamp-3 flex-1">{item.summary}</p>
             )}

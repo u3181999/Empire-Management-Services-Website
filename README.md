@@ -142,12 +142,13 @@ and testimonials.
 On the posts list, **View** opens the live post and **Delete** removes a post (it asks first).
 
 ### Cleaning industry news (automatic)
-The **Industry News** tab in the website menu (`/industry-news`) shows the latest
-Australian cleaning industry headlines from [INCLEAN](https://incleanmag.com.au) (the leading Australian
-commercial cleaning trade publication) about every 3 hours, with no work from you. Each card shows the
-headline, a short teaser and a link to the publisher's own article; nothing is copied. Stories about
-lawsuits, court cases, injuries, recalls, politics and similar are filtered out. If the feed is ever
-unreachable, the page shows a "temporarily unavailable" message.
+On the public **Blog** page, the **Industry News** button shows the latest Australian cleaning industry
+headlines from [INCLEAN](https://incleanmag.com.au) (the leading Australian commercial cleaning trade
+publication), about every 3 hours, with no work from you. Each card shows the headline, a short teaser and a
+link to the publisher's own article; nothing is copied. Stories about lawsuits, court cases, injuries,
+recalls, politics and similar are filtered out. If the feed is ever unreachable, a "temporarily
+unavailable" message shows. Any posts you write yourself with the category **Industry News** appear above
+the headlines.
 Developers: the feed list and filter are in `lib/news.ts`. To add another Australian publisher, add a line
 to the `FEEDS` list there.
 

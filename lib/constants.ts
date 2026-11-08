@@ -147,7 +147,6 @@ export const NAV_ITEMS = [
   { label: 'About', href: '/about' },
   { label: 'Services', href: '/services' },
   { label: 'Blog', href: '/blog' },
-  { label: 'Industry News', href: '/industry-news' },
   { label: 'Employment', href: '/employment' },
   { label: 'Contact', href: '/contact' },
 ] as const

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { prisma } from '@/lib/prisma'
 import { Search } from 'lucide-react'
+import IndustryNews from '@/components/features/IndustryNews'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -13,6 +14,8 @@ export default async function BlogPage(props: PageProps<'/blog'>) {
   const searchParams = await props.searchParams
   const query = typeof searchParams?.q === 'string' ? searchParams.q : ''
   const categorySlug = typeof searchParams?.category === 'string' ? searchParams.category : undefined
+  // The "Industry News" button also shows automatic Australian headlines (not while searching).
+  const showNews = categorySlug === 'industry-news' && !query
 
   const [posts, categories] = await Promise.all([
     prisma.blogPost.findMany({
@@ -42,11 +45,7 @@ export default async function BlogPage(props: PageProps<'/blog'>) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl sm:text-5xl font-bold">Blog</h1>
           <p className="mt-4 text-gray-300 max-w-2xl text-lg">
-            Cleaning tips and insights from our team. Looking for headlines from across the industry? See{' '}
-            <Link href="/industry-news" className="text-[#d4a017] underline underline-offset-2 hover:no-underline">
-              Industry News
-            </Link>
-            .
+            Cleaning tips, industry news, and insights from our team.
           </p>
         </div>
       </section>
@@ -104,6 +103,7 @@ export default async function BlogPage(props: PageProps<'/blog'>) {
 
           {/* Posts */}
           {posts.length === 0 ? (
+            showNews ? null : (
             <div className="text-center py-20 text-gray-500">
               <p className="text-lg font-medium">No posts found.</p>
               {query && (
@@ -112,6 +112,7 @@ export default async function BlogPage(props: PageProps<'/blog'>) {
                 </Link>
               )}
             </div>
+            )
           ) : (
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {posts.map((post) => (
@@ -152,6 +153,17 @@ export default async function BlogPage(props: PageProps<'/blog'>) {
                   </div>
                 </Link>
               ))}
+            </div>
+          )}
+
+          {/* Automatic Australian headlines, shown under the Industry News button */}
+          {showNews && (
+            <div className={posts.length > 0 ? 'mt-14' : ''}>
+              <h2 className="text-2xl font-bold text-[#102a43]">Latest Australian cleaning industry headlines</h2>
+              <p className="mt-1 mb-8 text-sm text-gray-500">
+                Updated automatically from Australian cleaning industry publications.
+              </p>
+              <IndustryNews limit={12} />
             </div>
           )}
         </div>

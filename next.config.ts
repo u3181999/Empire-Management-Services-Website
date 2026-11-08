@@ -10,6 +10,10 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    // The news now lives under Blog > Industry News.
+    return [{ source: '/industry-news', destination: '/blog?category=industry-news', permanent: false }]
+  },
   async headers() {
     return [
       {
