@@ -1,4 +1,5 @@
-// Automatic Australian cleaning-industry headlines from the publishers' own public RSS feeds.
+// Automatic Australian cleaning headlines (INCLEAN, plus ABC News and 7NEWS when they run a cleaning story)
+// from the publishers' own public RSS feeds.
 // We only keep the headline, a short teaser, the date and a link back to the
 // publisher's article (never the article text), and always credit the source.
 // To add another Australian publisher, add a line to FEEDS (WordPress sites use <site>/feed/).
@@ -11,10 +12,25 @@ export type NewsItem = {
   summary: string
 }
 
-// `pages`: each feed page holds only a few stories, so we read several pages.
-const FEEDS = [
+type Feed = {
+  name: string
+  url: string
+  /** Each feed page holds only a few stories, so some feeds are read over several pages. */
+  pages: number
+  /** General news feeds: only keep stories that match this (i.e. are really about cleaning). */
+  require?: RegExp
+}
+
+// ABC and 7NEWS only publish a general news feed (no search), so they are filtered down to genuine
+// cleaning stories. Such stories are rare, so INCLEAN does most of the work. 9News has no public feed.
+export const CLEANING_STORY = /\b(commercial cleaning|cleaning (industry|company|companies|contractors?|services?|staff|workers?|sector)|cleaners?|janitors?)\b/i
+
+const FEEDS: Feed[] = [
   { name: 'INCLEAN', url: 'https://incleanmag.com.au/feed/', pages: 4 },
-] as const
+  { name: 'ABC News', url: 'https://www.abc.net.au/news/feed/45910/rss.xml', pages: 1, require: CLEANING_STORY },
+  { name: 'ABC News', url: 'https://www.abc.net.au/news/feed/51120/rss.xml', pages: 1, require: CLEANING_STORY },
+  { name: '7NEWS', url: 'https://7news.com.au/rss', pages: 1, require: CLEANING_STORY },
+]
 
 const REVALIDATE_SECONDS = 3 * 60 * 60 // refresh about every 3 hours
 const MAX_AGE_DAYS = 60
@@ -104,14 +120,15 @@ export function parseFeed(xml: string, feed: { name: string; url: string }): New
     })
 }
 
-async function fetchFeed(feed: (typeof FEEDS)[number]): Promise<NewsItem[]> {
+async function fetchFeed(feed: Feed): Promise<NewsItem[]> {
   const pages = await Promise.all(
     Array.from({ length: feed.pages }, (_, i) => fetchFeedPage(feed, i === 0 ? feed.url : `${feed.url}?paged=${i + 1}`))
   )
-  return pages.flat()
+  const { require } = feed
+  return require ? pages.flat().filter((item) => require.test(`${item.title} ${item.summary}`)) : pages.flat()
 }
 
-async function fetchFeedPage(feed: (typeof FEEDS)[number], url: string): Promise<NewsItem[]> {
+async function fetchFeedPage(feed: Feed, url: string): Promise<NewsItem[]> {
   try {
     const res = await fetch(url, {
       headers: {
@@ -130,7 +147,7 @@ async function fetchFeedPage(feed: (typeof FEEDS)[number], url: string): Promise
   }
 }
 
-export async function getCleaningNews(limit = 6): Promise<NewsItem[]> {
+export async function getCleaningNews(limit = 5): Promise<NewsItem[]> {
   const results = await Promise.all(FEEDS.map(fetchFeed))
   const oldest = Date.now() - MAX_AGE_DAYS * 24 * 60 * 60 * 1000
   const seen = new Set<string>()

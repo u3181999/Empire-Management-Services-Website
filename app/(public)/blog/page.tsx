@@ -163,7 +163,7 @@ export default async function BlogPage(props: PageProps<'/blog'>) {
               <p className="mt-1 mb-8 text-sm text-gray-500">
                 Updated automatically from Australian cleaning industry publications.
               </p>
-              <IndustryNews limit={12} />
+              <IndustryNews limit={5} />
             </div>
           )}
         </div>

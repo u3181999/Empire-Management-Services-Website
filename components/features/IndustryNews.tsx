@@ -1,7 +1,7 @@
 import { ArrowUpRight } from 'lucide-react'
 import { getCleaningNews } from '@/lib/news'
 
-export default async function IndustryNews({ limit = 12 }: { limit?: number }) {
+export default async function IndustryNews({ limit = 5 }: { limit?: number }) {
   const items = await getCleaningNews(limit)
 
   if (items.length === 0) {
