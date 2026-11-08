@@ -1,6 +1,8 @@
 import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
-import { Plus, Edit, Eye, EyeOff } from 'lucide-react'
+import { Plus, Edit, Eye, EyeOff, ExternalLink, Trash2 } from 'lucide-react'
+import { deleteBlogPost } from '@/app/actions/admin'
+import DeleteButton from '@/components/features/DeleteButton'
 import type { Metadata } from 'next'
 
 // Always read live data (otherwise Next prerenders this page at build time).
@@ -58,12 +60,31 @@ export default async function AdminBlogPage() {
                   {new Date(post.createdAt).toLocaleDateString('en-AU')}
                 </td>
                 <td className="px-4 py-3">
-                  <Link
-                    href={`/admin/blog/${post.id}`}
-                    className="inline-flex items-center gap-1 text-xs text-[#d4a017] hover:underline"
-                  >
-                    <Edit className="w-3.5 h-3.5" /> Edit
-                  </Link>
+                  <div className="flex items-center gap-4">
+                    <Link
+                      href={`/admin/blog/${post.id}`}
+                      className="inline-flex items-center gap-1 text-xs text-[#d4a017] hover:underline"
+                    >
+                      <Edit className="w-3.5 h-3.5" /> Edit
+                    </Link>
+                    {post.isPublished && (
+                      <Link
+                        href={`/blog/${post.slug}`}
+                        target="_blank"
+                        className="inline-flex items-center gap-1 text-xs text-gray-500 hover:underline"
+                      >
+                        <ExternalLink className="w-3.5 h-3.5" /> View
+                      </Link>
+                    )}
+                    <DeleteButton
+                      action={deleteBlogPost}
+                      id={post.id}
+                      confirmMessage={`Delete "${post.title}"? This cannot be undone.`}
+                      className="inline-flex items-center gap-1 text-xs text-red-600 hover:underline"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" /> Delete
+                    </DeleteButton>
+                  </div>
                 </td>
               </tr>
             ))}

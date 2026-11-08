@@ -35,14 +35,40 @@ export async function updateBookingStatus(formData: FormData) {
 
 const blogPostSchema = z.object({
   id: z.string().cuid().optional(),
-  title: z.string().min(3).max(200),
-  slug: z.string().min(3).max(200),
-  excerpt: z.string().min(10).max(500),
-  content: z.string().min(10),
-  imageUrl: z.string().url().optional().or(z.literal('')),
+  title: z.string().min(3, 'Title must be at least 3 characters.').max(200, 'Title must be 200 characters or fewer.'),
+  slug: z
+    .string()
+    .min(3, 'Web address must be at least 3 characters.')
+    .max(200, 'Web address must be 200 characters or fewer.')
+    .regex(
+      /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
+      'Web address can only use lowercase letters, numbers and single hyphens (for example: my-first-post).'
+    ),
+  excerpt: z
+    .string()
+    .min(10, 'Summary must be at least 10 characters.')
+    .max(500, 'Summary must be 500 characters or fewer.'),
+  content: z.string().min(10, 'The post body must be at least 10 characters.'),
+  imageUrl: z.string().url('Image address must be a full link starting with https://').optional().or(z.literal('')),
   isPublished: z.boolean().default(false),
   categoryId: z.string().optional().or(z.literal('')),
 })
+
+function escapeHtml(text: string) {
+  return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+}
+
+// If the author typed plain text (no HTML tags), turn blank-line separated
+// paragraphs into <p> tags so the post keeps its paragraph breaks.
+function toHtml(content: string) {
+  if (/<[a-z][\s\S]*>/i.test(content)) return content
+  return content
+    .split(/\n{2,}/)
+    .map((p) => p.trim())
+    .filter(Boolean)
+    .map((p) => `<p>${escapeHtml(p).replace(/\n/g, '<br>')}</p>`)
+    .join('\n')
+}
 
 export async function saveBlogPost(
   _prev: { success: boolean; error?: string } | null,
@@ -62,31 +88,55 @@ export async function saveBlogPost(
   })
 
   if (!parsed.success) {
-    return { success: false, error: 'Invalid form data.' }
+    return { success: false, error: parsed.error.issues[0]?.message ?? 'Please check the form and try again.' }
   }
 
   const { id, ...data } = parsed.data
+
+  const existing = id ? await prisma.blogPost.findUnique({ where: { id } }) : null
+  if (id && !existing) return { success: false, error: 'This post no longer exists.' }
 
   const postData = {
     title: data.title,
     slug: data.slug,
     excerpt: data.excerpt,
-    content: data.content,
+    content: toHtml(data.content),
     imageUrl: data.imageUrl || null,
     isPublished: data.isPublished,
-    publishedAt: data.isPublished ? new Date() : null,
+    // Keep the original publish date when editing an already-published post.
+    publishedAt: data.isPublished ? (existing?.publishedAt ?? new Date()) : null,
     categoryId: data.categoryId || null,
   }
 
-  if (id) {
-    await prisma.blogPost.update({ where: { id }, data: postData })
-  } else {
-    await prisma.blogPost.create({ data: postData })
+  try {
+    if (id) {
+      await prisma.blogPost.update({ where: { id }, data: postData })
+    } else {
+      await prisma.blogPost.create({ data: postData })
+    }
+  } catch (e: unknown) {
+    if ((e as { code?: string }).code === 'P2002') {
+      return { success: false, error: 'Another post already uses this web address. Please change it.' }
+    }
+    throw e
   }
 
   revalidatePath('/blog')
+  revalidatePath(`/blog/${data.slug}`)
+  if (existing && existing.slug !== data.slug) revalidatePath(`/blog/${existing.slug}`)
   revalidatePath('/admin/blog')
+  revalidatePath('/sitemap.xml')
   return { success: true }
+}
+
+export async function deleteBlogPost(formData: FormData) {
+  await requireAdmin()
+  const id = z.string().cuid().parse(formData.get('id'))
+  const post = await prisma.blogPost.delete({ where: { id } })
+  revalidatePath('/blog')
+  revalidatePath(`/blog/${post.slug}`)
+  revalidatePath('/admin/blog')
+  revalidatePath('/sitemap.xml')
 }
 
 // ── Testimonial CRUD ──────────────────────────────────────────────────────────
