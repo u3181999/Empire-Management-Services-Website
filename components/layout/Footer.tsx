@@ -109,7 +109,21 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 pt-6 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-gray-500">
+        {/* Acknowledgement of Country */}
+        <div className="mt-10 pt-8 border-t border-white/10 max-w-4xl mx-auto text-center">
+          <h3 className="text-white font-semibold text-sm uppercase tracking-wider">
+            Acknowledgement of Country
+          </h3>
+          <p className="mt-3 text-sm leading-relaxed text-gray-400">
+            Empire Management Services acknowledges the Ngunnawal people as the Traditional Custodians of the
+            land on which our Canberra head office stands, and recognises any other people or families with
+            connection to the lands of the ACT and region. We also acknowledge the First Nations peoples of the
+            lands across New South Wales where we work. We pay our respects to Elders past and present, and
+            recognise their continuing connection to land, waters and community.
+          </p>
+        </div>
+
+        <div className="mt-8 pt-6 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-gray-500">
           <p>© {year} {COMPANY.name}. All rights reserved.</p>
           <div className="flex gap-4">
             <Link href="/privacy" className="hover:text-[#d4a017] transition-colors">Privacy Policy</Link>
