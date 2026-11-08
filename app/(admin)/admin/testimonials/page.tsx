@@ -5,6 +5,9 @@ import { deleteTestimonial } from '@/app/actions/admin'
 import DeleteButton from '@/components/features/DeleteButton'
 import type { Metadata } from 'next'
 
+// Always read live data (otherwise Next prerenders this page at build time).
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = { title: 'Testimonials — Admin' }
 
 export default async function AdminTestimonialsPage() {

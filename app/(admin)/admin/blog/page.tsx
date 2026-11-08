@@ -3,6 +3,9 @@ import Link from 'next/link'
 import { Plus, Edit, Eye, EyeOff } from 'lucide-react'
 import type { Metadata } from 'next'
 
+// Always read live data (otherwise Next prerenders this page at build time).
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = { title: 'Blog — Admin' }
 
 export default async function AdminBlogPage() {
