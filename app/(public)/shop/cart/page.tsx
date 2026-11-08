@@ -1,9 +1,13 @@
+import { notFound } from 'next/navigation'
 import CartPageClient from '@/components/features/CartPageClient'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = { title: 'Cart' }
 
 export default function CartPage() {
+  // Online checkout is disabled until Stripe is configured (shop is enquiry-only).
+  if (!process.env.STRIPE_SECRET_KEY) notFound()
+
   return (
     <>
       <section className="bg-[#102a43] text-white py-12">

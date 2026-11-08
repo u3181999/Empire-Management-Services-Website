@@ -16,6 +16,11 @@ const checkoutSchema = z.object({
 })
 
 export async function POST(req: NextRequest) {
+  // Online checkout is disabled until Stripe is configured (shop is enquiry-only).
+  if (!process.env.STRIPE_SECRET_KEY) {
+    return NextResponse.json({ error: 'Not found' }, { status: 404 })
+  }
+
   const ip = req.headers.get('x-forwarded-for') ?? 'unknown'
   const { success: allowed } = checkoutLimiter.check(20, ip)
   if (!allowed) {

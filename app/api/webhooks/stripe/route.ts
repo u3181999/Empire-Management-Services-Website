@@ -5,6 +5,10 @@ import { sendOrderConfirmation } from '@/lib/email'
 import { nanoid } from 'nanoid'
 
 export async function POST(req: NextRequest) {
+  if (!process.env.STRIPE_SECRET_KEY) {
+    return NextResponse.json({ error: 'Not found' }, { status: 404 })
+  }
+
   const body = await req.text()
   const sig = req.headers.get('stripe-signature')
 
