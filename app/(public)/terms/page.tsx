@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Terms and Conditions | Empire Management Services',
+  title: 'Terms and Conditions',
   description:
     'Terms and Conditions for Empire Management Services — bookings, cancellations, payments and governing law.',
 }

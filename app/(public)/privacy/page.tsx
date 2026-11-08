@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy | Empire Management Services',
+  title: 'Privacy Policy',
   description:
     'Privacy Policy for Empire Management Services — how we collect, use, store and protect your personal information under the Australian Privacy Act 1988.',
 }
