@@ -2,12 +2,10 @@
 
 import { signIn } from 'next-auth/react'
 import { useState, FormEvent } from 'react'
-import { useRouter } from 'next/navigation'
 
 export default function AdminLoginPage() {
   const [error, setError] = useState('')
   const [pending, setPending] = useState(false)
-  const router = useRouter()
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -22,7 +20,9 @@ export default function AdminLoginPage() {
       setError('Invalid email or password.')
       setPending(false)
     } else {
-      router.push('/admin')
+      // Full page load so the new session cookie is used and no cached
+      // signed-out redirect from the router can send us back to the login page.
+      window.location.assign('/admin')
     }
   }
 

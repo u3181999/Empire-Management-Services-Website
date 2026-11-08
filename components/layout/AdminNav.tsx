@@ -15,6 +15,10 @@ const NAV = [
 export default function AdminNav() {
   const pathname = usePathname()
 
+  // No sidebar on the login page: its links would be prefetched while signed out
+  // and leave the router with a cached redirect back to /admin/login.
+  if (pathname === '/admin/login') return null
+
   return (
     <aside className="w-56 bg-[#102a43] text-white flex flex-col min-h-screen">
       <div className="p-6 border-b border-white/10">
