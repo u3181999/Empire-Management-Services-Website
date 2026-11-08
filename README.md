@@ -167,6 +167,8 @@ Other common places:
 | Meet the Team | `app/(public)/about/page.tsx` |
 | Terms of service | `app/(public)/terms/page.tsx` |
 | Privacy policy | `app/(public)/privacy/page.tsx` |
+| Risk Management & Compliance section (homepage) | `components/features/RiskCompliance.tsx` |
+| Acknowledgement of Country (footer, every page) | `components/layout/Footer.tsx` |
 
 If a change breaks the site, Vercel keeps the previous version running. In **Deployments** you can re-publish
 an older version with one click.

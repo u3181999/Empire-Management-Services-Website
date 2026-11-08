@@ -2,6 +2,7 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import ClientsMarquee from '@/components/features/ClientsMarquee'
 import TestimonialsSection from '@/components/features/TestimonialsSection'
+import RiskCompliance from '@/components/features/RiskCompliance'
 import BackToTop from '@/components/features/BackToTop'
 import { Button, Card, SectionHeading } from '@/components/ui'
 import Link from 'next/link'
@@ -148,6 +149,9 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+
+        {/* Risk management & compliance */}
+        <RiskCompliance />
 
         {/* Values */}
         <section className="py-20 bg-white">
