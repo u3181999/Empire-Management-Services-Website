@@ -14,7 +14,7 @@ export async function generateMetadata(props: PageProps<'/locations/[slug]'>): P
   const location = LOCATIONS.find((l) => l.id === slug)
   if (!location) return {}
   return {
-    title: `Commercial Cleaning ${location.name} | Empire Management Services`,
+    title: `Commercial Cleaning ${location.name}`,
     description: `Professional commercial cleaning services in ${location.name}. Contact Empire Management Services — 30+ years experience, ISO certified.`,
   }
 }
@@ -81,14 +81,18 @@ export default async function LocationPage(props: PageProps<'/locations/[slug]'>
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             {/* Contact details */}
             <div>
-              <h2 className="text-2xl font-bold text-navy-900 mb-6">Location Details</h2>
+              <h2 className="text-2xl font-bold text-navy-900 mb-6">
+                {location.isHeadOffice ? 'Location Details' : 'Service Area'}
+              </h2>
               <div className="space-y-5">
                 <div className="flex items-start gap-4">
                   <div className="w-10 h-10 bg-gold-500/10 rounded-lg flex items-center justify-center shrink-0">
                     <MapPin className="w-5 h-5 text-gold-500" />
                   </div>
                   <div>
-                    <p className="font-semibold text-navy-900">Address</p>
+                    <p className="font-semibold text-navy-900">
+                      {location.isHeadOffice ? 'Address' : 'Coverage'}
+                    </p>
                     <p className="text-gray-600 text-sm mt-0.5">{location.address}</p>
                     {location.isHeadOffice && (
                       <p className="text-gray-500 text-xs mt-0.5">{COMPANY.poBox}</p>
@@ -134,7 +138,9 @@ export default async function LocationPage(props: PageProps<'/locations/[slug]'>
                     <Clock className="w-5 h-5 text-gold-500" />
                   </div>
                   <div>
-                    <p className="font-semibold text-navy-900">Office Hours</p>
+                    <p className="font-semibold text-navy-900">
+                      {location.isHeadOffice ? 'Office Hours' : 'Head Office Hours'}
+                    </p>
                     <p className="text-gray-600 text-sm mt-0.5">
                       Monday – Friday: 7:00am – 5:00pm<br />
                       Saturday: By appointment<br />
