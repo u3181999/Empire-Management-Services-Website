@@ -20,7 +20,7 @@ import JsonLd from '@/components/seo/JsonLd'
 
 export const metadata: Metadata = {
   ...pageSeo('/'),
-  title: 'Commercial Cleaning Canberra | Empire Management Services',
+  title: 'Empire Management Services | Commercial Cleaning Canberra',
   description:
     'Professional commercial and industrial cleaning across Canberra (ACT) and New South Wales. 30+ years, 80+ clients, 100,000m² serviced. Get a free quote today.',
 }
