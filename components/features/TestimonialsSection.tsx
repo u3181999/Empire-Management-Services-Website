@@ -3,7 +3,7 @@ import { Star, ExternalLink } from 'lucide-react'
 
 function StarRating({ rating }: { rating: number }) {
   return (
-    <div className="flex gap-0.5" aria-label={`${rating} out of 5 stars`}>
+    <div className="flex gap-0.5" role="img" aria-label={`${rating} out of 5 stars`}>
       {[1, 2, 3, 4, 5].map((i) => (
         <Star
           key={i}
@@ -36,7 +36,16 @@ export default async function TestimonialsSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* One or two reviews are centred and wider so the section never looks half empty; three or more fill the grid. */}
+        <div
+          className={`grid gap-6 ${
+            testimonials.length === 1
+              ? 'grid-cols-1 max-w-xl mx-auto'
+              : testimonials.length === 2
+                ? 'grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto'
+                : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
+          }`}
+        >
           {testimonials.map((t) => (
             <div
               key={t.id}

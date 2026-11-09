@@ -40,8 +40,10 @@ export default function Header() {
             <Image
               src="/logo.png"
               alt="Empire Management Services"
-              width={220}
-              height={80}
+              // The file is 313x332 and shows 64px tall, so declare that shape: the browser then downloads a
+              // small copy instead of one sized for a 220px-wide logo.
+              width={60}
+              height={64}
               className="h-16 w-auto object-contain"
               priority
             />
