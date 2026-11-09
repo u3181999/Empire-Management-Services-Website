@@ -41,7 +41,11 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     // The news now lives under Blog > Industry News.
-    return [{ source: '/industry-news', destination: '/blog?category=industry-news', permanent: false }]
+    return [
+      { source: '/industry-news', destination: '/blog?category=industry-news', permanent: false },
+      // The old case-study page made claims we could not substantiate, so it was removed.
+      { source: '/commercial', destination: '/services', permanent: true },
+    ]
   },
   async headers() {
     return [
