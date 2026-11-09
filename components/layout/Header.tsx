@@ -22,10 +22,14 @@ export default function Header() {
             <Phone className="w-3.5 h-3.5" />
             {COMPANY.phone}
           </a>
-          <span className="flex items-center gap-1.5 text-gray-400">
+          <Link
+            href="/locations/canberra"
+            aria-label="Canberra (Head Office) — view location and map"
+            className="flex items-center gap-1.5 text-gray-400 hover:text-gold-500 transition-colors"
+          >
             <MapPin className="w-3.5 h-3.5 text-gold-500" />
             Canberra (Head Office)
-          </span>
+          </Link>
         </div>
       </div>
 
