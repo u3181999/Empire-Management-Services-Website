@@ -1,6 +1,7 @@
 import { prisma } from '@/lib/prisma'
 import { Calendar, FileText } from 'lucide-react'
 import type { Metadata } from 'next'
+import { requireAdminPage } from '@/lib/admin-guard'
 
 // Always read live data (otherwise Next prerenders this page at build time).
 export const dynamic = 'force-dynamic'
@@ -8,6 +9,7 @@ export const dynamic = 'force-dynamic'
 export const metadata: Metadata = { title: 'Admin Dashboard' }
 
 export default async function AdminDashboard() {
+  await requireAdminPage()
   const [bookingCount, postCount, pendingBookings] = await Promise.all([
     prisma.booking.count(),
     prisma.blogPost.count({ where: { isPublished: true } }),

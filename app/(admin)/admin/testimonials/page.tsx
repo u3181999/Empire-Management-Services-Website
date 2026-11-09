@@ -4,6 +4,7 @@ import { Plus, Edit, Eye, EyeOff, Star } from 'lucide-react'
 import { deleteTestimonial } from '@/app/actions/admin'
 import DeleteButton from '@/components/features/DeleteButton'
 import type { Metadata } from 'next'
+import { requireAdminPage } from '@/lib/admin-guard'
 
 // Always read live data (otherwise Next prerenders this page at build time).
 export const dynamic = 'force-dynamic'
@@ -11,6 +12,7 @@ export const dynamic = 'force-dynamic'
 export const metadata: Metadata = { title: 'Testimonials — Admin' }
 
 export default async function AdminTestimonialsPage() {
+  await requireAdminPage()
   const testimonials = await prisma.testimonial.findMany({
     orderBy: [{ sortOrder: 'asc' }, { createdAt: 'desc' }],
   })

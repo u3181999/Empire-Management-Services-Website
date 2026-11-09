@@ -3,12 +3,14 @@ import { notFound } from 'next/navigation'
 import { saveBlogPost } from '@/app/actions/admin'
 import BlogPostForm from '../BlogPostForm'
 import type { Metadata } from 'next'
+import { requireAdminPage } from '@/lib/admin-guard'
 
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = { title: 'Edit Post — Admin' }
 
 export default async function EditBlogPostPage({ params }: { params: Promise<{ id: string }> }) {
+  await requireAdminPage()
   const { id } = await params
 
   const [post, categories] = await Promise.all([

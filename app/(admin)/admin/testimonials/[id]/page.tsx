@@ -3,10 +3,12 @@ import { notFound } from 'next/navigation'
 import { updateTestimonial } from '@/app/actions/admin'
 import TestimonialForm from '../TestimonialForm'
 import type { Metadata } from 'next'
+import { requireAdminPage } from '@/lib/admin-guard'
 
 export const metadata: Metadata = { title: 'Edit Testimonial — Admin' }
 
 export default async function EditTestimonialPage({ params }: { params: Promise<{ id: string }> }) {
+  await requireAdminPage()
   const { id } = await params
   const testimonial = await prisma.testimonial.findUnique({ where: { id } })
   if (!testimonial) notFound()

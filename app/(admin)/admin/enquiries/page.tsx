@@ -1,5 +1,4 @@
-import { redirect } from 'next/navigation'
-import { auth } from '@/lib/auth'
+import { requireAdminPage } from '@/lib/admin-guard'
 import { prisma } from '@/lib/prisma'
 import type { Metadata } from 'next'
 
@@ -28,9 +27,7 @@ function EmailBadge({ sent, error }: { sent: boolean; error: string | null }) {
 }
 
 export default async function AdminEnquiriesPage() {
-  // The proxy already protects /admin, but this page lists personal details, so it checks too.
-  const session = await auth()
-  if (!session) redirect('/admin/login')
+  await requireAdminPage()
 
   const [enquiries, applications] = await Promise.all([
     prisma.enquiry.findMany({ orderBy: { createdAt: 'desc' }, take: LIMIT }),

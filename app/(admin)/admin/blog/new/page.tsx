@@ -2,12 +2,14 @@ import { prisma } from '@/lib/prisma'
 import { saveBlogPost } from '@/app/actions/admin'
 import BlogPostForm from '../BlogPostForm'
 import type { Metadata } from 'next'
+import { requireAdminPage } from '@/lib/admin-guard'
 
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = { title: 'New Post — Admin' }
 
 export default async function NewBlogPostPage() {
+  await requireAdminPage()
   const categories = await prisma.blogCategory.findMany({
     orderBy: { name: 'asc' },
     select: { id: true, name: true },

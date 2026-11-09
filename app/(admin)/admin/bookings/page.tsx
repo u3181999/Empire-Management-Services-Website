@@ -1,12 +1,14 @@
 import { prisma } from '@/lib/prisma'
 import { updateBookingStatus } from '@/app/actions/admin'
 import type { Metadata } from 'next'
+import { requireAdminPage } from '@/lib/admin-guard'
 
 export const metadata: Metadata = { title: 'Bookings — Admin' }
 
 const STATUSES = ['PENDING', 'CONFIRMED', 'COMPLETED', 'CANCELLED'] as const
 
 export default async function AdminBookingsPage(props: PageProps<'/admin/bookings'>) {
+  await requireAdminPage()
   const searchParams = await props.searchParams
   const rawStatus = typeof searchParams?.status === 'string' ? searchParams.status : undefined
   const statusFilter = STATUSES.includes(rawStatus as typeof STATUSES[number])
