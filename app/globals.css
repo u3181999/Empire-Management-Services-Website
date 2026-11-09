@@ -68,7 +68,8 @@ body {
   justify-content: center;
   border: 3px solid #d4a017;
   border-radius: 50%;
-  background: #fff;
+  /* Navy, with the emblem recoloured for it (public/map-pin-logo-navy.png): white swoosh, gold star. */
+  background: #102a43;
 }
 .empire-pin__head img {
   display: block;
