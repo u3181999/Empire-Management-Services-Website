@@ -76,8 +76,10 @@ $env:NEW_ADMIN_PASSWORD = "choose-a-long-unique-password"; npm run admin:set-pas
 - Form spam protection (`lib/form-guard.ts`): honeypot + minimum fill time + a database-backed rate limit
   (5 per hour per connection; 3 for job applications; booking also caps 3 per email address per day). If a
   determined bot gets through, add Cloudflare Turnstile (free; needs a Cloudflare account and two keys).
-- The admin **login** limiter (`lib/rate-limit.ts`) is still in-memory, so on Vercel it is per serverless
-  instance — a soft protection only.
+- Admin login protection (`lib/login-guard.ts`): 5 failed attempts per connection and email, or 20 per connection,
+  blocks sign-in from that connection for 15 minutes. The block is per connection, so it cannot be used to lock you
+  out from somewhere else. If you lock yourself out, wait 15 minutes. A distributed attack is limited only by bcrypt and
+  your password, so use a long unique password and consider adding two-factor sign-in.
 - The privacy policy promises enquiries are deleted after 12 months and applications after 6. The stored copies
   are deleted automatically by the daily job, but copies that were **emailed** to the office stay in the
   mailbox until someone deletes them, so set a reminder to clear them on the same schedule.
