@@ -1,7 +1,9 @@
 // Automatic Australian cleaning headlines (INCLEAN, plus ABC News and 7NEWS when they run a cleaning story)
 // from the publishers' own public RSS feeds.
-// We only keep the headline, a short teaser, the date and a link back to the
-// publisher's article (never the article text), and always credit the source.
+// We display only the headline, the date and a link back to the publisher's article, and always credit
+// the source. The feed's short description is read only to judge whether a story is about cleaning
+// (and suitable to show); it is never displayed. Neither ABC nor 7NEWS grants a licence to reuse its
+// text commercially, so do not start showing teasers or article text without written permission.
 // To add another Australian publisher, add a line to FEEDS (WordPress sites use <site>/feed/).
 
 export type NewsItem = {

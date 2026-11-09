@@ -24,16 +24,14 @@ export default async function IndustryNews({ limit = 5 }: { limit?: number }) {
             rel="noopener noreferrer nofollow"
             className="group bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:border-[#d4a017] hover:shadow-md transition-all flex flex-col"
           >
-            <span className="text-xs font-semibold text-[#d4a017] uppercase tracking-wider">
+            <span className="text-xs font-semibold text-gold-700 uppercase tracking-wider">
               {item.source}
             </span>
-            <h3 className="mt-2 font-bold text-[#102a43] group-hover:text-[#d4a017] transition-colors line-clamp-3">
+            {/* Headline and link only: the publishers' article text is not reproduced here. */}
+            <h3 className="mt-2 flex-1 font-bold text-[#102a43] group-hover:text-gold-700 transition-colors line-clamp-4">
               {item.title}
             </h3>
-            {item.summary && (
-              <p className="mt-2 text-sm text-gray-500 line-clamp-3 flex-1">{item.summary}</p>
-            )}
-            <div className="mt-4 flex items-center justify-between text-xs text-gray-400">
+            <div className="mt-4 flex items-center justify-between text-xs text-gray-600">
               <time dateTime={item.publishedAt.toISOString()}>
                 {item.publishedAt.toLocaleDateString('en-AU', { year: 'numeric', month: 'long', day: 'numeric' })}
               </time>
@@ -45,9 +43,9 @@ export default async function IndustryNews({ limit = 5 }: { limit?: number }) {
         ))}
       </div>
 
-      <p className="mt-8 text-xs text-gray-400">
-        Headlines link to the original publisher. Empire Management Services is not responsible for the
-        content of external websites.
+      <p className="mt-8 text-xs text-gray-600">
+        Headlines link to the original publisher, whose copyright applies to the articles. Empire Management
+        Services is not responsible for the content of external websites.
       </p>
     </>
   )
