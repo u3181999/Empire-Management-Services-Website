@@ -2,7 +2,9 @@
 
 import { useActionState } from 'react'
 import { submitBooking } from '@/app/actions/booking'
+import Link from 'next/link'
 import { SERVICES, LOCATIONS, TIME_SLOTS } from '@/lib/constants'
+import FormGuardFields from '@/components/features/FormGuardFields'
 
 export default function BookingForm() {
   const [state, action, pending] = useActionState(submitBooking, null)
@@ -23,6 +25,7 @@ export default function BookingForm() {
 
   return (
     <form action={action} className="space-y-6">
+      <FormGuardFields />
       <h2 className="text-xl font-bold text-[#102a43]">Your Details</h2>
 
       {state?.error && (
@@ -165,8 +168,13 @@ export default function BookingForm() {
         {pending ? 'Submitting…' : 'Submit Booking Request'}
       </button>
 
-      <p className="text-xs text-gray-400 text-center">
-        Submitting this form is a booking request only. We will contact you to confirm availability.
+      <p className="text-xs text-gray-600 text-center leading-relaxed">
+        Submitting this form is a booking request only. We will contact you to confirm availability. We use the
+        details you give here only to handle your booking — see our{' '}
+        <Link href="/privacy" className="font-medium text-gold-700 underline underline-offset-2 hover:text-gold-800">
+          Privacy Policy
+        </Link>
+        .
       </p>
     </form>
   )

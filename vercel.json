@@ -1,6 +1,12 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "regions": ["syd1"],
+  "crons": [
+    {
+      "path": "/api/cron/cleanup",
+      "schedule": "0 17 * * *"
+    }
+  ],
   "redirects": [
     {
       "source": "/:path*",

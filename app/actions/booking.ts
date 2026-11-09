@@ -3,9 +3,12 @@
 import { z } from 'zod'
 import { prisma } from '@/lib/prisma'
 import { sendBookingConfirmationToCustomer, sendBookingNotificationToAdmin } from '@/lib/email'
-import { SERVICES, LOCATIONS } from '@/lib/constants'
-import { headers } from 'next/headers'
-import { bookingLimiter } from '@/lib/rate-limit'
+import { SERVICES, LOCATIONS, TIME_SLOTS } from '@/lib/constants'
+import { guardSubmission, describeError } from '@/lib/form-guard'
+
+// Most booking requests one email address can make in 24 hours. Stops the form being used
+// to flood someone else's inbox with confirmation emails.
+const MAX_BOOKINGS_PER_EMAIL_PER_DAY = 3
 
 const schema = z.object({
   customerName: z.string().min(2).max(100),
@@ -18,7 +21,7 @@ const schema = z.object({
     const today = new Date(); today.setHours(0,0,0,0)
     return !isNaN(parsed.getTime()) && parsed >= today
   }, { message: 'Please select a valid future date.' }),
-  timeSlot: z.string().min(1),
+  timeSlot: z.enum(TIME_SLOTS),
   notes: z.string().max(1000).optional(),
 })
 
@@ -30,12 +33,12 @@ export async function submitBooking(
   _prev: BookingResult | null,
   formData: FormData
 ): Promise<BookingResult> {
-  const headersList = await headers()
-  const ip = headersList.get('x-forwarded-for') ?? 'unknown'
-
-  const { success: allowed } = bookingLimiter.check(10, ip)
-  if (!allowed) {
-    return { success: false, error: 'Too many requests. Please try again in a minute.' }
+  const guard = await guardSubmission('booking', formData)
+  if (!guard.ok) {
+    // A caught bot is told it worked, with a throwaway reference, so it doesn't learn it was spotted.
+    return guard.silent
+      ? { success: true, reference: 'PENDING' }
+      : { success: false, error: guard.error ?? 'Please try again.' }
   }
 
   const parsed = schema.safeParse({
@@ -64,6 +67,19 @@ export async function submitBooking(
   }
 
   try {
+    const recent = await prisma.booking.count({
+      where: {
+        customerEmail: { equals: customerEmail, mode: 'insensitive' },
+        createdAt: { gte: new Date(Date.now() - 24 * 60 * 60 * 1000) },
+      },
+    })
+    if (recent >= MAX_BOOKINGS_PER_EMAIL_PER_DAY) {
+      return {
+        success: false,
+        error: 'We already have several booking requests from this email address today. Please call us to arrange anything further.',
+      }
+    }
+
     let dbLocation = await prisma.location.findUnique({ where: { slug: locationId } })
     if (!dbLocation) {
       dbLocation = await prisma.location.create({
@@ -107,7 +123,7 @@ export async function submitBooking(
       weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
     })
 
-    await Promise.allSettled([
+    const emailResults = await Promise.allSettled([
       sendBookingConfirmationToCustomer({
         customerName,
         customerEmail,
@@ -129,6 +145,14 @@ export async function submitBooking(
         bookingRef: booking.reference,
       }),
     ])
+
+    // The booking is saved either way; make a failed email visible in the logs instead of silent.
+    const labels = ['customer confirmation', 'admin notification']
+    emailResults.forEach((result, i) => {
+      if (result.status === 'rejected') {
+        console.error(`[booking] ${labels[i]} email failed`, { reference: booking.reference, error: describeError(result.reason) })
+      }
+    })
 
     return { success: true, reference: booking.reference }
   } catch {

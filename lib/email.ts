@@ -9,6 +9,17 @@ function getResend(): Resend {
   return _resend
 }
 
+/**
+ * Resend does NOT throw when it rejects a message (bad API key, unverified domain, rate limit…);
+ * it returns `{ data: null, error }`. Turn that into a real exception so callers can tell a
+ * failed send from a successful one instead of silently treating both as success.
+ */
+async function deliver(payload: Parameters<Resend['emails']['send']>[0]) {
+  const { data, error } = await getResend().emails.send(payload)
+  if (error) throw new Error(`${error.name}: ${error.message}`)
+  return data
+}
+
 const FROM = `${COMPANY.name} <noreply@${SITE_DOMAIN}>`
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL ?? COMPANY.email
 
@@ -38,7 +49,7 @@ export async function sendBookingConfirmationToCustomer({
   time: string
   bookingRef: string
 }) {
-  return getResend().emails.send({
+  return deliver({
     from: FROM,
     to: customerEmail,
     subject: `Booking Confirmed – ${service} on ${date}`,
@@ -80,7 +91,7 @@ export async function sendBookingNotificationToAdmin({
   notes?: string
   bookingRef: string
 }) {
-  return getResend().emails.send({
+  return deliver({
     from: FROM,
     to: ADMIN_EMAIL,
     subject: `New Booking: ${service} – ${date} ${time}`,
@@ -114,7 +125,7 @@ export async function sendContactEmail({
   message: string
   subject: string
 }) {
-  return getResend().emails.send({
+  return deliver({
     from: FROM,
     to: ADMIN_EMAIL,
     replyTo: email,
@@ -150,7 +161,7 @@ export async function sendOrderConfirmation({
     .map((i) => `<li>${escapeHtml(i.name)} × ${i.quantity} — $${(i.price / 100).toFixed(2)}</li>`)
     .join('')
 
-  return getResend().emails.send({
+  return deliver({
     from: FROM,
     to: customerEmail,
     subject: `Order Confirmed – #${orderNumber}`,

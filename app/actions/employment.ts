@@ -1,9 +1,9 @@
 'use server'
 
 import { z } from 'zod'
+import { prisma } from '@/lib/prisma'
 import { sendContactEmail } from '@/lib/email'
-import { headers } from 'next/headers'
-import { contactLimiter } from '@/lib/rate-limit'
+import { guardSubmission, describeError } from '@/lib/form-guard'
 import { SECURITY_CLEARANCES } from '@/lib/constants'
 
 const schema = z.object({
@@ -26,13 +26,8 @@ export async function submitEmploymentApplication(
   _prev: { success: boolean; error?: string } | null,
   formData: FormData
 ): Promise<{ success: boolean; error?: string }> {
-  const headersList = await headers()
-  const ip = headersList.get('x-forwarded-for') ?? 'unknown'
-
-  const { success: allowed } = contactLimiter.check(5, ip)
-  if (!allowed) {
-    return { success: false, error: 'Too many requests. Please try again in a minute.' }
-  }
+  const guard = await guardSubmission('employment', formData)
+  if (!guard.ok) return guard.silent ? { success: true } : { success: false, error: guard.error }
 
   const days = formData.getAll('days')
 
@@ -55,8 +50,32 @@ export async function submitEmploymentApplication(
   }
 
   const { name, email, phone, shift, startDate, citizen, clearance, hasExperience, message } = parsed.data
-  const daysAvailable = Array.isArray(days) ? days.join(', ') : (days ?? 'Not specified')
+  const daysAvailable = days.length > 0 ? days.join(', ') : 'Not specified'
 
+  // 1. Save first, so the application survives even if the email can't be sent.
+  let applicationId: string | null = null
+  try {
+    const row = await prisma.jobApplication.create({
+      data: {
+        name,
+        email,
+        phone,
+        shift,
+        days: daysAvailable,
+        startDate,
+        citizen,
+        clearance,
+        hasExperience: hasExperience === 'yes',
+        message: message ?? null,
+      },
+    })
+    applicationId = row.id
+  } catch (error) {
+    console.error('[employment] could not save the application', describeError(error))
+  }
+
+  // 2. Email the office, and record whether it worked.
+  let emailError: string | null = null
   try {
     await sendContactEmail({
       name,
@@ -76,8 +95,20 @@ export async function submitEmploymentApplication(
         .filter(Boolean)
         .join('\n'),
     })
-    return { success: true }
-  } catch {
+  } catch (error) {
+    emailError = describeError(error)
+    console.error('[employment] notification email failed', { applicationId, error: emailError })
+  }
+
+  if (applicationId) {
+    await prisma.jobApplication
+      .update({ where: { id: applicationId }, data: { emailSent: !emailError, emailError } })
+      .catch((error) => console.error('[employment] could not record the email result', describeError(error)))
+  }
+
+  // Only a failure if the application was neither saved nor emailed.
+  if (!applicationId && emailError) {
     return { success: false, error: 'Failed to submit application. Please email us directly.' }
   }
+  return { success: true }
 }

@@ -224,3 +224,54 @@ model Testimonial {
 
   @@map("testimonials")
 }
+
+// A message sent through the contact form. Saved before the notification email is attempted,
+// so a mail problem can never lose a lead.
+model Enquiry {
+  id         String   @id @default(cuid())
+  name       String
+  email      String
+  phone      String?
+  subject    String
+  message    String
+  emailSent  Boolean  @default(false)
+  emailError String?
+  createdAt  DateTime @default(now())
+
+  @@index([createdAt])
+  @@map("enquiries")
+}
+
+// An employment application. Same save-first approach as Enquiry.
+model JobApplication {
+  id            String   @id @default(cuid())
+  name          String
+  email         String
+  phone         String
+  shift         String
+  days          String
+  startDate     String
+  citizen       String
+  clearance     String
+  hasExperience Boolean  @default(false)
+  message       String?
+  emailSent     Boolean  @default(false)
+  emailError    String?
+  createdAt     DateTime @default(now())
+
+  @@index([createdAt])
+  @@map("job_applications")
+}
+
+// One row per form submission attempt, keyed by a one-way hash of the visitor's IP (never the IP itself).
+// Used for rate limiting that works across serverless instances; old rows are purged by the cleanup job.
+model FormHit {
+  id        String   @id @default(cuid())
+  kind      String
+  ipHash    String
+  createdAt DateTime @default(now())
+
+  @@index([kind, ipHash, createdAt])
+  @@index([createdAt])
+  @@map("form_hits")
+}

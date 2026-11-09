@@ -3,7 +3,9 @@
 import { useActionState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { submitContact } from '@/app/actions/contact'
+import Link from 'next/link'
 import { SERVICES } from '@/lib/constants'
+import FormGuardFields from '@/components/features/FormGuardFields'
 
 const SUBJECTS = [
   'General Enquiry',
@@ -38,6 +40,7 @@ export default function ContactForm({ serviceName }: { serviceName?: string }) {
 
   return (
     <form action={action} className="space-y-5">
+      <FormGuardFields />
       {state?.error && (
         <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-sm text-red-700">
           {state.error}
@@ -130,8 +133,13 @@ export default function ContactForm({ serviceName }: { serviceName?: string }) {
         {pending ? 'Sending…' : 'Send Message'}
       </button>
 
-      <p className="text-xs text-gray-400 text-center">
-        We typically respond within 1 business day.
+      <p className="text-xs text-gray-600 text-center leading-relaxed">
+        We typically respond within 1 business day. We use the details you give here only to respond to your
+        enquiry — see our{' '}
+        <Link href="/privacy" className="font-medium text-gold-700 underline underline-offset-2 hover:text-gold-800">
+          Privacy Policy
+        </Link>
+        .
       </p>
     </form>
   )

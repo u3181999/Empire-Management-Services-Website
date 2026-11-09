@@ -4,6 +4,7 @@ import { useActionState } from 'react'
 import Link from 'next/link'
 import { submitEmploymentApplication } from '@/app/actions/employment'
 import { SECURITY_CLEARANCES } from '@/lib/constants'
+import FormGuardFields from '@/components/features/FormGuardFields'
 
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
@@ -24,6 +25,7 @@ export default function EmploymentForm() {
 
   return (
     <form action={action} className="space-y-5">
+      <FormGuardFields />
       {state?.error && (
         <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-sm text-red-700">
           {state.error}
