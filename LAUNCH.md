@@ -63,6 +63,12 @@ $env:NEW_ADMIN_PASSWORD = "choose-a-long-unique-password"; npm run admin:set-pas
 - [ ] Vercel → **Analytics** shows your own visit after a minute (not if you pressed Decline)
 - [ ] `/admin/login` works with the new password; the dashboard shows your bookings
 - [ ] `/sitemap.xml`, `/robots.txt` load; paste the site into a chat app to see the link preview
+- [ ] View-source on a page: the `<link rel="canonical">` shows `https://empirecleaning.com.au/...` (this relies on
+      `NEXT_PUBLIC_SITE_URL` being set correctly in Vercel)
+- [ ] Run Google's [Rich Results Test](https://search.google.com/test/rich-results) on the home page, a service page and a
+      blog post: each should detect its items (business, service, article, breadcrumbs) with no errors
+- [ ] Sign in once and click through every admin page (Dashboard, Bookings, Enquiries, Blog, Testimonials, and edit one
+      of each). Every admin page now double-checks your session, so this proves a signed-in admin is not locked out
 - [ ] Submit the sitemap in Google Search Console
 
 ## Known limitations
