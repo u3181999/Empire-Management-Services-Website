@@ -9,6 +9,7 @@ import StatsTiles from '@/components/features/StatsTiles'
 import ServicesShowcase from '@/components/features/ServicesShowcase'
 import { Button, Card, SectionHeading } from '@/components/ui'
 import Image from 'next/image'
+import Link from 'next/link'
 import {
   Shield, Clock, BadgeCheck, Users,
   ArrowRight, Phone, CheckCircle2,
@@ -105,6 +106,12 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
+            <p className="mt-8 text-sm text-gray-600">
+              Current certificates available on request.{' '}
+              <Link href="/compliance" className="font-semibold text-gold-700 underline underline-offset-2 hover:text-gold-800">
+                View certifications &amp; compliance
+              </Link>
+            </p>
           </div>
         </section>
 
@@ -163,7 +170,7 @@ export default function HomePage() {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 {[
-                  { icon: Shield,    title: 'Security Cleared', desc: 'All staff vetted and cleared' },
+                  { icon: Shield,    title: 'Police-Checked Staff', desc: 'Cleared teams for sensitive sites' },
                   { icon: BadgeCheck,title: 'Quality Assured',  desc: 'Practical QA system in place' },
                   { icon: Clock,     title: 'Always On Time',   desc: 'Reliable scheduling, every time' },
                   { icon: Users,     title: 'Dedicated Teams',  desc: 'Consistent staff for your site' },

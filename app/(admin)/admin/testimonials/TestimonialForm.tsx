@@ -70,7 +70,7 @@ export default function TestimonialForm({
           <label className="block text-sm font-medium text-gray-700 mb-1">Source</label>
           <select
             name="source"
-            defaultValue={testimonial?.source ?? 'Google'}
+            defaultValue={testimonial?.source ?? 'Direct'}
             className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#d4a017]"
           >
             <option value="Google">Google</option>
@@ -78,6 +78,10 @@ export default function TestimonialForm({
             <option value="Email">Email</option>
             <option value="Other">Other</option>
           </select>
+          <p className="mt-1 text-xs text-gray-600">
+            Only choose Google (or another site) if you also paste that review&apos;s link below. The site only shows a
+            platform name next to a review that has a link.
+          </p>
         </div>
       </div>
 

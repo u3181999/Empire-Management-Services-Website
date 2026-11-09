@@ -91,7 +91,7 @@ export default function AboutPage() {
                 { value: `${COMPANY.yearsExperience}+`, label: 'Years in Business' },
                 { value: `${COMPANY.clientCount}+`, label: 'Active Clients' },
                 { value: '100,000m²', label: 'Sites Cleaned' },
-                { value: '2', label: 'States Serviced' },
+                { value: '2', label: 'States & Territories' },
               ].map(({ value, label }) => (
                 <div
                   key={label}
@@ -164,6 +164,12 @@ export default function AboutPage() {
               </div>
             ))}
           </div>
+          <p className="mt-8 text-sm text-gray-600">
+            Current certificates available on request.{' '}
+            <Link href="/compliance" className="font-semibold text-gold-700 underline underline-offset-2 hover:text-gold-800">
+              View certifications &amp; compliance
+            </Link>
+          </p>
         </div>
       </section>
 

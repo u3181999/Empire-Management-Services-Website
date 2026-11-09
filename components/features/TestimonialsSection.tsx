@@ -44,7 +44,8 @@ export default async function TestimonialsSection() {
             >
               <div className="flex items-center justify-between">
                 <StarRating rating={t.rating} />
-                <span className="text-xs text-gray-600 font-medium">{t.source}</span>
+                {/* A platform name is only shown when there is a link to that review, so it can be checked. */}
+                {t.reviewUrl && <span className="text-xs text-gray-600 font-medium">{t.source} review</span>}
               </div>
 
               <blockquote className="text-gray-700 text-sm leading-relaxed flex-1">

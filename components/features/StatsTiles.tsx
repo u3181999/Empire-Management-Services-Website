@@ -8,7 +8,7 @@ const STATS = [
   { end: COMPANY.staffCount,      suffix: '+',  label: 'Cleaning Staff',         icon: UsersRound },
   { end: COMPANY.weeklyHours,     suffix: '+',  label: 'Hours Serviced Weekly',  icon: CalendarClock },
   { end: COMPANY.sitesM2,         suffix: 'm²', label: 'Sites Serviced',         icon: Ruler },
-  { end: 2,                       suffix: '',   label: 'States',                 icon: MapPin },
+  { end: 2,                       suffix: '',   label: 'States & Territories',                 icon: MapPin },
 ] as const
 
 export default function StatsTiles() {

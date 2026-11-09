@@ -71,6 +71,10 @@ export default function ClientsMarquee() {
           ))}
         </div>
       </div>
+
+      <p className="mt-8 px-4 text-center text-xs text-gray-600">
+        Client logos are trademarks of their respective owners and are shown with their permission.
+      </p>
     </section>
   )
 }

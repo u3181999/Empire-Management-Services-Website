@@ -55,7 +55,7 @@ const SERVICE_DETAILS: Record<string, { benefits: string[]; suitableFor: string[
   },
   'government-departments': {
     benefits: [
-      'Security-cleared staff for sensitive environments',
+      'Security-cleared teams available for sensitive environments',
       'Strict confidentiality agreements for all personnel',
       'Compliance with government procurement requirements',
       'Consistent, audit-ready cleaning standards',
@@ -152,7 +152,7 @@ export default async function ServiceDetailPage(props: PageProps<'/services/[slu
   if (!service) notFound()
 
   const details = SERVICE_DETAILS[slug] ?? {
-    benefits: ['Professionally delivered by trained, security-cleared staff'],
+    benefits: ['Professionally delivered by trained, police-checked staff'],
     suitableFor: ['Commercial and industrial clients'],
   }
 

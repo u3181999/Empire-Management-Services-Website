@@ -42,8 +42,8 @@ const ANSWERS: Record<string, { text: string; cta?: { label: string; href: strin
     cta: { label: 'Contact us', href: '/contact' },
   },
   iso: {
-    text: 'Yes! Empire Management Services is ISO certified across three standards: ISO 9001:2015 (Quality), ISO 14001:2015 (Environmental), and ISO 45001:2018 (Health & Safety).',
-    cta: { label: 'About us', href: '/about' },
+    text: 'Yes! Empire Management Services is ISO certified across three standards: ISO 9001:2015 (Quality), ISO 14001:2015 (Environmental), and ISO 45001:2018 (Health & Safety). Current certificates are available on request.',
+    cta: { label: 'View certifications', href: '/compliance' },
   },
   nsw: {
     text: 'Absolutely — we service commercial clients across New South Wales, managed from our Canberra head office with the same professional standards.',

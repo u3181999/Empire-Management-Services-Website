@@ -48,8 +48,8 @@ const PILLARS = [
   },
   {
     icon: ShieldCheck,
-    title: 'Insured, vetted people',
-    desc: 'Comprehensive insurance and public liability cover, and vetted staff, with security-cleared teams for government and other sensitive sites.',
+    title: 'Insured, police-checked people',
+    desc: 'Public liability insurance and police-checked staff, with security-cleared teams available for government and other sensitive sites.',
   },
 ] as const
 
@@ -113,6 +113,12 @@ export default function RiskCompliance() {
             className="inline-flex items-center gap-1.5 font-semibold text-[#102a43] hover:text-[#d4a017] transition-colors"
           >
             Talk to our team <ArrowRight className="w-4 h-4" aria-hidden="true" />
+          </Link>
+          <Link
+            href="/compliance"
+            className="inline-flex items-center gap-1.5 font-semibold text-gold-700 underline underline-offset-2 hover:text-gold-800 transition-colors"
+          >
+            View certifications &amp; insurance
           </Link>
         </div>
       </div>
