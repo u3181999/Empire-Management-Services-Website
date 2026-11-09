@@ -3,8 +3,10 @@ import { Button, SectionHeading } from '@/components/ui'
 import ServicesShowcase from '@/components/features/ServicesShowcase'
 import StatsTiles from '@/components/features/StatsTiles'
 import type { Metadata } from 'next'
+import { pageSeo } from '@/lib/seo'
 
 export const metadata: Metadata = {
+  ...pageSeo('/services'),
   title: 'Services',
   description:
     'Explore our full range of commercial cleaning services including strata, industrial, medical, government, window cleaning, graffiti removal and more.',

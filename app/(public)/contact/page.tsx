@@ -4,8 +4,10 @@ import ContactForm, { PrefilledContactForm } from '@/components/features/Contact
 import { Suspense } from 'react'
 import Link from 'next/link'
 import type { Metadata } from 'next'
+import { pageSeo } from '@/lib/seo'
 
 export const metadata: Metadata = {
+  ...pageSeo('/contact'),
   title: 'Contact Us',
   description: `Get in touch with Empire Management Services. Phone: ${COMPANY.phone}. Address: ${COMPANY.address}, ${COMPANY.suburb} ACT.`,
 }

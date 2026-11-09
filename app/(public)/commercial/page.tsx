@@ -1,8 +1,10 @@
 import Link from 'next/link'
 import { ArrowRight, CheckCircle2, Building2, Landmark, Users } from 'lucide-react'
 import type { Metadata } from 'next'
+import { pageSeo } from '@/lib/seo'
 
 export const metadata: Metadata = {
+  ...pageSeo('/commercial'),
   title: 'Commercial Cleaning Solutions',
   description:
     'Specialist commercial cleaning for large-scale buildings, government facilities, and corporate environments across Canberra and NSW.',

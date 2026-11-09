@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, CheckCircle2, Phone } from 'lucide-react'
 import { SERVICES, COMPANY } from '@/lib/constants'
 import { Button, Badge, Card } from '@/components/ui'
 import type { Metadata } from 'next'
+import { pageSeo } from '@/lib/seo'
 
 export function generateStaticParams() {
   return SERVICES.map((s) => ({ slug: s.slug }))
@@ -14,6 +15,7 @@ export async function generateMetadata(props: PageProps<'/services/[slug]'>): Pr
   const service = SERVICES.find((s) => s.slug === slug)
   if (!service) return {}
   return {
+    ...pageSeo(`/services/${slug}`),
     title: service.name,
     description: service.shortDescription,
   }

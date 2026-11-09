@@ -5,6 +5,7 @@ import { LOCATIONS, SERVICES, COMPANY, OFFICE_HOURS } from '@/lib/constants'
 import { Button, SectionHeading } from '@/components/ui'
 import LocationMap from '@/components/features/LocationMap'
 import type { Metadata } from 'next'
+import { pageSeo } from '@/lib/seo'
 
 export function generateStaticParams() {
   return LOCATIONS.map((l) => ({ slug: l.id }))
@@ -15,6 +16,7 @@ export async function generateMetadata(props: PageProps<'/locations/[slug]'>): P
   const location = LOCATIONS.find((l) => l.id === slug)
   if (!location) return {}
   return {
+    ...pageSeo(`/locations/${slug}`),
     title: `Commercial Cleaning ${location.name}`,
     description: `Professional commercial cleaning services in ${location.name}. Contact Empire Management Services — 30+ years experience, ISO certified.`,
   }

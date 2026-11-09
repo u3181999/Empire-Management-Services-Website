@@ -3,8 +3,10 @@ import { prisma } from '@/lib/prisma'
 import { Search } from 'lucide-react'
 import IndustryNews from '@/components/features/IndustryNews'
 import type { Metadata } from 'next'
+import { pageSeo } from '@/lib/seo'
 
 export const metadata: Metadata = {
+  ...pageSeo('/blog'),
   title: 'Blog — Cleaning Tips & Industry Insights',
   description:
     'Cleaning tips, industry news, and insights from the Empire Management Services team.',

@@ -1,8 +1,10 @@
 import EmploymentForm from '@/components/features/EmploymentForm'
 import { CheckCircle2 } from 'lucide-react'
 import type { Metadata } from 'next'
+import { pageSeo } from '@/lib/seo'
 
 export const metadata: Metadata = {
+  ...pageSeo('/employment'),
   title: 'Employment',
   description:
     'Join the Empire Management Services team. Apply now for cleaning positions across Canberra and NSW.',

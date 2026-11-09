@@ -1,8 +1,10 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { COMPANY } from '@/lib/constants'
+import { pageSeo } from '@/lib/seo'
 
 export const metadata: Metadata = {
+  ...pageSeo('/privacy'),
   title: 'Privacy Policy',
   description:
     'Privacy Policy for Empire Management Services — how we collect, use, store and protect your personal information under the Australian Privacy Act 1988.',

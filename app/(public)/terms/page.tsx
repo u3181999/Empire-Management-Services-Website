@@ -1,8 +1,10 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { COMPANY } from '@/lib/constants'
+import { pageSeo } from '@/lib/seo'
 
 export const metadata: Metadata = {
+  ...pageSeo('/terms'),
   title: 'Terms and Conditions',
   description:
     'Terms and Conditions for Empire Management Services — bookings, cancellations, payments and governing law.',

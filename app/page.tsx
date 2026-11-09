@@ -15,8 +15,10 @@ import {
 } from 'lucide-react'
 import { COMPANY, VALUES } from '@/lib/constants'
 import type { Metadata } from 'next'
+import { pageSeo } from '@/lib/seo'
 
 export const metadata: Metadata = {
+  ...pageSeo('/'),
   title: 'Commercial Cleaning Canberra | Empire Management Services',
   description:
     'Professional commercial and industrial cleaning across Canberra (ACT) and New South Wales. 30+ years, 80+ clients, 100,000m² serviced. Get a free quote today.',

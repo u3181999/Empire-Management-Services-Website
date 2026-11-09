@@ -4,12 +4,14 @@ import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import DOMPurify from 'isomorphic-dompurify'
 import type { Metadata } from 'next'
+import { pageSeo } from '@/lib/seo'
 
 export async function generateMetadata(props: PageProps<'/blog/[slug]'>): Promise<Metadata> {
   const { slug } = await props.params
   const post = await prisma.blogPost.findUnique({ where: { slug } })
   if (!post) return {}
   return {
+    ...pageSeo(`/blog/${slug}`, { publishedTime: post.publishedAt, modifiedTime: post.updatedAt }),
     title: post.title,
     description: post.excerpt,
   }

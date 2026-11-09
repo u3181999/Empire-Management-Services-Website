@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { CheckCircle2, ArrowRight, User } from 'lucide-react'
 import { COMPANY, VALUES } from '@/lib/constants'
 import type { Metadata } from 'next'
+import { pageSeo } from '@/lib/seo'
 
 const TEAM = [
   {
@@ -37,6 +38,7 @@ const TEAM = [
 ]
 
 export const metadata: Metadata = {
+  ...pageSeo('/about'),
   title: 'About Us',
   description: `Learn about Empire Management Services — ${COMPANY.yearsExperience}+ years of professional commercial cleaning in Canberra and NSW.`,
 }
