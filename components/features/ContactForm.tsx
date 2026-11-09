@@ -4,17 +4,12 @@ import { useActionState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { submitContact } from '@/app/actions/contact'
 import Link from 'next/link'
-import { SERVICES } from '@/lib/constants'
+import { CONTACT_SUBJECTS, SERVICES } from '@/lib/constants'
 import FormGuardFields from '@/components/features/FormGuardFields'
+import { ErrorSummary, FieldError, FormSuccess, controlClass, errorProps } from '@/components/features/FormErrors'
 
-const SUBJECTS = [
-  'General Enquiry',
-  'Request a Quote',
-  'Booking Enquiry',
-  'Employment',
-  'Complaint or Feedback',
-  'Other',
-]
+// Field names in the order they appear, with the names used in the error summary.
+const LABELS = { name: 'Full name', phone: 'Phone', email: 'Email', subject: 'Subject', message: 'Message' }
 
 /** Reads ?service=<slug> (from a "Get a Quote" button) and pre-fills the form. */
 export function PrefilledContactForm() {
@@ -25,27 +20,27 @@ export function PrefilledContactForm() {
 
 export default function ContactForm({ serviceName }: { serviceName?: string }) {
   const [state, action, pending] = useActionState(submitContact, null)
+  const errors = state?.fieldErrors ?? {}
+  // React clears a form after every submission, so a rejected form refills itself from what was sent.
+  const v = state?.values ?? {}
+  const text = (name: string) => (typeof v[name] === 'string' ? (v[name] as string) : undefined)
 
   if (state?.success) {
     return (
-      <div className="bg-green-50 border border-green-200 rounded-xl p-8 text-center">
-        <div className="text-green-600 text-4xl mb-3">✓</div>
+      <FormSuccess className="bg-green-50 border border-green-200 rounded-xl p-8 text-center">
+        <div className="text-green-600 text-4xl mb-3" aria-hidden="true">✓</div>
         <h3 className="font-bold text-green-800 text-lg">Message Sent!</h3>
         <p className="text-green-700 text-sm mt-2">
           Thank you for reaching out. We&apos;ll get back to you within 1 business day.
         </p>
-      </div>
+      </FormSuccess>
     )
   }
 
   return (
     <form action={action} className="space-y-5">
       <FormGuardFields />
-      {state?.error && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-sm text-red-700">
-          {state.error}
-        </div>
-      )}
+      <ErrorSummary error={state?.error} fieldErrors={state?.fieldErrors} labels={LABELS} />
 
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
@@ -58,9 +53,12 @@ export default function ContactForm({ serviceName }: { serviceName?: string }) {
             type="text"
             required
             autoComplete="name"
-            className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#d4a017] focus:border-transparent"
+            defaultValue={text('name')}
+            {...errorProps('name', errors.name)}
+            className={controlClass(!!errors.name)}
             placeholder="Jane Smith"
           />
+          <FieldError name="name" message={errors.name} />
         </div>
         <div>
           <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1.5">
@@ -71,9 +69,12 @@ export default function ContactForm({ serviceName }: { serviceName?: string }) {
             name="phone"
             type="tel"
             autoComplete="tel"
-            className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#d4a017] focus:border-transparent"
+            defaultValue={text('phone')}
+            {...errorProps('phone', errors.phone)}
+            className={controlClass(!!errors.phone)}
             placeholder="02 1234 5678"
           />
+          <FieldError name="phone" message={errors.phone} />
         </div>
       </div>
 
@@ -87,9 +88,12 @@ export default function ContactForm({ serviceName }: { serviceName?: string }) {
           type="email"
           required
           autoComplete="email"
-          className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#d4a017] focus:border-transparent"
+          defaultValue={text('email')}
+          {...errorProps('email', errors.email)}
+          className={controlClass(!!errors.email)}
           placeholder="jane@company.com.au"
         />
+        <FieldError name="email" message={errors.email} />
       </div>
 
       <div>
@@ -97,17 +101,21 @@ export default function ContactForm({ serviceName }: { serviceName?: string }) {
           Subject <span aria-hidden="true">*</span>
         </label>
         <select
+          // A dropdown only reads its default when it is created, so rebuild it when the refilled value changes.
+          key={text('subject') ?? 'none'}
           id="subject"
           name="subject"
           required
-          defaultValue={serviceName ? 'Request a Quote' : ''}
-          className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#d4a017] focus:border-transparent bg-white"
+          defaultValue={text('subject') ?? (serviceName ? 'Request a Quote' : '')}
+          {...errorProps('subject', errors.subject)}
+          className={controlClass(!!errors.subject, 'bg-white')}
         >
           <option value="">Select a subject</option>
-          {SUBJECTS.map((s) => (
+          {CONTACT_SUBJECTS.map((s) => (
             <option key={s} value={s}>{s}</option>
           ))}
         </select>
+        <FieldError name="subject" message={errors.subject} />
       </div>
 
       <div>
@@ -118,11 +126,13 @@ export default function ContactForm({ serviceName }: { serviceName?: string }) {
           id="message"
           name="message"
           required
-          defaultValue={serviceName ? `I'd like a quote for ${serviceName}.` : ''}
+          defaultValue={text('message') ?? (serviceName ? `I'd like a quote for ${serviceName}.` : '')}
           rows={5}
-          className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#d4a017] focus:border-transparent resize-none"
+          {...errorProps('message', errors.message)}
+          className={controlClass(!!errors.message, 'resize-none')}
           placeholder="Tell us about your cleaning requirements..."
         />
+        <FieldError name="message" message={errors.message} />
       </div>
 
       <button

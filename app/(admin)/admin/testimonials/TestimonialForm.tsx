@@ -30,7 +30,7 @@ export default function TestimonialForm({
       {testimonial && <input type="hidden" name="id" value={testimonial.id} />}
 
       {state?.error && (
-        <div className="p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm">
+        <div role="alert" className="p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm">
           {state.error}
         </div>
       )}

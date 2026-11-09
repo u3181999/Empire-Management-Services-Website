@@ -3,34 +3,53 @@
 import { useActionState } from 'react'
 import Link from 'next/link'
 import { submitEmploymentApplication } from '@/app/actions/employment'
-import { SECURITY_CLEARANCES } from '@/lib/constants'
+import { SECURITY_CLEARANCES, SHIFT_OPTIONS, WORK_DAYS } from '@/lib/constants'
 import FormGuardFields from '@/components/features/FormGuardFields'
+import { ErrorSummary, FieldError, FormSuccess, controlClass, errorProps } from '@/components/features/FormErrors'
 
-const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+// Field names in the order they appear, with the names used in the error summary.
+const LABELS = {
+  name: 'Full name',
+  phone: 'Phone',
+  email: 'Email',
+  days: 'Days available',
+  shift: 'Preferred shift',
+  startDate: 'Available start date',
+  citizen: 'Australian citizen',
+  clearance: 'Highest security clearance',
+  message: 'Additional information',
+  privacyConsent: 'Privacy consent',
+}
+
+const radioClass = 'w-4 h-4 text-[#d4a017] border-gray-300 focus:ring-[#d4a017]'
 
 export default function EmploymentForm() {
   const [state, action, pending] = useActionState(submitEmploymentApplication, null)
+  const errors = state?.fieldErrors ?? {}
+  // React clears a form after every submission, so a rejected form refills itself from what was sent.
+  const v = state?.values ?? {}
+  const text = (name: string) => (typeof v[name] === 'string' ? (v[name] as string) : undefined)
+  const chosenDays = Array.isArray(v.days) ? v.days : []
+
+  // A group of boxes has no single input to mark invalid, so the group points at its message instead.
+  const group = (name: string) => (errors[name] ? ({ 'aria-describedby': `${name}-error` } as const) : {})
 
   if (state?.success) {
     return (
-      <div className="bg-green-50 border border-green-200 rounded-xl p-8 text-center">
-        <div className="text-green-600 text-4xl mb-3">✓</div>
+      <FormSuccess className="bg-green-50 border border-green-200 rounded-xl p-8 text-center">
+        <div className="text-green-600 text-4xl mb-3" aria-hidden="true">✓</div>
         <h3 className="font-bold text-green-800 text-lg">Application Submitted!</h3>
         <p className="text-green-700 text-sm mt-2">
           Thank you for your interest. We&apos;ll review your application and be in touch soon.
         </p>
-      </div>
+      </FormSuccess>
     )
   }
 
   return (
     <form action={action} className="space-y-5">
       <FormGuardFields />
-      {state?.error && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-sm text-red-700">
-          {state.error}
-        </div>
-      )}
+      <ErrorSummary error={state?.error} fieldErrors={state?.fieldErrors} labels={LABELS} />
 
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
@@ -43,8 +62,11 @@ export default function EmploymentForm() {
             type="text"
             required
             autoComplete="name"
-            className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#d4a017] focus:border-transparent"
+            defaultValue={text('name')}
+            {...errorProps('name', errors.name)}
+            className={controlClass(!!errors.name)}
           />
+          <FieldError name="name" message={errors.name} />
         </div>
         <div>
           <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1.5">
@@ -56,8 +78,11 @@ export default function EmploymentForm() {
             type="tel"
             required
             autoComplete="tel"
-            className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#d4a017] focus:border-transparent"
+            defaultValue={text('phone')}
+            {...errorProps('phone', errors.phone)}
+            className={controlClass(!!errors.phone)}
           />
+          <FieldError name="phone" message={errors.phone} />
         </div>
       </div>
 
@@ -71,50 +96,57 @@ export default function EmploymentForm() {
           type="email"
           required
           autoComplete="email"
-          className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#d4a017] focus:border-transparent"
+          defaultValue={text('email')}
+          {...errorProps('email', errors.email)}
+          className={controlClass(!!errors.email)}
         />
+        <FieldError name="email" message={errors.email} />
       </div>
 
       <div>
-        <fieldset>
+        <fieldset {...group('days')}>
           <legend className="block text-sm font-medium text-gray-700 mb-2">
             Days Available <span aria-hidden="true">*</span>
           </legend>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-            {DAYS.map((day) => (
+            {WORK_DAYS.map((day) => (
               <label key={day} className="flex items-center gap-2 py-1 text-sm cursor-pointer">
                 <input
                   type="checkbox"
                   name="days"
                   value={day}
+                  defaultChecked={chosenDays.includes(day)}
                   className="w-4 h-4 text-[#d4a017] border-gray-300 rounded focus:ring-[#d4a017]"
                 />
                 <span className="text-gray-600">{day}</span>
               </label>
             ))}
           </div>
+          <FieldError name="days" message={errors.days} />
         </fieldset>
       </div>
 
       <div>
-        <fieldset>
+        <fieldset {...group('shift')}>
           <legend className="block text-sm font-medium text-gray-700 mb-2">
             Preferred Shift <span aria-hidden="true">*</span>
           </legend>
           <div className="flex gap-4">
-            {['AM', 'PM', 'Either'].map((shift) => (
+            {SHIFT_OPTIONS.map((shift) => (
               <label key={shift} className="flex items-center gap-2 py-1 text-sm cursor-pointer">
                 <input
                   type="radio"
                   name="shift"
                   value={shift}
                   required
-                  className="w-4 h-4 text-[#d4a017] border-gray-300 focus:ring-[#d4a017]"
+                  defaultChecked={text('shift') === shift}
+                  className={radioClass}
                 />
                 <span className="text-gray-600">{shift}</span>
               </label>
             ))}
           </div>
+          <FieldError name="shift" message={errors.shift} />
         </fieldset>
       </div>
 
@@ -127,12 +159,15 @@ export default function EmploymentForm() {
           name="startDate"
           type="date"
           required
-          className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#d4a017] focus:border-transparent"
+          defaultValue={text('startDate')}
+          {...errorProps('startDate', errors.startDate)}
+          className={controlClass(!!errors.startDate)}
         />
+        <FieldError name="startDate" message={errors.startDate} />
       </div>
 
       <div>
-        <fieldset>
+        <fieldset {...group('citizen')}>
           <legend className="block text-sm font-medium text-gray-700 mb-2">
             Australian Citizen? <span aria-hidden="true">*</span>
           </legend>
@@ -144,18 +179,19 @@ export default function EmploymentForm() {
                   name="citizen"
                   value={answer}
                   required
-                  defaultChecked={answer === 'Yes'}
-                  className="w-4 h-4 text-[#d4a017] border-gray-300 focus:ring-[#d4a017]"
+                  defaultChecked={(text('citizen') ?? 'Yes') === answer}
+                  className={radioClass}
                 />
                 <span className="text-gray-600">{answer}</span>
               </label>
             ))}
           </div>
+          <FieldError name="citizen" message={errors.citizen} />
         </fieldset>
       </div>
 
       <div>
-        <fieldset>
+        <fieldset {...group('clearance')}>
           <legend className="block text-sm font-medium text-gray-700 mb-2">
             Highest Security Clearance? <span aria-hidden="true">*</span>
           </legend>
@@ -167,13 +203,14 @@ export default function EmploymentForm() {
                   name="clearance"
                   value={level}
                   required
-                  defaultChecked={level === 'None'}
-                  className="w-4 h-4 text-[#d4a017] border-gray-300 focus:ring-[#d4a017]"
+                  defaultChecked={(text('clearance') ?? 'None') === level}
+                  className={radioClass}
                 />
                 <span className="text-gray-600">{level}</span>
               </label>
             ))}
           </div>
+          <FieldError name="clearance" message={errors.clearance} />
         </fieldset>
       </div>
 
@@ -183,6 +220,7 @@ export default function EmploymentForm() {
             type="checkbox"
             name="hasExperience"
             value="yes"
+            defaultChecked={text('hasExperience') === 'yes'}
             className="w-4 h-4 mt-0.5 text-[#d4a017] border-gray-300 rounded focus:ring-[#d4a017]"
           />
           <span className="text-gray-600">I have previous cleaning experience</span>
@@ -197,9 +235,12 @@ export default function EmploymentForm() {
           id="message"
           name="message"
           rows={4}
-          className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#d4a017] focus:border-transparent resize-none"
+          defaultValue={text('message')}
+          {...errorProps('message', errors.message)}
+          className={controlClass(!!errors.message, 'resize-none')}
           placeholder="Tell us about your experience or anything else relevant..."
         />
+        <FieldError name="message" message={errors.message} />
       </div>
 
       <div>
@@ -209,6 +250,8 @@ export default function EmploymentForm() {
             name="privacyConsent"
             value="true"
             required
+            defaultChecked={text('privacyConsent') === 'true'}
+            {...errorProps('privacyConsent', errors.privacyConsent)}
             className="w-4 h-4 mt-0.5 text-[#d4a017] border-gray-300 rounded focus:ring-[#d4a017] shrink-0"
           />
           <span className="text-gray-600">
@@ -221,6 +264,7 @@ export default function EmploymentForm() {
             . <span aria-hidden="true">*</span>
           </span>
         </label>
+        <FieldError name="privacyConsent" message={errors.privacyConsent} />
       </div>
 
       <button

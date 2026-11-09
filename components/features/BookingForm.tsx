@@ -5,34 +5,49 @@ import { submitBooking } from '@/app/actions/booking'
 import Link from 'next/link'
 import { SERVICES, LOCATIONS, TIME_SLOTS } from '@/lib/constants'
 import FormGuardFields from '@/components/features/FormGuardFields'
+import { ErrorSummary, FieldError, FormSuccess, controlClass, errorProps } from '@/components/features/FormErrors'
+
+// Field names in the order they appear, with the names used in the error summary.
+const LABELS = {
+  customerName: 'Full name',
+  customerPhone: 'Phone',
+  customerEmail: 'Email',
+  locationId: 'Location',
+  serviceId: 'Service',
+  date: 'Preferred date',
+  timeSlot: 'Preferred time',
+  notes: 'Additional notes',
+}
 
 export default function BookingForm() {
   const [state, action, pending] = useActionState(submitBooking, null)
 
   if (state?.success) {
     return (
-      <div className="text-center py-8">
-        <div className="text-green-500 text-5xl mb-4">✓</div>
+      <FormSuccess className="text-center py-8">
+        <div className="text-green-500 text-5xl mb-4" aria-hidden="true">✓</div>
         <h3 className="text-xl font-bold text-[#102a43]">Booking Request Received!</h3>
         <p className="mt-2 text-gray-600">
           Your reference number is <strong>{state.reference}</strong>.
           <br />
           We&apos;ll confirm your booking via email within 1 business day.
         </p>
-      </div>
+      </FormSuccess>
     )
   }
+
+  const failure = state && !state.success ? state : null
+  const errors = failure?.fieldErrors ?? {}
+  // React clears a form after every submission, so a rejected form refills itself from what was sent.
+  const v = failure?.values ?? {}
+  const text = (name: string) => (typeof v[name] === 'string' ? (v[name] as string) : undefined)
 
   return (
     <form action={action} className="space-y-6">
       <FormGuardFields />
       <h2 className="text-xl font-bold text-[#102a43]">Your Details</h2>
 
-      {state?.error && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-sm text-red-700">
-          {state.error}
-        </div>
-      )}
+      <ErrorSummary error={failure?.error} fieldErrors={failure?.fieldErrors} labels={LABELS} />
 
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
@@ -45,8 +60,11 @@ export default function BookingForm() {
             type="text"
             required
             autoComplete="name"
-            className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#d4a017] focus:border-transparent"
+            defaultValue={text('customerName')}
+            {...errorProps('customerName', errors.customerName)}
+            className={controlClass(!!errors.customerName)}
           />
+          <FieldError name="customerName" message={errors.customerName} />
         </div>
         <div>
           <label htmlFor="customerPhone" className="block text-sm font-medium text-gray-700 mb-1.5">
@@ -58,8 +76,11 @@ export default function BookingForm() {
             type="tel"
             required
             autoComplete="tel"
-            className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#d4a017] focus:border-transparent"
+            defaultValue={text('customerPhone')}
+            {...errorProps('customerPhone', errors.customerPhone)}
+            className={controlClass(!!errors.customerPhone)}
           />
+          <FieldError name="customerPhone" message={errors.customerPhone} />
         </div>
       </div>
 
@@ -73,8 +94,11 @@ export default function BookingForm() {
           type="email"
           required
           autoComplete="email"
-          className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#d4a017] focus:border-transparent"
+          defaultValue={text('customerEmail')}
+          {...errorProps('customerEmail', errors.customerEmail)}
+          className={controlClass(!!errors.customerEmail)}
         />
+        <FieldError name="customerEmail" message={errors.customerEmail} />
       </div>
 
       <hr className="border-gray-100" />
@@ -86,32 +110,41 @@ export default function BookingForm() {
             Location <span aria-hidden="true">*</span>
           </label>
           <select
+            // A dropdown only reads its default when it is created, so rebuild it when the refilled value changes.
+            key={text('locationId') ?? 'none'}
             id="locationId"
             name="locationId"
             required
-            className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#d4a017] focus:border-transparent bg-white"
+            defaultValue={text('locationId') ?? ''}
+            {...errorProps('locationId', errors.locationId)}
+            className={controlClass(!!errors.locationId, 'bg-white')}
           >
             <option value="">Select location</option>
             {LOCATIONS.map((loc) => (
               <option key={loc.id} value={loc.id}>{loc.name}</option>
             ))}
           </select>
+          <FieldError name="locationId" message={errors.locationId} />
         </div>
         <div>
           <label htmlFor="serviceId" className="block text-sm font-medium text-gray-700 mb-1.5">
             Service <span aria-hidden="true">*</span>
           </label>
           <select
+            key={text('serviceId') ?? 'none'}
             id="serviceId"
             name="serviceId"
             required
-            className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#d4a017] focus:border-transparent bg-white"
+            defaultValue={text('serviceId') ?? ''}
+            {...errorProps('serviceId', errors.serviceId)}
+            className={controlClass(!!errors.serviceId, 'bg-white')}
           >
             <option value="">Select service</option>
             {SERVICES.map((s) => (
               <option key={s.slug} value={s.slug}>{s.name}</option>
             ))}
           </select>
+          <FieldError name="serviceId" message={errors.serviceId} />
         </div>
       </div>
 
@@ -126,24 +159,31 @@ export default function BookingForm() {
             type="date"
             required
             min={new Date().toISOString().split('T')[0]}
-            className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#d4a017] focus:border-transparent"
+            defaultValue={text('date')}
+            {...errorProps('date', errors.date)}
+            className={controlClass(!!errors.date)}
           />
+          <FieldError name="date" message={errors.date} />
         </div>
         <div>
           <label htmlFor="timeSlot" className="block text-sm font-medium text-gray-700 mb-1.5">
             Preferred Time <span aria-hidden="true">*</span>
           </label>
           <select
+            key={text('timeSlot') ?? 'none'}
             id="timeSlot"
             name="timeSlot"
             required
-            className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#d4a017] focus:border-transparent bg-white"
+            defaultValue={text('timeSlot') ?? ''}
+            {...errorProps('timeSlot', errors.timeSlot)}
+            className={controlClass(!!errors.timeSlot, 'bg-white')}
           >
             <option value="">Select time slot</option>
             {TIME_SLOTS.map((t) => (
               <option key={t} value={t}>{t}</option>
             ))}
           </select>
+          <FieldError name="timeSlot" message={errors.timeSlot} />
         </div>
       </div>
 
@@ -155,9 +195,12 @@ export default function BookingForm() {
           id="notes"
           name="notes"
           rows={4}
-          className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#d4a017] focus:border-transparent resize-none"
+          defaultValue={text('notes')}
+          {...errorProps('notes', errors.notes)}
+          className={controlClass(!!errors.notes, 'resize-none')}
           placeholder="Site size, access requirements, special instructions..."
         />
+        <FieldError name="notes" message={errors.notes} />
       </div>
 
       <button

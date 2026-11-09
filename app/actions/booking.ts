@@ -4,56 +4,72 @@ import { z } from 'zod'
 import { prisma } from '@/lib/prisma'
 import { sendBookingReceivedToCustomer, sendBookingNotificationToAdmin } from '@/lib/email'
 import { SERVICES, LOCATIONS, TIME_SLOTS } from '@/lib/constants'
-import { guardSubmission, describeError } from '@/lib/form-guard'
+import { screenSubmission, checkRateLimit, describeError } from '@/lib/form-guard'
+import {
+  type FieldErrors,
+  type FormValues,
+  FIX_FIELDS_MESSAGE,
+  fieldErrorsFrom,
+  readValues,
+  text,
+} from '@/lib/form-state'
 
 // Most booking requests one email address can make in 24 hours. Stops the form being used
 // to flood someone else's inbox with acknowledgement emails.
 const MAX_BOOKINGS_PER_EMAIL_PER_DAY = 3
 
+const FIELDS = ['customerName', 'customerPhone', 'customerEmail', 'locationId', 'serviceId', 'date', 'timeSlot', 'notes']
+
+// Today's date in Canberra as YYYY-MM-DD. The server runs in UTC, which can be a day behind Canberra.
+function todayInCanberra() {
+  return new Intl.DateTimeFormat('en-CA', { timeZone: 'Australia/Canberra' }).format(new Date())
+}
+
 const schema = z.object({
-  customerName: z.string().min(2).max(100),
-  customerEmail: z.string().email(),
-  customerPhone: z.string().min(6).max(20),
-  locationId: z.string().min(1),
-  serviceId: z.string().min(1),
-  date: z.string().min(1).refine((d) => {
-    const parsed = new Date(d)
-    const today = new Date(); today.setHours(0,0,0,0)
-    return !isNaN(parsed.getTime()) && parsed >= today
-  }, { message: 'Please select a valid future date.' }),
-  timeSlot: z.enum(TIME_SLOTS),
-  notes: z.string().max(1000).optional(),
+  customerName: z.string().min(2, 'Please enter your full name').max(100, 'Please keep your name under 100 characters'),
+  customerEmail: z.string().email('Please enter a valid email address, like jane@company.com.au'),
+  customerPhone: z
+    .string()
+    .min(6, 'Please enter a phone number we can reach you on')
+    .max(20, 'Please keep your phone number under 20 characters'),
+  locationId: z.string().min(1, 'Please choose a location'),
+  serviceId: z.string().min(1, 'Please choose a service'),
+  date: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, 'Please choose the date you would like')
+    .refine((d) => d >= todayInCanberra(), { message: 'Please choose today or a later date' }),
+  timeSlot: z.enum(TIME_SLOTS, 'Please choose a time'),
+  notes: z.string().max(1000, 'Please keep your notes under 1,000 characters').optional(),
 })
 
 type BookingResult =
   | { success: true; reference: string }
-  | { success: false; error: string }
+  | { success: false; error?: string; fieldErrors?: FieldErrors; values?: FormValues }
 
-export async function submitBooking(
-  _prev: BookingResult | null,
-  formData: FormData
-): Promise<BookingResult> {
-  const guard = await guardSubmission('booking', formData)
-  if (!guard.ok) {
+export async function submitBooking(_prev: BookingResult | null, formData: FormData): Promise<BookingResult> {
+  const values = readValues(formData, FIELDS)
+
+  const screen = screenSubmission(formData)
+  if (!screen.ok) {
     // A caught bot is told it worked, with a throwaway reference, so it doesn't learn it was spotted.
-    return guard.silent
+    return screen.silent
       ? { success: true, reference: 'PENDING' }
-      : { success: false, error: guard.error ?? 'Please try again.' }
+      : { success: false, error: screen.error ?? 'Please try again.', values }
   }
 
   const parsed = schema.safeParse({
-    customerName: formData.get('customerName'),
-    customerEmail: formData.get('customerEmail'),
-    customerPhone: formData.get('customerPhone'),
-    locationId: formData.get('locationId'),
-    serviceId: formData.get('serviceId'),
-    date: formData.get('date'),
-    timeSlot: formData.get('timeSlot'),
-    notes: formData.get('notes') || undefined,
+    customerName: text(formData, 'customerName'),
+    customerEmail: text(formData, 'customerEmail'),
+    customerPhone: text(formData, 'customerPhone'),
+    locationId: text(formData, 'locationId'),
+    serviceId: text(formData, 'serviceId'),
+    date: text(formData, 'date'),
+    timeSlot: text(formData, 'timeSlot'),
+    notes: text(formData, 'notes') || undefined,
   })
 
   if (!parsed.success) {
-    return { success: false, error: 'Please fill in all required fields.' }
+    return { success: false, error: FIX_FIELDS_MESSAGE, fieldErrors: fieldErrorsFrom(parsed.error), values }
   }
 
   const { customerName, customerEmail, customerPhone, locationId, serviceId, date, timeSlot, notes } =
@@ -63,8 +79,14 @@ export async function submitBooking(
   const location = LOCATIONS.find((l) => l.id === locationId)
 
   if (!service || !location) {
-    return { success: false, error: 'Invalid service or location selected.' }
+    const fieldErrors: FieldErrors = {}
+    if (!location) fieldErrors.locationId = 'Please choose one of the locations listed'
+    if (!service) fieldErrors.serviceId = 'Please choose one of the services listed'
+    return { success: false, error: FIX_FIELDS_MESSAGE, fieldErrors, values }
   }
+
+  const limit = await checkRateLimit('booking')
+  if (!limit.ok) return { success: false, error: limit.error, values }
 
   try {
     const recent = await prisma.booking.count({
@@ -74,10 +96,9 @@ export async function submitBooking(
       },
     })
     if (recent >= MAX_BOOKINGS_PER_EMAIL_PER_DAY) {
-      return {
-        success: false,
-        error: 'We already have several booking requests from this email address today. Please call us to arrange anything further.',
-      }
+      const message =
+        'We already have several booking requests from this email address today. Please call us to arrange anything further.'
+      return { success: false, error: message, fieldErrors: { customerEmail: message }, values }
     }
 
     let dbLocation = await prisma.location.findUnique({ where: { slug: locationId } })
@@ -155,7 +176,8 @@ export async function submitBooking(
     })
 
     return { success: true, reference: booking.reference }
-  } catch {
-    return { success: false, error: 'Failed to create booking. Please call us directly.' }
+  } catch (error) {
+    console.error('[booking] could not create the booking', describeError(error))
+    return { success: false, error: 'Failed to create booking. Please call us directly.', values }
   }
 }

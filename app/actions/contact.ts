@@ -3,34 +3,48 @@
 import { z } from 'zod'
 import { prisma } from '@/lib/prisma'
 import { sendContactEmail } from '@/lib/email'
-import { guardSubmission, describeError } from '@/lib/form-guard'
+import { screenSubmission, checkRateLimit, describeError } from '@/lib/form-guard'
+import { CONTACT_SUBJECTS } from '@/lib/constants'
+import {
+  type ActionResult,
+  FIX_FIELDS_MESSAGE,
+  fieldErrorsFrom,
+  readValues,
+  text,
+} from '@/lib/form-state'
+
+const FIELDS = ['name', 'email', 'phone', 'subject', 'message']
 
 const schema = z.object({
-  name: z.string().min(2).max(100),
-  email: z.string().email(),
-  phone: z.string().max(20).optional(),
-  subject: z.string().min(1).max(100),
-  message: z.string().min(10).max(2000),
+  name: z.string().min(2, 'Please enter your full name').max(100, 'Please keep your name under 100 characters'),
+  email: z.string().email('Please enter a valid email address, like jane@company.com.au'),
+  phone: z.string().max(20, 'Please keep your phone number under 20 characters').optional(),
+  subject: z.enum(CONTACT_SUBJECTS, 'Please choose a subject'),
+  message: z
+    .string()
+    .min(10, 'Please write at least 10 characters so we know how to help')
+    .max(2000, 'Please keep your message under 2,000 characters'),
 })
 
-export async function submitContact(
-  _prev: { success: boolean; error?: string } | null,
-  formData: FormData
-): Promise<{ success: boolean; error?: string }> {
-  const guard = await guardSubmission('contact', formData)
-  if (!guard.ok) return guard.silent ? { success: true } : { success: false, error: guard.error }
+export async function submitContact(_prev: ActionResult | null, formData: FormData): Promise<ActionResult> {
+  const values = readValues(formData, FIELDS)
+
+  const screen = screenSubmission(formData)
+  if (!screen.ok) return screen.silent ? { success: true } : { success: false, error: screen.error, values }
 
   const parsed = schema.safeParse({
-    name: formData.get('name'),
-    email: formData.get('email'),
-    phone: formData.get('phone') || undefined,
-    subject: formData.get('subject'),
-    message: formData.get('message'),
+    name: text(formData, 'name'),
+    email: text(formData, 'email'),
+    phone: text(formData, 'phone') || undefined,
+    subject: text(formData, 'subject'),
+    message: text(formData, 'message'),
   })
-
   if (!parsed.success) {
-    return { success: false, error: 'Please check your form entries and try again.' }
+    return { success: false, error: FIX_FIELDS_MESSAGE, fieldErrors: fieldErrorsFrom(parsed.error), values }
   }
+
+  const limit = await checkRateLimit('contact')
+  if (!limit.ok) return { success: false, error: limit.error, values }
 
   // 1. Save first, so the enquiry survives even if the email can't be sent.
   let enquiryId: string | null = null
@@ -59,7 +73,7 @@ export async function submitContact(
 
   // Only a failure if the message was neither saved nor emailed.
   if (!enquiryId && emailError) {
-    return { success: false, error: 'Failed to send message. Please call us directly.' }
+    return { success: false, error: 'Failed to send message. Please call us directly.', values }
   }
   return { success: true }
 }

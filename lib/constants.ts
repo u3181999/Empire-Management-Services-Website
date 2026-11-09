@@ -168,6 +168,18 @@ export const VALUES = [
 // Employment application: options for the eligibility questions (used by the form and validated on the server).
 export const SECURITY_CLEARANCES = ['None', 'Police Check', 'Baseline', 'NV1', 'NV2', 'PV'] as const
 
+// Option lists shared by the public forms and checked again on the server.
+export const CONTACT_SUBJECTS = [
+  'General Enquiry',
+  'Request a Quote',
+  'Booking Enquiry',
+  'Employment',
+  'Complaint or Feedback',
+  'Other',
+] as const
+export const WORK_DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as const
+export const SHIFT_OPTIONS = ['AM', 'PM', 'Either'] as const
+
 export const NAV_ITEMS = [
   { label: 'Home', href: '/' },
   { label: 'About', href: '/about' },

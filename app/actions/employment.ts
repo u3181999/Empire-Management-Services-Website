@@ -3,54 +3,69 @@
 import { z } from 'zod'
 import { prisma } from '@/lib/prisma'
 import { sendContactEmail } from '@/lib/email'
-import { guardSubmission, describeError } from '@/lib/form-guard'
-import { SECURITY_CLEARANCES } from '@/lib/constants'
+import { screenSubmission, checkRateLimit, describeError } from '@/lib/form-guard'
+import { SECURITY_CLEARANCES, SHIFT_OPTIONS, WORK_DAYS } from '@/lib/constants'
+import {
+  type ActionResult,
+  FIX_FIELDS_MESSAGE,
+  fieldErrorsFrom,
+  readValues,
+  text,
+} from '@/lib/form-state'
+
+const SINGLES = ['name', 'phone', 'email', 'startDate', 'shift', 'citizen', 'clearance', 'hasExperience', 'message', 'privacyConsent']
+const MULTIS = ['days']
 
 const schema = z.object({
-  name: z.string().min(2).max(100),
-  email: z.string().email(),
-  phone: z.string().min(6).max(20),
-  shift: z.enum(['AM', 'PM', 'Either']),
-  startDate: z.string().min(1),
-  citizen: z.enum(['Yes', 'No']),
-  clearance: z.enum(SECURITY_CLEARANCES),
+  name: z.string().min(2, 'Please enter your full name').max(100, 'Please keep your name under 100 characters'),
+  email: z.string().email('Please enter a valid email address, like jane@example.com'),
+  phone: z
+    .string()
+    .min(6, 'Please enter a phone number we can reach you on')
+    .max(20, 'Please keep your phone number under 20 characters'),
+  days: z.array(z.enum(WORK_DAYS)).min(1, 'Please choose at least one day you can work'),
+  shift: z.enum(SHIFT_OPTIONS, 'Please choose a preferred shift'),
+  startDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Please choose the date you could start'),
+  citizen: z.enum(['Yes', 'No'], 'Please say whether you are an Australian citizen'),
+  clearance: z.enum(SECURITY_CLEARANCES, 'Please choose your highest security clearance'),
   hasExperience: z.string().optional(),
-  message: z.string().max(1000).optional(),
-  days: z.union([z.string(), z.array(z.string())]).optional(),
+  message: z.string().max(1000, 'Please keep this under 1,000 characters').optional(),
   privacyConsent: z
-    .preprocess((v) => v === 'true' || v === true, z.boolean())
-    .refine((v) => v === true, { message: 'You must accept the privacy policy.' }),
+    .preprocess((v) => v === 'true', z.boolean())
+    .refine((v) => v === true, { message: 'Please tick the box to accept the privacy policy' }),
 })
 
 export async function submitEmploymentApplication(
-  _prev: { success: boolean; error?: string } | null,
+  _prev: ActionResult | null,
   formData: FormData
-): Promise<{ success: boolean; error?: string }> {
-  const guard = await guardSubmission('employment', formData)
-  if (!guard.ok) return guard.silent ? { success: true } : { success: false, error: guard.error }
+): Promise<ActionResult> {
+  const values = readValues(formData, SINGLES, MULTIS)
 
-  const days = formData.getAll('days')
+  const screen = screenSubmission(formData)
+  if (!screen.ok) return screen.silent ? { success: true } : { success: false, error: screen.error, values }
 
   const parsed = schema.safeParse({
-    name: formData.get('name'),
-    email: formData.get('email'),
-    phone: formData.get('phone'),
-    shift: formData.get('shift'),
-    startDate: formData.get('startDate'),
-    citizen: formData.get('citizen'),
-    clearance: formData.get('clearance'),
-    hasExperience: formData.get('hasExperience') || undefined,
-    message: formData.get('message') || undefined,
-    days,
-    privacyConsent: formData.get('privacyConsent'),
+    name: text(formData, 'name'),
+    email: text(formData, 'email'),
+    phone: text(formData, 'phone'),
+    days: formData.getAll('days').filter((d): d is string => typeof d === 'string'),
+    shift: text(formData, 'shift'),
+    startDate: text(formData, 'startDate'),
+    citizen: text(formData, 'citizen'),
+    clearance: text(formData, 'clearance'),
+    hasExperience: text(formData, 'hasExperience') || undefined,
+    message: text(formData, 'message') || undefined,
+    privacyConsent: text(formData, 'privacyConsent'),
   })
-
   if (!parsed.success) {
-    return { success: false, error: 'Please check your form entries and try again.' }
+    return { success: false, error: FIX_FIELDS_MESSAGE, fieldErrors: fieldErrorsFrom(parsed.error), values }
   }
 
-  const { name, email, phone, shift, startDate, citizen, clearance, hasExperience, message } = parsed.data
-  const daysAvailable = days.length > 0 ? days.join(', ') : 'Not specified'
+  const limit = await checkRateLimit('employment')
+  if (!limit.ok) return { success: false, error: limit.error, values }
+
+  const { name, email, phone, days, shift, startDate, citizen, clearance, hasExperience, message } = parsed.data
+  const daysAvailable = days.join(', ')
 
   // 1. Save first, so the application survives even if the email can't be sent.
   let applicationId: string | null = null
@@ -108,7 +123,7 @@ export async function submitEmploymentApplication(
 
   // Only a failure if the application was neither saved nor emailed.
   if (!applicationId && emailError) {
-    return { success: false, error: 'Failed to submit application. Please email us directly.' }
+    return { success: false, error: 'Failed to submit application. Please email us directly.', values }
   }
   return { success: true }
 }
