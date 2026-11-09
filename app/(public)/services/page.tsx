@@ -1,6 +1,7 @@
 import { ArrowRight } from 'lucide-react'
 import { Button, SectionHeading } from '@/components/ui'
 import ServicesShowcase from '@/components/features/ServicesShowcase'
+import StatsTiles from '@/components/features/StatsTiles'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -21,6 +22,8 @@ export default function ServicesPage() {
           </p>
         </div>
       </section>
+
+      <StatsTiles />
 
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
