@@ -16,7 +16,9 @@ export default function Footer() {
             <p className="mt-3 text-xs text-gray-400">
               Established 1995 · {COMPANY.yearsExperience}+ years · {COMPANY.clientCount}+ clients
             </p>
-            <p className="mt-1 text-xs text-gray-400">ABN {COMPANY.abn}</p>
+            <p className="mt-1 text-xs text-gray-400">
+              {COMPANY.legalName} · ABN {COMPANY.abn}
+            </p>
             <div className="mt-4 flex gap-3">
               <a
                 href="https://www.facebook.com/empirecleaningservices"

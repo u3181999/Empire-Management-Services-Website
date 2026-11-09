@@ -87,7 +87,7 @@ export default function CommercialPage() {
           </h1>
           <p className="mt-6 text-gray-300 text-lg max-w-2xl leading-relaxed">
             Empire Management Services specialises in complex, large-scale commercial cleaning contracts for
-            government, corporate, medical, and strata clients across Canberra, NSW and Queensland.
+            government, corporate, medical, and strata clients across Canberra (ACT) and New South Wales.
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
             <Link

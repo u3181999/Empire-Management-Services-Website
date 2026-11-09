@@ -19,7 +19,7 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Commercial Cleaning Canberra | Empire Management Services',
   description:
-    'Professional commercial and industrial cleaning across Canberra, NSW and QLD. 30+ years, 80+ clients, 100,000m² serviced. Get a free quote today.',
+    'Professional commercial and industrial cleaning across Canberra (ACT) and New South Wales. 30+ years, 80+ clients, 100,000m² serviced. Get a free quote today.',
 }
 
 export default function HomePage() {

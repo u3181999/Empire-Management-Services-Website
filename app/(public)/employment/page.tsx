@@ -24,7 +24,7 @@ export default function EmploymentPage() {
           <h1 className="text-4xl sm:text-5xl font-bold">Join Our Team</h1>
           <p className="mt-4 text-gray-300 max-w-2xl text-lg">
             We&apos;re always looking for reliable, hardworking people to join the Empire Management Services team
-            across Canberra, NSW and Queensland.
+            across Canberra (ACT) and New South Wales.
           </p>
         </div>
       </section>

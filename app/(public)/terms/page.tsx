@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { COMPANY } from '@/lib/constants'
 
 export const metadata: Metadata = {
   title: 'Terms and Conditions',
@@ -13,7 +14,7 @@ export default function TermsPage() {
       <section className="bg-navy-900 text-white py-14">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-3xl sm:text-4xl font-bold">Terms and Conditions</h1>
-          <p className="mt-3 text-gray-400 text-sm">Last updated: June 2025</p>
+          <p className="mt-3 text-gray-400 text-sm">Last updated: November 2026</p>
         </div>
       </section>
 
@@ -27,14 +28,14 @@ export default function TermsPage() {
           </p>
           <p>
             &ldquo;Empire&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;, or &ldquo;our&rdquo; refers
-            to Empire Management Services Pty Ltd (ABN provided on request), Fyshwick ACT 2609,
-            Australia.
+            to {COMPANY.legalName} (ABN {COMPANY.abn}), trading as {COMPANY.name}, {COMPANY.suburb}{' '}
+            {COMPANY.state} {COMPANY.postcode}, Australia.
           </p>
 
           <h2>1. Services</h2>
           <p>
             Empire provides commercial and industrial cleaning services across the Australian
-            Capital Territory, New South Wales, and Queensland. The specific scope, schedule, and
+            Capital Territory and New South Wales. The specific scope, schedule, and
             pricing of services will be agreed in writing prior to commencement.
           </p>
           <p>
@@ -50,7 +51,7 @@ export default function TermsPage() {
           </p>
           <p>
             You must provide accurate information when making a booking. Providing false or
-            misleading information may result in cancellation without refund.
+            misleading information may result in your booking being declined or cancelled.
           </p>
 
           <h2>3. Cancellations and Rescheduling</h2>
@@ -85,8 +86,8 @@ export default function TermsPage() {
             stated.
           </p>
           <p>
-            We reserve the right to charge interest on overdue amounts at the rate prescribed under
-            the <em>Penalty Interest Rates Act 1983</em> (Vic) or applicable ACT legislation.
+            We may charge interest on overdue amounts where your service agreement provides for it,
+            at a rate permitted by law.
           </p>
 
           <h2>5. Liability</h2>
