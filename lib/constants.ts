@@ -144,6 +144,9 @@ export const VALUES = [
   },
 ] as const
 
+// Employment application: options for the eligibility questions (used by the form and validated on the server).
+export const SECURITY_CLEARANCES = ['None', 'Police Check', 'Baseline', 'NV1', 'NV2', 'PV'] as const
+
 export const NAV_ITEMS = [
   { label: 'Home', href: '/' },
   { label: 'About', href: '/about' },

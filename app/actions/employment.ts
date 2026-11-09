@@ -4,6 +4,7 @@ import { z } from 'zod'
 import { sendContactEmail } from '@/lib/email'
 import { headers } from 'next/headers'
 import { contactLimiter } from '@/lib/rate-limit'
+import { SECURITY_CLEARANCES } from '@/lib/constants'
 
 const schema = z.object({
   name: z.string().min(2).max(100),
@@ -11,6 +12,8 @@ const schema = z.object({
   phone: z.string().min(6).max(20),
   shift: z.enum(['AM', 'PM', 'Either']),
   startDate: z.string().min(1),
+  citizen: z.enum(['Yes', 'No']),
+  clearance: z.enum(SECURITY_CLEARANCES),
   hasExperience: z.string().optional(),
   message: z.string().max(1000).optional(),
   days: z.union([z.string(), z.array(z.string())]).optional(),
@@ -39,6 +42,8 @@ export async function submitEmploymentApplication(
     phone: formData.get('phone'),
     shift: formData.get('shift'),
     startDate: formData.get('startDate'),
+    citizen: formData.get('citizen'),
+    clearance: formData.get('clearance'),
     hasExperience: formData.get('hasExperience') || undefined,
     message: formData.get('message') || undefined,
     days,
@@ -49,7 +54,7 @@ export async function submitEmploymentApplication(
     return { success: false, error: 'Please check your form entries and try again.' }
   }
 
-  const { name, email, phone, shift, startDate, hasExperience, message } = parsed.data
+  const { name, email, phone, shift, startDate, citizen, clearance, hasExperience, message } = parsed.data
   const daysAvailable = Array.isArray(days) ? days.join(', ') : (days ?? 'Not specified')
 
   try {
@@ -63,6 +68,8 @@ export async function submitEmploymentApplication(
         `Days Available: ${daysAvailable}`,
         `Preferred Shift: ${shift}`,
         `Available Start Date: ${startDate}`,
+        `Australian Citizen: ${citizen}`,
+        `Highest Security Clearance: ${clearance}`,
         `Previous Experience: ${hasExperience === 'yes' ? 'Yes' : 'No'}`,
         message ? `\nAdditional Info:\n${message}` : '',
       ]
