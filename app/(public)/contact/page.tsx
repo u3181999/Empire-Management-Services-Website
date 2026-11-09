@@ -4,7 +4,8 @@ import ContactForm, { PrefilledContactForm } from '@/components/features/Contact
 import { Suspense } from 'react'
 import Link from 'next/link'
 import type { Metadata } from 'next'
-import { pageSeo } from '@/lib/seo'
+import { pageSeo, localBusinessSchema } from '@/lib/seo'
+import JsonLd from '@/components/seo/JsonLd'
 
 export const metadata: Metadata = {
   ...pageSeo('/contact'),
@@ -15,6 +16,7 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
+      <JsonLd data={localBusinessSchema()} />
       <section className="bg-[#102a43] text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl sm:text-5xl font-bold">Contact Us</h1>

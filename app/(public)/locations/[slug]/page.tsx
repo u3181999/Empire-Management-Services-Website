@@ -5,7 +5,8 @@ import { LOCATIONS, SERVICES, COMPANY, OFFICE_HOURS } from '@/lib/constants'
 import { Button, SectionHeading } from '@/components/ui'
 import LocationMap from '@/components/features/LocationMap'
 import type { Metadata } from 'next'
-import { pageSeo } from '@/lib/seo'
+import { pageSeo, localBusinessSchema, breadcrumbSchema } from '@/lib/seo'
+import JsonLd from '@/components/seo/JsonLd'
 
 export function generateStaticParams() {
   return LOCATIONS.map((l) => ({ slug: l.id }))
@@ -31,7 +32,7 @@ const LOCATION_CONTENT: Record<string, {
   areas: string[]
 }> = {
   canberra: {
-    coordinates: { lat: -35.3273894, lng: 149.1860957 }, // 89-91 Tennant St, Fyshwick
+    coordinates: { lat: COMPANY.geo.latitude, lng: COMPANY.geo.longitude }, // 89-91 Tennant St, Fyshwick
     headline: 'Commercial Cleaning in Canberra & the ACT',
     description:
       'Empire Management Services has been delivering professional commercial cleaning across Canberra and the ACT for over 30 years. Our Fyshwick head office serves government departments, commercial buildings, strata complexes, medical centres, and industrial facilities throughout the territory.',
@@ -61,6 +62,13 @@ export default async function LocationPage(props: PageProps<'/locations/[slug]'>
 
   const featuredServices = SERVICES.slice(0, 6)
 
+  const crumbs = breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: location.name, path: `/locations/${slug}` },
+  ])
+  // Only the head-office page shows the full address, phone and hours the business data describes.
+  const structuredData = location.isHeadOffice ? [localBusinessSchema(), crumbs] : [crumbs]
+
   // Street address as Google Maps understands it (only used for the head office map)
   const streetAddress = `${COMPANY.address}, ${COMPANY.suburb} ${COMPANY.state} ${COMPANY.postcode}`
   const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(streetAddress)}`
@@ -68,6 +76,7 @@ export default async function LocationPage(props: PageProps<'/locations/[slug]'>
 
   return (
     <>
+      <JsonLd data={structuredData} />
       <section className="bg-navy-900 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2 text-gold-500 text-sm font-medium mb-3">

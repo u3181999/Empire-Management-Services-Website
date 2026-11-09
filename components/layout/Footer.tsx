@@ -21,7 +21,7 @@ export default function Footer() {
             </p>
             <div className="mt-4 flex gap-3">
               <a
-                href="https://www.facebook.com/empirecleaningservices"
+                href={COMPANY.social.facebook}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
@@ -32,7 +32,7 @@ export default function Footer() {
                 </svg>
               </a>
               <a
-                href="https://www.linkedin.com/company/empire-management-services"
+                href={COMPANY.social.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"

@@ -15,7 +15,8 @@ import {
 } from 'lucide-react'
 import { COMPANY, VALUES } from '@/lib/constants'
 import type { Metadata } from 'next'
-import { pageSeo } from '@/lib/seo'
+import { pageSeo, localBusinessSchema, websiteSchema } from '@/lib/seo'
+import JsonLd from '@/components/seo/JsonLd'
 
 export const metadata: Metadata = {
   ...pageSeo('/'),
@@ -27,6 +28,7 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
+      <JsonLd data={[localBusinessSchema(), websiteSchema()]} />
       <Header />
       <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
 

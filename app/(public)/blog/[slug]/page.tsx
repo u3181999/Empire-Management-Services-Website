@@ -4,7 +4,8 @@ import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import DOMPurify from 'isomorphic-dompurify'
 import type { Metadata } from 'next'
-import { pageSeo } from '@/lib/seo'
+import { pageSeo, blogPostSchema, breadcrumbSchema } from '@/lib/seo'
+import JsonLd from '@/components/seo/JsonLd'
 
 export async function generateMetadata(props: PageProps<'/blog/[slug]'>): Promise<Metadata> {
   const { slug } = await props.params
@@ -30,6 +31,16 @@ export default async function BlogPostPage(props: PageProps<'/blog/[slug]'>) {
 
   return (
     <>
+      <JsonLd
+        data={[
+          blogPostSchema({ ...post, categoryName: post.category?.name }),
+          breadcrumbSchema([
+            { name: 'Home', path: '/' },
+            { name: 'Blog', path: '/blog' },
+            { name: post.title, path: `/blog/${slug}` },
+          ]),
+        ]}
+      />
       <section className="bg-navy-900 text-white py-14">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link

@@ -4,7 +4,8 @@ import { ArrowLeft, ArrowRight, CheckCircle2, Phone } from 'lucide-react'
 import { SERVICES, COMPANY } from '@/lib/constants'
 import { Button, Badge, Card } from '@/components/ui'
 import type { Metadata } from 'next'
-import { pageSeo } from '@/lib/seo'
+import { pageSeo, serviceSchema, breadcrumbSchema } from '@/lib/seo'
+import JsonLd from '@/components/seo/JsonLd'
 
 export function generateStaticParams() {
   return SERVICES.map((s) => ({ slug: s.slug }))
@@ -157,6 +158,16 @@ export default async function ServiceDetailPage(props: PageProps<'/services/[slu
 
   return (
     <>
+      <JsonLd
+        data={[
+          serviceSchema(service),
+          breadcrumbSchema([
+            { name: 'Home', path: '/' },
+            { name: 'Services', path: '/services' },
+            { name: service.name, path: `/services/${slug}` },
+          ]),
+        ]}
+      />
       <section className="bg-navy-900 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link

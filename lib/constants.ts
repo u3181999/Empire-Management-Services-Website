@@ -20,6 +20,12 @@ export const COMPANY = {
   sitesM2: 100000,
   staffCount: 100,
   weeklyHours: 5000,
+  // Head office position (89-91 Tennant St, Fyshwick): used by the map and the structured data.
+  geo: { latitude: -35.3273894, longitude: 149.1860957 },
+  social: {
+    facebook: 'https://www.facebook.com/empirecleaningservices',
+    linkedin: 'https://www.linkedin.com/company/empire-management-services',
+  },
 } as const
 
 // Head-office hours. Used by the location page and the chatbot so they cannot drift apart.
@@ -27,6 +33,12 @@ export const OFFICE_HOURS = {
   weekdays: 'Monday – Friday: 7:00am – 5:00pm',
   saturday: 'Saturday: By appointment',
   sunday: 'Sunday: Closed',
+  // The same weekday hours in machine-readable form (structured data). Keep in step with `weekdays` above.
+  schema: {
+    days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+    opens: '07:00',
+    closes: '17:00',
+  },
 } as const
 
 export const LOCATIONS = [
