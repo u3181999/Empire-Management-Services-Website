@@ -4,6 +4,7 @@ import { z } from 'zod'
 import { prisma } from '@/lib/prisma'
 import { sendBookingReceivedToCustomer, sendBookingNotificationToAdmin } from '@/lib/email'
 import { SERVICES, LOCATIONS, TIME_SLOTS } from '@/lib/constants'
+import { todayInCanberra, latestBookingDate, isRealDate } from '@/lib/dates'
 import { screenSubmission, checkRateLimit, describeError } from '@/lib/form-guard'
 import {
   type FieldErrors,
@@ -20,24 +21,35 @@ const MAX_BOOKINGS_PER_EMAIL_PER_DAY = 3
 
 const FIELDS = ['customerName', 'customerPhone', 'customerEmail', 'locationId', 'serviceId', 'date', 'timeSlot', 'notes']
 
-// Today's date in Canberra as YYYY-MM-DD. The server runs in UTC, which can be a day behind Canberra.
-function todayInCanberra() {
-  return new Intl.DateTimeFormat('en-CA', { timeZone: 'Australia/Canberra' }).format(new Date())
-}
-
 const schema = z.object({
-  customerName: z.string().min(2, 'Please enter your full name').max(100, 'Please keep your name under 100 characters'),
-  customerEmail: z.string().email('Please enter a valid email address, like jane@company.com.au'),
+  customerName: z
+    .string()
+    .min(2, 'Please enter your full name')
+    .max(100, 'Please keep your name under 100 characters')
+    // Anything a real name or business contact might contain, but no control characters or markup.
+    .refine((n) => !/[<>\p{Cc}]/u.test(n), { message: 'Please remove any < or > characters from your name' }),
+  customerEmail: z
+    .string()
+    .max(254, 'Please enter a valid email address, like jane@company.com.au')
+    .email('Please enter a valid email address, like jane@company.com.au')
+    // Stored in lower case so the "3 requests per day" limit cannot be dodged with Jane@ vs jane@.
+    .transform((e) => e.toLowerCase()),
   customerPhone: z
     .string()
-    .min(6, 'Please enter a phone number we can reach you on')
-    .max(20, 'Please keep your phone number under 20 characters'),
+    .max(20, 'Please keep your phone number under 20 characters')
+    .regex(/^\+?[\d\s()-]+$/, 'Please use only numbers, spaces, + ( ) and - in your phone number')
+    .refine((p) => p.replace(/\D/g, '').length >= 8, {
+      message: 'Please enter a phone number we can reach you on, with the area code',
+    }),
   locationId: z.string().min(1, 'Please choose a location'),
   serviceId: z.string().min(1, 'Please choose a service'),
   date: z
     .string()
-    .regex(/^\d{4}-\d{2}-\d{2}$/, 'Please choose the date you would like')
-    .refine((d) => d >= todayInCanberra(), { message: 'Please choose today or a later date' }),
+    .refine(isRealDate, { message: 'Please choose a real date' })
+    .refine((d) => !isRealDate(d) || d >= todayInCanberra(), { message: 'Please choose today or a later date' })
+    .refine((d) => !isRealDate(d) || d <= latestBookingDate(), {
+      message: 'Please choose a date within the next 12 months, or call us for longer-term arrangements',
+    }),
   timeSlot: z.enum(TIME_SLOTS, 'Please choose a time'),
   notes: z.string().max(1000, 'Please keep your notes under 1,000 characters').optional(),
 })
@@ -140,8 +152,9 @@ export async function submitBooking(_prev: BookingResult | null, formData: FormD
       },
     })
 
+    // The date is a calendar day stored as midnight UTC, so format it in UTC or it can shift by a day.
     const formattedDate = new Date(date).toLocaleDateString('en-AU', {
-      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC',
     })
 
     const emailResults = await Promise.allSettled([

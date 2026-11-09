@@ -67,7 +67,7 @@ export default async function AdminDashboard() {
                   <td className="py-3 text-gray-900">{b.customerName}</td>
                   <td className="py-3 text-gray-600">{b.service.name}</td>
                   <td className="py-3 text-gray-600">
-                    {new Date(b.date).toLocaleDateString('en-AU')}
+                    {new Date(b.date).toLocaleDateString('en-AU', { timeZone: 'UTC' })}
                   </td>
                   <td className="py-3">
                     <StatusBadge status={b.status} />

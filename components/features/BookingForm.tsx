@@ -1,9 +1,10 @@
 'use client'
 
-import { useActionState } from 'react'
+import { useActionState, useSyncExternalStore } from 'react'
 import { submitBooking } from '@/app/actions/booking'
 import Link from 'next/link'
-import { SERVICES, LOCATIONS, TIME_SLOTS } from '@/lib/constants'
+import { SERVICES, LOCATIONS, TIME_SLOTS, OFFICE_HOURS } from '@/lib/constants'
+import { todayInCanberra, addDays, MAX_BOOKING_DAYS_AHEAD } from '@/lib/dates'
 import FormGuardFields from '@/components/features/FormGuardFields'
 import { ErrorSummary, FieldError, FormSuccess, controlClass, errorProps } from '@/components/features/FormErrors'
 
@@ -19,8 +20,15 @@ const LABELS = {
   notes: 'Additional notes',
 }
 
+const noSubscribe = () => () => {}
+
 export default function BookingForm() {
   const [state, action, pending] = useActionState(submitBooking, null)
+
+  // The earliest and latest dates the date picker offers, in Canberra time. Worked out in the browser (the server
+  // snapshot is empty, so a build never freezes a stale date) and the server checks the same rules again.
+  const earliest = useSyncExternalStore(noSubscribe, todayInCanberra, () => '')
+  const latest = earliest ? addDays(earliest, MAX_BOOKING_DAYS_AHEAD) : ''
 
   if (state?.success) {
     return (
@@ -158,7 +166,8 @@ export default function BookingForm() {
             name="date"
             type="date"
             required
-            min={new Date().toISOString().split('T')[0]}
+            min={earliest || undefined}
+            max={latest || undefined}
             defaultValue={text('date')}
             {...errorProps('date', errors.date)}
             className={controlClass(!!errors.date)}
@@ -186,6 +195,10 @@ export default function BookingForm() {
           <FieldError name="timeSlot" message={errors.timeSlot} />
         </div>
       </div>
+      <p className="-mt-2 text-xs text-gray-600">
+        Our office is open {OFFICE_HOURS.weekdays.replace('Monday – Friday: ', 'Monday to Friday, ')}. You can ask for
+        evenings or weekends and we will confirm what we can do when we reply.
+      </p>
 
       <div>
         <label htmlFor="notes" className="block text-sm font-medium text-gray-700 mb-1.5">

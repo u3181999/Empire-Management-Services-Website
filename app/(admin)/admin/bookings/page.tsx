@@ -71,7 +71,7 @@ export default async function AdminBookingsPage(props: PageProps<'/admin/booking
                   <td className="px-4 py-3 text-gray-600">{b.service.name}</td>
                   <td className="px-4 py-3 text-gray-600">{b.location.name}</td>
                   <td className="px-4 py-3 text-gray-600">
-                    <p>{new Date(b.date).toLocaleDateString('en-AU')}</p>
+                    <p>{new Date(b.date).toLocaleDateString('en-AU', { timeZone: 'UTC' })}</p>
                     <p className="text-xs text-gray-400">{b.timeSlot}</p>
                   </td>
                   <td className="px-4 py-3">
