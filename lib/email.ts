@@ -54,6 +54,8 @@ export async function sendBookingReceivedToCustomer({
   return deliver({
     from: FROM,
     to: customerEmail,
+    // noreply@ has no mailbox, so a customer who hits Reply is sent to the public contact address instead.
+    replyTo: COMPANY.email,
     subject: `Booking Request Received – ${service} on ${date}`,
     html: `
       <h2>Booking Request Received</h2>
@@ -96,6 +98,8 @@ export async function sendBookingNotificationToAdmin({
   return deliver({
     from: FROM,
     to: ADMIN_EMAIL,
+    // Staff can press Reply to answer the customer directly (like the contact-form notification).
+    replyTo: customerEmail,
     subject: `New Booking: ${service} – ${date} ${time}`,
     html: `
       <h2>New Booking Received</h2>

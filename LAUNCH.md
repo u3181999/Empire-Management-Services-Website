@@ -60,14 +60,42 @@ git-ignored and no commit contains a real connection string). Replace the passwo
 ## 3. Domain
 
 1. Vercel → **Settings → Domains** → add `empirecleaning.com.au` and `www.empirecleaning.com.au`.
-2. At the DNS host, add the records Vercel shows (`A` for the apex, `CNAME` for `www`).
+2. At the DNS host, add the records Vercel shows (`A` for the apex, `CNAME` for `www`). Change **only** those two:
+   the apex currently points at the old web host (`103.152.248.115`, checked 9 Nov 2026), and the `MX`, `TXT` and
+   `autodiscover`-type records must stay exactly as they are, or staff email stops.
 3. `www` redirects to the apex automatically; HTTPS is issued by Vercel.
 
 ## 4. Email (Resend) — contact form and bookings depend on this
 
-1. resend.com → **Domains → Add Domain** → `empirecleaning.com.au`.
-2. Add the SPF / DKIM (and DMARC, recommended) DNS records, then **Verify**.
-3. Mail is sent from `noreply@empirecleaning.com.au` and delivered to `ADMIN_EMAIL`.
+Your email is on **Microsoft 365** (checked 9 Nov 2026: the MX record points to Outlook, and the root SPF record is
+`v=spf1 include:spf.protection.outlook.com -all`). Resend sends through its own `send` subdomain, so **do not change
+or delete the existing MX, SPF (the root `TXT` starting `v=spf1`) or `mscid` records, and never add a second SPF record
+on the root domain**: that would break your normal staff email. Do these in order:
+
+1. **Mailbox.** In the Microsoft 365 admin centre, confirm `admin@empirecleaning.com.au` is a real mailbox, shared
+   mailbox, group or alias that accepts mail from outside the company. Booking, contact and job-application
+   notifications arrive there (`ADMIN_EMAIL`). `noreply@` needs no mailbox: replies are redirected to `admin@`.
+2. **Resend domain.** resend.com → sign in → **Domains → Add Domain** → `empirecleaning.com.au` (closest region offered).
+   Resend then shows about three DNS records (usually an `MX` and a `TXT` on `send`, and a `TXT` on `resend._domainkey`).
+3. **DNS.** At the place that manages the DNS for `empirecleaning.com.au`, add exactly those records (copy and paste
+   the values; do not retype). Back in Resend click **Verify**. It can take a few minutes, sometimes a few hours.
+4. **DMARC (recommended; none exists today).** Add a `TXT` record named `_dmarc` with the value
+   `v=DMARC1; p=none; rua=mailto:admin@empirecleaning.com.au`. `p=none` only monitors; do not tighten it later
+   without reading the reports first.
+5. **API key.** Resend → **API Keys → Create API Key** → permission **Sending access**, domain
+   `empirecleaning.com.au`. Copy it once. It is a password: paste it only into Vercel, never into a chat or email. If
+   it is ever exposed, delete it in Resend and create a new one.
+6. **Vercel.** Project → **Settings → Environment Variables → Production**: add `RESEND_API_KEY` (the key; tick
+   **Sensitive**) and `ADMIN_EMAIL` = `admin@empirecleaning.com.au`. Then **Deployments → ⋯ → Redeploy**, because
+   new variables only apply to new deployments.
+7. **Test** (section 5 below).
+
+Mail is sent from `noreply@empirecleaning.com.au`. A customer's reply to the booking acknowledgement goes to
+`admin@empirecleaning.com.au`, and **Reply** on a booking or contact notification goes to the customer.
+
+If the first test message lands in **Junk**: it is sent from your own domain into your own Microsoft 365 mailbox, so
+Microsoft can be cautious until the DKIM record above verifies. Mark it "Not junk", and if it keeps happening add an
+allow entry for `noreply@empirecleaning.com.au` (Microsoft 365 → Defender → Policies → Tenant Allow/Block List).
 
 ## 5. After deploy — smoke test
 
@@ -76,7 +104,9 @@ git-ignored and no commit contains a real connection string). Replace the passwo
       `/admin/enquiries` marked "Emailed". If it shows "Email failed — follow up", the message is safe but
       the email setup (step 4) is wrong; fix that before launch
 - [ ] Employment application → same two checks (including the citizenship / clearance answers)
-- [ ] Booking → customer confirmation + admin notification arrive
+- [ ] Booking (use your own personal email as the customer) → the acknowledgement arrives there, the notification
+      arrives at `admin@`, pressing **Reply** on it addresses the customer, and replying to the acknowledgement
+      reaches `admin@`
 - [ ] Vercel → Project → **Cron Jobs** lists `/api/cron/cleanup` (daily); trigger it once with **Run** and
       confirm it returns `{"ok":true,...}`
 - [ ] Vercel → **Analytics** shows your own visit after a minute (not if you pressed Decline)
