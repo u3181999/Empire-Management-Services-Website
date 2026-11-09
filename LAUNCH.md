@@ -9,10 +9,10 @@ email sender all read the domain from one place (`lib/site.ts`) and a link-previ
 The domain lives in one setting: `NEXT_PUBLIC_SITE_URL`. If the domain ever changes, change that variable
 (and `NEXTAUTH_URL`, and the `www` redirect host in `vercel.json`).
 
-## 1. Admin password (do first)
+## 1. Admin password
 
-The admin account (`admin@empirecleaning.com.au`) still uses the default seed password. Change it
-before the site is public (PowerShell, from the project folder):
+Done: checked on 9 Nov 2026, the admin account (`admin@empirecleaning.com.au`) no longer uses the default
+seed password. To change it again later (PowerShell, from the project folder):
 
 ```powershell
 $env:NEW_ADMIN_PASSWORD = "choose-a-long-unique-password"; npm run admin:set-password
@@ -31,8 +31,12 @@ $env:NEW_ADMIN_PASSWORD = "choose-a-long-unique-password"; npm run admin:set-pas
 | `NEXT_PUBLIC_SITE_URL` | `https://empirecleaning.com.au` |
 | `ADMIN_EMAIL` | `email@empirecleaning.com.au` |
 | `RESEND_API_KEY` | From resend.com → API Keys |
+| `CRON_SECRET` | A new random string (same command as `NEXTAUTH_SECRET`). Vercel sends it to the daily clean-up job; without it the job refuses to run (safe, but old enquiries are then never deleted) |
 
-3. Deploy.
+3. **Analytics:** Vercel → your project → **Analytics** tab → **Enable**. The code is already in place
+   (cookieless; a visitor who presses "Decline" in the cookie banner is not counted). Until it is enabled the
+   script URL returns 404, which is harmless.
+4. Deploy.
 
 ## 3. Domain
 
@@ -49,13 +53,27 @@ $env:NEW_ADMIN_PASSWORD = "choose-a-long-unique-password"; npm run admin:set-pas
 ## 5. After deploy — smoke test
 
 - [ ] Home, About, Services, Contact, Blog, Terms, Privacy load over https; `www` redirects to apex
-- [ ] Contact form → email arrives at `email@empirecleaning.com.au`
+- [ ] Contact form → email arrives at `email@empirecleaning.com.au`, **and** the message appears in
+      `/admin/enquiries` marked "Emailed". If it shows "Email failed — follow up", the message is safe but
+      the email setup (step 4) is wrong; fix that before launch
+- [ ] Employment application → same two checks (including the citizenship / clearance answers)
 - [ ] Booking → customer confirmation + admin notification arrive
+- [ ] Vercel → Project → **Cron Jobs** lists `/api/cron/cleanup` (daily); trigger it once with **Run** and
+      confirm it returns `{"ok":true,...}`
+- [ ] Vercel → **Analytics** shows your own visit after a minute (not if you pressed Decline)
 - [ ] `/admin/login` works with the new password; the dashboard shows your bookings
 - [ ] `/sitemap.xml`, `/robots.txt` load; paste the site into a chat app to see the link preview
 - [ ] Submit the sitemap in Google Search Console
 
 ## Known limitations
 
-- The rate limiter (`lib/rate-limit.ts`) is in-memory, so on Vercel it is per serverless instance — a soft
-  protection against spam only. Swap for Upstash Redis if abuse appears.
+- Form spam protection (`lib/form-guard.ts`): honeypot + minimum fill time + a database-backed rate limit
+  (5 per hour per connection; 3 for job applications; booking also caps 3 per email address per day). If a
+  determined bot gets through, add Cloudflare Turnstile (free; needs a Cloudflare account and two keys).
+- The admin **login** limiter (`lib/rate-limit.ts`) is still in-memory, so on Vercel it is per serverless
+  instance — a soft protection only.
+- The privacy policy promises enquiries are deleted after 12 months and applications after 6. The stored copies
+  are deleted automatically by the daily job, but copies that were **emailed** to the office stay in the
+  mailbox until someone deletes them, so set a reminder to clear them on the same schedule.
+- Emails that fail to send are logged (Vercel → Logs, search `notification email failed`) and flagged in
+  `/admin/enquiries`; bookings log `email failed` too.
