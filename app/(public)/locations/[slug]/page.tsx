@@ -5,12 +5,14 @@ import { LOCATIONS, SERVICES, COMPANY, OFFICE_HOURS } from '@/lib/constants'
 import { Button, SectionHeading } from '@/components/ui'
 import LocationMap from '@/components/features/LocationMap'
 import type { Metadata } from 'next'
-import { pageSeo, localBusinessSchema, breadcrumbSchema } from '@/lib/seo'
+import { fitTitle, fitDescription, pageSeo, localBusinessSchema, breadcrumbSchema } from '@/lib/seo'
 import JsonLd from '@/components/seo/JsonLd'
 
 export function generateStaticParams() {
   return LOCATIONS.map((l) => ({ slug: l.id }))
 }
+
+const placeName = (name: string) => name.split(' (')[0]
 
 export async function generateMetadata(props: PageProps<'/locations/[slug]'>): Promise<Metadata> {
   const { slug } = await props.params
@@ -18,8 +20,12 @@ export async function generateMetadata(props: PageProps<'/locations/[slug]'>): P
   if (!location) return {}
   return {
     ...pageSeo(`/locations/${slug}`),
-    title: `Commercial Cleaning ${location.name}`,
-    description: `Professional commercial cleaning services in ${location.name}. Contact Empire Management Services — 30+ years experience, ISO certified.`,
+    // "Canberra (Head Office)" is the label on the site; search results only need the place name.
+    title: fitTitle(`Commercial Cleaning ${placeName(location.name)}`),
+    description: fitDescription(`Professional commercial cleaning services in ${placeName(location.name)}.`, [
+      'Contact Empire Management Services: 30+ years experience, ISO certified. Get a free quote.',
+      'Contact Empire Management Services: 30+ years experience, ISO certified.',
+    ]),
   }
 }
 

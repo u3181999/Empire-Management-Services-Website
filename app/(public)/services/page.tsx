@@ -3,11 +3,11 @@ import { Button, SectionHeading } from '@/components/ui'
 import ServicesShowcase from '@/components/features/ServicesShowcase'
 import StatsTiles from '@/components/features/StatsTiles'
 import type { Metadata } from 'next'
-import { pageSeo } from '@/lib/seo'
+import { fitTitle, pageSeo } from '@/lib/seo'
 
 export const metadata: Metadata = {
   ...pageSeo('/services'),
-  title: 'Services',
+  title: fitTitle('Commercial Cleaning Services Canberra'),
   description:
     'Explore our full range of commercial cleaning services including strata, industrial, medical, government, window cleaning, graffiti removal and more.',
 }
@@ -29,6 +29,8 @@ export default function ServicesPage() {
 
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* The service cards below are h3s, so give them an h2 to sit under (screen readers and search engines read the outline). */}
+          <h2 className="sr-only">Our cleaning services</h2>
           <ServicesShowcase />
         </div>
       </section>

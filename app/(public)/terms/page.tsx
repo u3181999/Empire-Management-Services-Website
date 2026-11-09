@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   ...pageSeo('/terms'),
   title: 'Terms and Conditions',
   description:
-    'Terms and Conditions for Empire Management Services — bookings, cancellations, payments and governing law.',
+    'Terms and Conditions for Empire Management Services: how bookings, cancellations, payments, liability and complaints are handled, and the governing law.',
 }
 
 export default function TermsPage() {

@@ -1,13 +1,13 @@
 import EmploymentForm from '@/components/features/EmploymentForm'
 import { CheckCircle2 } from 'lucide-react'
 import type { Metadata } from 'next'
-import { pageSeo } from '@/lib/seo'
+import { fitTitle, pageSeo } from '@/lib/seo'
 
 export const metadata: Metadata = {
   ...pageSeo('/employment'),
-  title: 'Employment',
+  title: fitTitle('Cleaning Jobs Canberra & NSW'),
   description:
-    'Join the Empire Management Services team. Apply now for cleaning positions across Canberra and NSW.',
+    'Join the Empire Management Services team. Apply online for cleaning positions across Canberra and NSW, and tell us your experience and availability.',
 }
 
 const BENEFITS = [

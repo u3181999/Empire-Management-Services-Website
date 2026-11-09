@@ -3,13 +3,13 @@ import { prisma } from '@/lib/prisma'
 import { Search } from 'lucide-react'
 import IndustryNews from '@/components/features/IndustryNews'
 import type { Metadata } from 'next'
-import { pageSeo } from '@/lib/seo'
+import { fitTitle, pageSeo } from '@/lib/seo'
 
 export const metadata: Metadata = {
   ...pageSeo('/blog'),
-  title: 'Blog — Cleaning Tips & Industry Insights',
+  title: fitTitle('Cleaning Tips & Industry News'),
   description:
-    'Cleaning tips, industry news, and insights from the Empire Management Services team.',
+    'Commercial cleaning tips, industry news and practical insights from the Empire Management Services team in Canberra, for building and facility managers.',
 }
 
 export default async function BlogPage(props: PageProps<'/blog'>) {

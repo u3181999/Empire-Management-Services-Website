@@ -40,7 +40,7 @@ const TEAM = [
 export const metadata: Metadata = {
   ...pageSeo('/about'),
   title: 'About Us',
-  description: `Learn about Empire Management Services — ${COMPANY.yearsExperience}+ years of professional commercial cleaning in Canberra and NSW.`,
+  description: `Learn about Empire Management Services: ${COMPANY.yearsExperience}+ years of professional commercial cleaning in Canberra and NSW, ISO-certified systems and ${COMPANY.clientCount}+ clients.`,
 }
 
 export default function AboutPage() {
@@ -212,7 +212,7 @@ export default function AboutPage() {
               ].map(({ icon, title, desc }) => (
                 <div key={title} className="bg-white rounded-xl p-5 border border-green-100 shadow-sm">
                   <span className="text-2xl">{icon}</span>
-                  <h4 className="font-bold text-[#102a43] mt-2 text-sm">{title}</h4>
+                  <h3 className="font-bold text-[#102a43] mt-2 text-sm">{title}</h3>
                   <p className="text-xs text-gray-500 mt-1 leading-relaxed">{desc}</p>
                 </div>
               ))}

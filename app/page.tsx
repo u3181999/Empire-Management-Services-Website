@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   ...pageSeo('/'),
   title: 'Empire Management Services | Commercial Cleaning Canberra',
   description:
-    'Professional commercial and industrial cleaning across Canberra (ACT) and New South Wales. 30+ years, 80+ clients, 100,000m² serviced. Get a free quote today.',
+    'Professional commercial and industrial cleaning across Canberra (ACT) and New South Wales. 30+ years, 80+ clients, 100,000m² serviced. Get a free quote.',
 }
 
 export default function HomePage() {
@@ -41,6 +41,7 @@ export default function HomePage() {
             fill
             className="object-cover object-center opacity-40"
             priority
+            fetchPriority="high"
             aria-hidden="true"
           />
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
@@ -49,7 +50,7 @@ export default function HomePage() {
                 Trusted for 30+ Years
               </span>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
-                Professional Cleaning<br />
+                Commercial Cleaning in Canberra<br />
                 <span className="text-gold-500">Built Around You</span>
               </h1>
               <p className="mt-6 text-lg sm:text-xl text-gray-300 max-w-2xl leading-relaxed">

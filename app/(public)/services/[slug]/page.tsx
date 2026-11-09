@@ -4,7 +4,7 @@ import { ArrowLeft, ArrowRight, CheckCircle2, Phone } from 'lucide-react'
 import { SERVICES, COMPANY } from '@/lib/constants'
 import { Button, Badge, Card } from '@/components/ui'
 import type { Metadata } from 'next'
-import { pageSeo, serviceSchema, breadcrumbSchema } from '@/lib/seo'
+import { fitTitle, fitDescription, pageSeo, serviceSchema, breadcrumbSchema } from '@/lib/seo'
 import JsonLd from '@/components/seo/JsonLd'
 
 export function generateStaticParams() {
@@ -17,8 +17,13 @@ export async function generateMetadata(props: PageProps<'/services/[slug]'>): Pr
   if (!service) return {}
   return {
     ...pageSeo(`/services/${slug}`),
-    title: service.name,
-    description: service.shortDescription,
+    title: fitTitle(service.name, 'Canberra'),
+    // Each service's own sentence, with a closing line that names the company and area where there is room.
+    description: fitDescription(service.shortDescription, [
+      'Delivered by Empire Management Services across Canberra and NSW. Get a free quote.',
+      'Empire Management Services, Canberra and NSW. Get a free quote.',
+      'Get a free quote from Empire Management Services.',
+    ]),
   }
 }
 

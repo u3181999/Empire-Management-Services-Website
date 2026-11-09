@@ -2,12 +2,13 @@ import BookingForm from '@/components/features/BookingForm'
 import { Phone, Mail } from 'lucide-react'
 import { COMPANY } from '@/lib/constants'
 import type { Metadata } from 'next'
-import { pageSeo } from '@/lib/seo'
+import { fitTitle, pageSeo } from '@/lib/seo'
 
 export const metadata: Metadata = {
   ...pageSeo('/booking'),
-  title: 'Book a Service',
-  description: 'Book a commercial cleaning service online. Select your location, service type, and preferred time slot.',
+  title: fitTitle('Book a Cleaning Service'),
+  description:
+    'Book a commercial cleaning service online with Empire Management Services. Choose your location, service and preferred time, and we will confirm by email.',
 }
 
 export default function BookingPage() {

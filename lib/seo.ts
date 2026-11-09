@@ -38,6 +38,52 @@ export function pageSeo(
   }
 }
 
+// ─── Titles and descriptions that fit in search results ───────────────────────────────────────────
+// Google shows roughly 60 characters of a title and 155 of a description, then cuts them off with "...".
+// These helpers choose the fullest wording that still fits, so a long page name is never chopped mid-word.
+
+export const TITLE_MAX = 60
+export const DESCRIPTION_MAX = 155
+
+const BRAND_LONG = ' | Empire Management Services'
+const BRAND_SHORT = ' | Empire'
+
+/** Cut at a word boundary and add an ellipsis. */
+function clip(text: string, max: number): string {
+  if (text.length <= max) return text
+  const cut = text.slice(0, max - 1)
+  return cut.slice(0, Math.max(cut.lastIndexOf(' '), 1)).replace(/[ ,;:.—–-]+$/, '') + '…'
+}
+
+/**
+ * A page title with the company name on the end, using the longest form that fits in 60 characters:
+ * "<name> | Empire Management Services", then "<name> | Empire", then the name alone, then a clipped name.
+ * Returned as { absolute } so the layout's title template does not add the company name a second time.
+ * Pass `extra` (e.g. "Canberra") to try "<name> <extra>" first; it is dropped if it does not fit.
+ */
+export function fitTitle(name: string, extra?: string): { absolute: string } {
+  const bases = extra ? [`${name} ${extra}`, name] : [name]
+  for (const base of bases) {
+    for (const brand of [BRAND_LONG, BRAND_SHORT]) {
+      if ((base + brand).length <= TITLE_MAX) return { absolute: base + brand }
+    }
+  }
+  const last = bases[bases.length - 1]
+  return { absolute: clip(last, TITLE_MAX) }
+}
+
+/**
+ * A meta description: the page's own sentence, plus the first of the optional `extras` that keeps it within 155
+ * characters. List the most helpful (and longest) ending first.
+ */
+export function fitDescription(base: string, extras: string[] = []): string {
+  for (const extra of extras) {
+    const full = `${base} ${extra}`
+    if (full.length <= DESCRIPTION_MAX) return full
+  }
+  return clip(base, DESCRIPTION_MAX)
+}
+
 // ─── Structured data (schema.org JSON-LD) ──────────────────────────────────────────────────────────
 // Only describe what is actually visible on the page the data sits on (Google's rule), and only claim
 // what we can stand behind: no star ratings (a single self-published testimonial does not qualify),
