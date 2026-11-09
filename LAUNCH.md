@@ -18,6 +18,21 @@ seed password. To change it again later (PowerShell, from the project folder):
 $env:NEW_ADMIN_PASSWORD = "choose-a-long-unique-password"; npm run admin:set-password
 ```
 
+### Rotate the database password (do this before launch, ~3 minutes)
+
+The Neon connection string, including its password, was pasted into the development chat, so anyone who can read
+that chat history has database access. It was never committed to the repository (checked on 9 Nov 2026: `.env` is
+git-ignored and no commit contains a real connection string). Replace the password so the old one stops working:
+
+1. console.neon.tech → your project → **Branches** → your branch → **Roles** → the role in your connection string →
+   **Reset password**. Copy the new connection string straight from Neon.
+2. Paste it into your local `.env` as `DATABASE_URL` (replace the old line).
+3. Put the same value in Vercel → **Settings → Environment Variables → `DATABASE_URL`** (Production), then
+   **Redeploy**. (The project already exists at empire-management-services-website.vercel.app. If you ever
+   recreate it, use the new value in the Vercel section below.)
+4. Check: `npx prisma migrate status` (from the project folder) says the schema is up to date, and the live site's
+   contact page still loads. Do **not** paste the new connection string into any chat.
+
 ## 2. Vercel project (~5 minutes)
 
 1. vercel.com → **Add New → Project** → import `u3181999/Empire-Management-Services-Website`. Framework: Next.js (auto).
