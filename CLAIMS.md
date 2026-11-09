@@ -53,6 +53,7 @@ These were not part of the owner's confirmation. They are plausible, but nobody 
 | Regular quality audits and reporting; "audit-ready" | Risk & Compliance | Keep sample audit reports. |
 | "Fully insured and OH&S compliant" | Window cleaning service page | Covered by insurance above; "OH&S compliant" is a legal-compliance claim, so keep the evidence. |
 | "Trusted by leading organisations" | Home | A subjective claim; fine while the client list above is current. |
+| **Strata Management** service and its five benefits (single point of contact, coordination of contractors, regular inspections and reports, prompt response, works alongside your strata manager) | Services page and `/services/strata-management` | Added 9 Nov 2026 with placeholder wording that avoids claiming body-corporate administration (levies, meetings, accounts). Replace it with what Empire really provides. If you do act as the strata manager, check what licence your state or territory requires before saying so. |
 
 ## Optional: show certificate details on the website
 

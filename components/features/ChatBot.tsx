@@ -26,7 +26,7 @@ const FULL_ADDRESS = `${COMPANY.address}, ${COMPANY.suburb} ${COMPANY.state} ${C
 
 const ANSWERS: Record<string, { text: string; cta?: { label: string; href: string } }> = {
   services: {
-    text: 'We offer commercial & residential strata cleaning, industrial cleaning, government, medical centre, shopping centre, window cleaning, high-pressure cleaning, carpet cleaning, waste removal, car park sweeping, and graffiti removal.',
+    text: 'We offer commercial & residential strata cleaning, strata management, government, medical centre, shopping centre, window cleaning, high-pressure cleaning, carpet cleaning, waste removal, car park sweeping, and graffiti removal.',
     cta: { label: 'View all services', href: '/services' },
   },
   booking: {

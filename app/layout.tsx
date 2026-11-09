@@ -17,10 +17,10 @@ export const metadata: Metadata = {
     template: '%s | Empire Management Services',
   },
   description:
-    'Professional commercial and industrial cleaning services in Canberra (ACT) and New South Wales. 30+ years experience. Strata, government, medical, industrial cleaning.',
+    'Professional commercial and industrial cleaning services in Canberra (ACT) and New South Wales. 30+ years experience. Strata cleaning and management, government, medical.',
   keywords: [
     'commercial cleaning Canberra',
-    'industrial cleaning ACT',
+    'strata management Canberra',
     'strata cleaning',
     'government cleaning',
     'medical centre cleaning',

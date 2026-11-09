@@ -48,15 +48,16 @@ const SERVICE_DETAILS: Record<string, { benefits: string[]; suitableFor: string[
     ],
     suitableFor: ['Office buildings', 'Corporate headquarters', 'Multi-tenanted buildings'],
   },
-  'industrial-cleaning': {
+  // Wording to confirm with the business: list only what Empire really provides (see CLAIMS.md).
+  'strata-management': {
     benefits: [
-      'Heavy machinery and equipment cleaning',
-      'Warehouse floor scrubbing and sweeping',
-      'Hazardous material handling compliance',
-      'High-level dusting and cobweb removal',
-      'Oil and grease removal',
+      'One point of contact for your strata scheme',
+      'Coordination of cleaning, maintenance and contractors for common property',
+      'Regular site inspections with reports to the committee or strata manager',
+      'Prompt response to building and common-area issues',
+      'Works alongside your existing strata manager and committee',
     ],
-    suitableFor: ['Manufacturing plants', 'Warehouses', 'Factories', 'Industrial facilities'],
+    suitableFor: ['Owners corporations and strata committees', 'Residential strata complexes', 'Mixed-use developments', 'Commercial strata'],
   },
   'government-departments': {
     benefits: [

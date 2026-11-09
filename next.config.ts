@@ -51,6 +51,8 @@ const nextConfig: NextConfig = {
       { source: '/industry-news', destination: '/blog?category=industry-news', permanent: false },
       // The old case-study page made claims we could not substantiate, so it was removed.
       { source: '/commercial', destination: '/services', permanent: true },
+      // Industrial Cleaning is no longer offered; keep any old link or search result working.
+      { source: '/services/industrial-cleaning', destination: '/services', permanent: true },
     ]
   },
   async headers() {

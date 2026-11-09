@@ -80,11 +80,12 @@ export const SERVICES = [
     category: 'commercial',
   },
   {
-    slug: 'industrial-cleaning',
-    name: 'Industrial Cleaning',
-    shortDescription: 'Heavy-duty cleaning solutions for warehouses, factories, and industrial sites.',
-    icon: 'Factory',
-    category: 'industrial',
+    slug: 'strata-management',
+    name: 'Strata Management',
+    // Wording to confirm with the business: say only what Empire really provides (see CLAIMS.md).
+    shortDescription: 'Practical support for strata schemes, from common-property upkeep to contractor coordination.',
+    icon: 'ClipboardCheck',
+    category: 'commercial',
   },
   {
     slug: 'government-departments',

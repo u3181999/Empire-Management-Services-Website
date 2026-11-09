@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import {
-  ArrowRight, Building2, Building, Factory, Landmark, Stethoscope, ShoppingBag,
+  ArrowRight, Building2, Building, ClipboardCheck, Factory, Landmark, Stethoscope, ShoppingBag,
   Sparkles, Droplets, Recycle, Brush, Car, SprayCan, LayoutGrid,
   type LucideIcon,
 } from 'lucide-react'
@@ -11,7 +11,7 @@ import { SERVICES } from '@/lib/constants'
 
 // Keys match the `icon` field on each entry in SERVICES.
 const SERVICE_ICONS: Record<string, LucideIcon> = {
-  Building2, Building, Factory, Landmark, Stethoscope, ShoppingBag,
+  Building2, Building, ClipboardCheck, Landmark, Stethoscope, ShoppingBag,
   Sparkles, Droplets, Recycle, Brush, Car, SprayCan,
 }
 

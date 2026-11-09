@@ -42,7 +42,7 @@ async function main() {
   const serviceData = [
     { name: 'Commercial & Residential Strata', slug: 'commercial-residential-strata', shortDescription: 'Comprehensive strata cleaning for common areas, lobbies, and facilities.', category: 'commercial', sortOrder: 1 },
     { name: 'Commercial Buildings', slug: 'commercial-buildings', shortDescription: 'Full-service cleaning for offices, corporate buildings, and commercial spaces.', category: 'commercial', sortOrder: 2 },
-    { name: 'Industrial Cleaning', slug: 'industrial-cleaning', shortDescription: 'Heavy-duty cleaning solutions for warehouses, factories, and industrial sites.', category: 'industrial', sortOrder: 3 },
+    { name: 'Strata Management', slug: 'strata-management', shortDescription: 'Practical support for strata schemes, from common-property upkeep to contractor coordination.', category: 'commercial', sortOrder: 3 },
     { name: 'Government Departments', slug: 'government-departments', shortDescription: 'Security-cleared cleaning teams for government buildings and sensitive sites.', category: 'government', sortOrder: 4 },
     { name: 'Medical Centres', slug: 'medical-centres', shortDescription: 'Infection-control compliant cleaning for clinics, hospitals, and healthcare facilities.', category: 'healthcare', sortOrder: 5 },
     { name: 'Shopping Centres', slug: 'shopping-centres', shortDescription: 'High-traffic retail cleaning including food courts, restrooms, and common areas.', category: 'retail', sortOrder: 6 },

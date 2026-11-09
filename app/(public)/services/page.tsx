@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   ...pageSeo('/services'),
   title: fitTitle('Commercial Cleaning Services Canberra'),
   description:
-    'Explore our full range of commercial cleaning services including strata, industrial, medical, government, window cleaning, graffiti removal and more.',
+    'Explore our commercial cleaning and strata management services, including medical, government, window cleaning, graffiti removal and more.',
 }
 
 export default function ServicesPage() {
