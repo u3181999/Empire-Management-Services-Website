@@ -50,7 +50,7 @@ export default function HomePage() {
                 Trusted for 30+ Years
               </span>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
-                Commercial Cleaning in Canberra<br />
+                Commercial Cleaning in Canberra and the Region<br />
                 <span className="text-gold-500">Built Around You</span>
               </h1>
               <p className="mt-6 text-lg sm:text-xl text-gray-300 max-w-2xl leading-relaxed">
