@@ -60,7 +60,8 @@ git-ignored and no commit contains a real connection string). Replace the passwo
 ## 3. Domain
 
 1. Vercel → **Settings → Domains** → add `empirecleaning.com.au` and `www.empirecleaning.com.au`.
-2. At the DNS host, add the records Vercel shows (`A` for the apex, `CNAME` for `www`). Change **only** those two:
+2. In the Microsoft 365 admin centre (Settings → Domains → `empirecleaning.com.au` → DNS records), add the records
+   Vercel shows (`A` for the apex, `CNAME` for `www`). Change **only** those two:
    the apex currently points at the old web host (`103.152.248.115`, checked 9 Nov 2026), and the `MX`, `TXT` and
    `autodiscover`-type records must stay exactly as they are, or staff email stops.
 3. `www` redirects to the apex automatically; HTTPS is issued by Vercel.
@@ -77,8 +78,13 @@ on the root domain**: that would break your normal staff email. Do these in orde
    notifications arrive there (`ADMIN_EMAIL`). `noreply@` needs no mailbox: replies are redirected to `admin@`.
 2. **Resend domain.** resend.com → sign in → **Domains → Add Domain** → `empirecleaning.com.au` (closest region offered).
    Resend then shows about three DNS records (usually an `MX` and a `TXT` on `send`, and a `TXT` on `resend._domainkey`).
-3. **DNS.** At the place that manages the DNS for `empirecleaning.com.au`, add exactly those records (copy and paste
-   the values; do not retype). Back in Resend click **Verify**. It can take a few minutes, sometimes a few hours.
+3. **DNS.** Your DNS is hosted by **Microsoft 365** (checked 9 Nov 2026: the nameservers are
+   `*.bdm.microsoftonline.com`), so add the records there: Microsoft 365 admin centre → **Settings → Domains →**
+   `empirecleaning.com.au` **→ DNS records → Add record** (type `MX` or `TXT` as Resend says; for the host name enter
+   only the part before `.empirecleaning.com.au`, e.g. `send` or `resend._domainkey`). Copy and paste the values from
+   Resend; do not retype. Back in Resend click **Verify**. It can take a few minutes, sometimes a few hours.
+   (Vercel's automatic DNS set-up for Resend only works when Vercel hosts your DNS. Moving your DNS to Vercel is not
+   recommended: every mail record would have to be recreated by hand, and one mistake stops staff email.)
 4. **DMARC (recommended; none exists today).** Add a `TXT` record named `_dmarc` with the value
    `v=DMARC1; p=none; rua=mailto:admin@empirecleaning.com.au`. `p=none` only monitors; do not tighten it later
    without reading the reports first.
