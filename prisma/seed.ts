@@ -6,7 +6,7 @@ import bcrypt from 'bcryptjs'
 
 const pool = new Pool({ connectionString: process.env.DATABASE_URL })
 const adapter = new PrismaPg(pool)
-const prisma = new PrismaClient({ adapter } as never)
+const prisma = new PrismaClient({ adapter })
 
 async function main() {
   console.log('🌱 Seeding database...')
