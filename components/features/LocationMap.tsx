@@ -40,7 +40,7 @@ export default function LocationMap({ lat, lng, name, address, directionsUrl }: 
 
       const icon = L.divIcon({
         className: '', // drop Leaflet's default white square
-        html: '<div class="empire-pin"><div class="empire-pin__head"><img src="/map-pin-logo-navy.png" alt="" width="34" height="34" /></div></div>',
+        html: '<div class="empire-pin"><div class="empire-pin__head"><img src="/map-pin-logo.png" alt="" width="34" height="34" /></div></div>',
         iconSize: [52, 64],
         iconAnchor: [26, 64], // the pin's tip sits exactly on the coordinates
         popupAnchor: [0, -60],

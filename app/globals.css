@@ -68,7 +68,7 @@ body {
   justify-content: center;
   border: 3px solid #d4a017;
   border-radius: 50%;
-  /* Navy, with the emblem recoloured for it (public/map-pin-logo-navy.png): white swoosh, gold star. */
+  /* Navy. The emblem keeps its own colours; public/map-pin-logo.png has a thin white outline so it stays readable on navy. */
   background: #102a43;
 }
 .empire-pin__head img {
