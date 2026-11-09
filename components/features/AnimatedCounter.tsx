@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { flushSync } from 'react-dom'
 
 interface AnimatedCounterProps {
   end: number
@@ -45,15 +46,15 @@ export default function AnimatedCounter({
       frame = requestAnimationFrame(tick)
     }
 
-    // Off-screen now: reset to 0 so the count-up is visible when it arrives.
-    const alreadyVisible = el.getBoundingClientRect().top < window.innerHeight
-    if (!alreadyVisible) setValue(0)
+    // The real number stays painted until the tile is actually on screen, so a crawler, a screenshot tool or a
+    // printout never sees "0+". The count then restarts from 0 as the tile comes into view.
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           observer.disconnect()
-          setValue(0)
+          // flushSync paints the 0 before the next frame, so the final number never flashes before the count-up.
+          flushSync(() => setValue(0))
           run()
         }
       },

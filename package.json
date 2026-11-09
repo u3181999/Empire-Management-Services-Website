@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "predev": "node -e \"const fs=require('fs');const f='app/(public)/page.tsx';if(fs.existsSync(f)){fs.unlinkSync(f);console.log('Removed duplicate route: '+f)}\"",
     "dev": "next dev",
     "postinstall": "prisma generate",
     "build": "next build",
@@ -16,7 +15,6 @@
     "@hookform/resolvers": "^5.4.0",
     "@prisma/adapter-pg": "^7.8.0",
     "@prisma/client": "^7.8.0",
-    "@types/dompurify": "^3.0.5",
     "@types/js-cookie": "^3.0.6",
     "@vercel/analytics": "2.0.1",
     "bcryptjs": "^3.0.3",

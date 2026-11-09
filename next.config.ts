@@ -2,6 +2,20 @@ import type { NextConfig } from "next";
 
 const isProd = process.env.NODE_ENV === 'production'
 
+// Stop a live deployment going out with a sign-in address that points at a developer's computer. With
+// NEXTAUTH_URL=http://localhost:3000 left in the Vercel settings, admin sign-in would bounce visitors to localhost.
+// Only checked for real production deployments on Vercel (VERCEL_ENV), never for local builds or previews.
+if (process.env.VERCEL_ENV === 'production') {
+  for (const name of ['NEXTAUTH_URL', 'AUTH_URL', 'NEXT_PUBLIC_SITE_URL']) {
+    if (/localhost|127\.0\.0\.1/.test(process.env[name] ?? '')) {
+      throw new Error(
+        `${name} is "${process.env[name]}" in this production deployment. Set it to the live address ` +
+          '(for example https://empirecleaning.com.au) in Vercel > Settings > Environment Variables, then redeploy.',
+      )
+    }
+  }
+}
+
 // Content-Security-Policy (production only: the dev server needs eval and websockets for hot reload).
 //
 // 'unsafe-inline' is kept for scripts and styles because Next.js writes small inline <script> blocks
@@ -31,14 +45,6 @@ const contentSecurityPolicy = [
 const nextConfig: NextConfig = {
   serverExternalPackages: ['@prisma/client', 'prisma'],
   poweredByHeader: false, // don't advertise "X-Powered-By: Next.js"
-  images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "logo.clearbit.com",
-      },
-    ],
-  },
   async redirects() {
     // The news now lives under Blog > Industry News.
     return [

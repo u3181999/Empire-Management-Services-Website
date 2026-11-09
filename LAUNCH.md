@@ -48,6 +48,8 @@ git-ignored and no commit contains a real connection string). Replace the passwo
 | `RESEND_API_KEY` | From resend.com → API Keys |
 | `CRON_SECRET` | A new random string (same command as `NEXTAUTH_SECRET`). Vercel sends it to the daily clean-up job; without it the job refuses to run (safe, but old enquiries are then never deleted) |
 
+   A production deployment now stops with a clear message if `NEXTAUTH_URL`, `AUTH_URL` or `NEXT_PUBLIC_SITE_URL` still
+   contains `localhost`, so admin sign-in can never go live pointing at a developer's computer.
 3. **Analytics:** Vercel → your project → **Analytics** tab → **Enable**. The code is already in place
    (cookieless; a visitor who presses "Decline" in the cookie banner is not counted). Until it is enabled the
    script URL returns 404, which is harmless.
@@ -76,7 +78,8 @@ git-ignored and no commit contains a real connection string). Replace the passwo
 - [ ] Vercel → Project → **Cron Jobs** lists `/api/cron/cleanup` (daily); trigger it once with **Run** and
       confirm it returns `{"ok":true,...}`
 - [ ] Vercel → **Analytics** shows your own visit after a minute (not if you pressed Decline)
-- [ ] `/admin/login` works with the new password; the dashboard shows your bookings
+- [ ] `/admin/login` works with the new password; the dashboard shows your bookings; after signing in the address bar
+      shows `https://empirecleaning.com.au/admin` (not `localhost`)
 - [ ] `/sitemap.xml`, `/robots.txt` load; paste the site into a chat app to see the link preview
 - [ ] View-source on a page: the `<link rel="canonical">` shows `https://empirecleaning.com.au/...` (this relies on
       `NEXT_PUBLIC_SITE_URL` being set correctly in Vercel)
@@ -87,6 +90,13 @@ git-ignored and no commit contains a real connection string). Replace the passwo
 - [ ] Submit the sitemap in Google Search Console
 
 ## Known limitations
+
+- Social links (footer icons and search-engine data) come from `COMPANY.social` in `lib/constants.ts`, and an icon
+  shows only when its address is filled in. Checked 9 Nov 2026: the Facebook address we had says "content isn't
+  available", so it is blank until you add the real page address. The LinkedIn page we link to lists the website
+  `empiremanagementservices.com.au`, not this site, so confirm it is your company's page (or replace the address).
+- The accessibility statement (`/accessibility`) says what has and has not been tested. If you commission an
+  independent audit, or fix one of the "known limitations", update it.
 
 - Form spam protection (`lib/form-guard.ts`): honeypot + minimum fill time + a database-backed rate limit
   (5 per hour per connection; 3 for job applications; booking also caps 3 per email address per day). If a
