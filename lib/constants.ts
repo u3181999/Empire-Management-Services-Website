@@ -151,7 +151,7 @@ export const VALUES = [
   {
     title: 'Security',
     description:
-      'All staff undergo security clearance checks and sign strict confidentiality agreements before working on any site.',
+      'All staff are police-checked and sign strict confidentiality agreements before working on any site. Security-cleared teams are available for government and other sensitive sites.',
   },
   {
     title: 'Reliability',
@@ -173,12 +173,43 @@ export const CONTACT_SUBJECTS = [
   'General Enquiry',
   'Request a Quote',
   'Booking Enquiry',
+  'Compliance Documents',
   'Employment',
   'Complaint or Feedback',
   'Other',
 ] as const
 export const WORK_DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as const
 export const SHIFT_OPTIONS = ['AM', 'PM', 'Either'] as const
+
+// What we can show clients on request (see CLAIMS.md). The certificate details are optional: fill in
+// certifiedBy / certificateNumber / validUntil only with the real values from the certificate, and the
+// Certifications & Compliance page will show them. Never add a credential here that we cannot document.
+export type Credential = {
+  code: string
+  name: string
+  summary: string
+  certifiedBy?: string
+  certificateNumber?: string
+  validUntil?: string
+}
+
+export const MANAGEMENT_STANDARDS: Credential[] = [
+  {
+    code: 'ISO 9001:2015',
+    name: 'Quality management',
+    summary: 'How we plan, deliver, audit and continually improve the quality of our cleaning services.',
+  },
+  {
+    code: 'ISO 14001:2015',
+    name: 'Environmental management',
+    summary: 'How we manage chemicals, waste and our environmental impact on every site.',
+  },
+  {
+    code: 'ISO 45001:2018',
+    name: 'Occupational health & safety',
+    summary: 'How we keep our people, your staff and your visitors safe, and keep us OH&S compliant.',
+  },
+]
 
 export const NAV_ITEMS = [
   { label: 'Home', href: '/' },

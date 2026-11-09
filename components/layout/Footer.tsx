@@ -78,6 +78,11 @@ export default function Footer() {
                   Book a Service
                 </Link>
               </li>
+              <li>
+                <Link href="/compliance" className="text-sm hover:text-[#d4a017] transition-colors">
+                  Certifications &amp; Compliance
+                </Link>
+              </li>
             </ul>
           </div>
 

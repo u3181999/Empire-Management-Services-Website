@@ -11,14 +11,22 @@ import { ErrorSummary, FieldError, FormSuccess, controlClass, errorProps } from 
 // Field names in the order they appear, with the names used in the error summary.
 const LABELS = { name: 'Full name', phone: 'Phone', email: 'Email', subject: 'Subject', message: 'Message' }
 
-/** Reads ?service=<slug> (from a "Get a Quote" button) and pre-fills the form. */
+const COMPLIANCE_REQUEST = 'Please send me copies of your current ISO certificates and public liability certificate of currency.'
+
+/**
+ * Pre-fills the form from the link that brought the visitor here:
+ *   ?service=<slug>    (a "Get a Quote" button)
+ *   ?subject=<subject> (e.g. the "Request a copy" button on the Certifications page)
+ * Both are looked up in our own lists, so nothing from the URL is ever echoed into the page.
+ */
 export function PrefilledContactForm() {
-  const slug = useSearchParams().get('service')
-  const service = SERVICES.find((s) => s.slug === slug)
-  return <ContactForm serviceName={service?.name} />
+  const params = useSearchParams()
+  const service = SERVICES.find((s) => s.slug === params.get('service'))
+  const subject = CONTACT_SUBJECTS.find((s) => s === params.get('subject'))
+  return <ContactForm serviceName={service?.name} presetSubject={subject} />
 }
 
-export default function ContactForm({ serviceName }: { serviceName?: string }) {
+export default function ContactForm({ serviceName, presetSubject }: { serviceName?: string; presetSubject?: string }) {
   const [state, action, pending] = useActionState(submitContact, null)
   const errors = state?.fieldErrors ?? {}
   // React clears a form after every submission, so a rejected form refills itself from what was sent.
@@ -106,7 +114,7 @@ export default function ContactForm({ serviceName }: { serviceName?: string }) {
           id="subject"
           name="subject"
           required
-          defaultValue={text('subject') ?? (serviceName ? 'Request a Quote' : '')}
+          defaultValue={text('subject') ?? presetSubject ?? (serviceName ? 'Request a Quote' : '')}
           {...errorProps('subject', errors.subject)}
           className={controlClass(!!errors.subject, 'bg-white')}
         >
@@ -126,7 +134,14 @@ export default function ContactForm({ serviceName }: { serviceName?: string }) {
           id="message"
           name="message"
           required
-          defaultValue={text('message') ?? (serviceName ? `I'd like a quote for ${serviceName}.` : '')}
+          defaultValue={
+            text('message') ??
+            (presetSubject === 'Compliance Documents'
+              ? COMPLIANCE_REQUEST
+              : serviceName
+                ? `I'd like a quote for ${serviceName}.`
+                : '')
+          }
           rows={5}
           {...errorProps('message', errors.message)}
           className={controlClass(!!errors.message, 'resize-none')}
