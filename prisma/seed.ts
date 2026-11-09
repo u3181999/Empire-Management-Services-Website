@@ -21,7 +21,7 @@ async function main() {
         slug: 'canberra',
         phone: '02 6228 1777',
         address: 'Unit 5, 89-91 Tennant Street, Fyshwick ACT 2609',
-        email: 'email@empirecleaning.com.au',
+        email: 'admin@empirecleaning.com.au',
         isHeadOffice: true,
       },
     }),
@@ -33,7 +33,7 @@ async function main() {
         slug: 'nsw',
         phone: '02 6228 1777',
         address: 'Servicing across NSW — contact head office',
-        email: 'email@empirecleaning.com.au',
+        email: 'admin@empirecleaning.com.au',
       },
     }),
   ])

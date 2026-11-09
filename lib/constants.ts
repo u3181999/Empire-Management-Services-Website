@@ -3,7 +3,7 @@ export const COMPANY = {
   tagline: 'Quality cleaning solutions for commercial and industrial clients',
   description:
     'With over 30 years of experience, Empire Management Services provides tailored cleaning and maintenance services to 80+ clients across 100,000m² of commercial sites throughout Canberra (ACT) and New South Wales.',
-  email: 'email@empirecleaning.com.au',
+  email: 'admin@empirecleaning.com.au',
   phone: '02 6228 1777',
   fax: '02 6228 1555',
   address: 'Unit 5, 89-91 Tennant Street',
@@ -51,7 +51,7 @@ export const LOCATIONS = [
     name: 'Canberra (Head Office)',
     phone: '02 6228 1777',
     address: 'Unit 5, 89-91 Tennant Street, Fyshwick ACT 2609',
-    email: 'email@empirecleaning.com.au',
+    email: 'admin@empirecleaning.com.au',
     isHeadOffice: true,
   },
   {
@@ -59,7 +59,7 @@ export const LOCATIONS = [
     name: 'New South Wales',
     phone: '02 6228 1777',
     address: 'Servicing across NSW — contact head office',
-    email: 'email@empirecleaning.com.au',
+    email: 'admin@empirecleaning.com.au',
     isHeadOffice: false,
   },
 ] as const

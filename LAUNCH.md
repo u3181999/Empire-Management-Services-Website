@@ -44,7 +44,7 @@ git-ignored and no commit contains a real connection string). Replace the passwo
 | `NEXTAUTH_SECRET` | A **new** random string: `node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"` |
 | `NEXTAUTH_URL` | `https://empirecleaning.com.au` |
 | `NEXT_PUBLIC_SITE_URL` | `https://empirecleaning.com.au` |
-| `ADMIN_EMAIL` | `email@empirecleaning.com.au` |
+| `ADMIN_EMAIL` | `admin@empirecleaning.com.au` |
 | `RESEND_API_KEY` | From resend.com → API Keys |
 | `CRON_SECRET` | A new random string (same command as `NEXTAUTH_SECRET`). Vercel sends it to the daily clean-up job; without it the job refuses to run (safe, but old enquiries are then never deleted) |
 
@@ -70,7 +70,7 @@ git-ignored and no commit contains a real connection string). Replace the passwo
 ## 5. After deploy — smoke test
 
 - [ ] Home, About, Services, Contact, Blog, Terms, Privacy load over https; `www` redirects to apex
-- [ ] Contact form → email arrives at `email@empirecleaning.com.au`, **and** the message appears in
+- [ ] Contact form → email arrives at `admin@empirecleaning.com.au`, **and** the message appears in
       `/admin/enquiries` marked "Emailed". If it shows "Email failed — follow up", the message is safe but
       the email setup (step 4) is wrong; fix that before launch
 - [ ] Employment application → same two checks (including the citizenship / clearance answers)

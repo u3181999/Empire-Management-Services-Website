@@ -73,7 +73,7 @@ $env:NEW_ADMIN_PASSWORD = "your-long-unique-password"; npm run admin:set-passwor
 | `DATABASE_URL` | Long text starting `postgresql://` | Copy from the `.env` file in your project folder |
 | `NEXTAUTH_SECRET` | A new random string | Run `node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"` in PowerShell and copy the result |
 | `NEXT_PUBLIC_SITE_URL` | `https://empirecleaning.com.au` | Your domain |
-| `ADMIN_EMAIL` | `email@empirecleaning.com.au` | The inbox that receives contact and booking emails |
+| `ADMIN_EMAIL` | `admin@empirecleaning.com.au` | The inbox that receives contact and booking emails |
 
    Add these **later** (steps 3 and 4): `NEXTAUTH_URL` and `RESEND_API_KEY`.
    Do **not** add `SEED_ADMIN_PASSWORD`; the seed is only used on your own computer.
@@ -109,7 +109,7 @@ Without this, **the contact form and booking emails will not send.**
 Open the live site and tick off each item:
 
 - [ ] Home, About, Services, Contact, Blog, Terms and Privacy all load
-- [ ] Send a test message through the Contact form; it arrives at `email@empirecleaning.com.au`
+- [ ] Send a test message through the Contact form; it arrives at `admin@empirecleaning.com.au`
 - [ ] Make a test booking; both the customer confirmation and the admin notification arrive
 - [ ] Log in at `/admin/login` with the new password; the dashboard shows your bookings
 - [ ] `www.empirecleaning.com.au` forwards to `empirecleaning.com.au`
