@@ -1,6 +1,7 @@
 import { MapPin, Phone, Mail, Clock, ArrowRight } from 'lucide-react'
 import { COMPANY, LOCATIONS } from '@/lib/constants'
-import ContactForm from '@/components/features/ContactForm'
+import ContactForm, { PrefilledContactForm } from '@/components/features/ContactForm'
+import { Suspense } from 'react'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 
@@ -113,7 +114,9 @@ export default function ContactPage() {
             {/* Form */}
             <div>
               <h2 className="text-2xl font-bold text-[#102a43] mb-6">Send a Message</h2>
-              <ContactForm />
+              <Suspense fallback={<ContactForm />}>
+                <PrefilledContactForm />
+              </Suspense>
             </div>
           </div>
         </div>

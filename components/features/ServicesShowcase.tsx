@@ -83,11 +83,10 @@ export default function ServicesShowcase() {
         {visible.map((service, i) => {
           const Icon = SERVICE_ICONS[service.icon] ?? Sparkles
           return (
-            <Link
+            <div
               key={service.slug}
-              href={`/services/${service.slug}`}
               style={{ animationDelay: `${i * 45}ms` }}
-              className="group relative flex flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-gold-500/60 hover:shadow-xl motion-safe:animate-fade-up focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-500"
+              className="group relative flex flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-gold-500/60 hover:shadow-xl motion-safe:animate-fade-up focus-within:ring-2 focus-within:ring-gold-500/70"
             >
               <div className="flex items-start justify-between">
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-navy-900 text-gold-500 transition-colors duration-300 group-hover:bg-gold-500 group-hover:text-navy-900">
@@ -98,16 +97,34 @@ export default function ServicesShowcase() {
                 </span>
               </div>
 
-              <h3 className="mt-5 text-lg font-bold leading-snug text-navy-900">{service.name}</h3>
+              <h3 className="mt-5 text-lg font-bold leading-snug text-navy-900">
+                {/* Stretched link: the ::after covers the whole card, so the entire tile is clickable */}
+                <Link
+                  href={`/services/${service.slug}`}
+                  className="after:absolute after:inset-0 after:content-[''] focus-visible:outline-none"
+                >
+                  {service.name}
+                </Link>
+              </h3>
               <p className="mt-2 flex-1 text-sm leading-relaxed text-gray-600">{service.shortDescription}</p>
 
-              <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-gold-600">
-                Learn more
-                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
-              </span>
+              <div className="mt-5 flex items-center justify-between gap-3">
+                <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-gold-600">
+                  Learn more
+                  <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
+                </span>
+                {/* Sits above the stretched link (z-10) so it can be clicked on its own */}
+                <Link
+                  href={`/contact?service=${service.slug}`}
+                  className="relative z-10 rounded-full border border-navy-900/15 px-3.5 py-1.5 text-xs font-semibold text-navy-900 transition-colors hover:border-gold-500 hover:bg-gold-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-500"
+                >
+                  Get a Quote
+                  <span className="sr-only"> for {service.name}</span>
+                </Link>
+              </div>
 
               <span className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-gold-500 transition-transform duration-300 group-hover:scale-x-100" />
-            </Link>
+            </div>
           )
         })}
       </div>

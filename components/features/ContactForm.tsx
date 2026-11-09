@@ -1,7 +1,9 @@
 'use client'
 
 import { useActionState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { submitContact } from '@/app/actions/contact'
+import { SERVICES } from '@/lib/constants'
 
 const SUBJECTS = [
   'General Enquiry',
@@ -12,7 +14,14 @@ const SUBJECTS = [
   'Other',
 ]
 
-export default function ContactForm() {
+/** Reads ?service=<slug> (from a "Get a Quote" button) and pre-fills the form. */
+export function PrefilledContactForm() {
+  const slug = useSearchParams().get('service')
+  const service = SERVICES.find((s) => s.slug === slug)
+  return <ContactForm serviceName={service?.name} />
+}
+
+export default function ContactForm({ serviceName }: { serviceName?: string }) {
   const [state, action, pending] = useActionState(submitContact, null)
 
   if (state?.success) {
@@ -88,6 +97,7 @@ export default function ContactForm() {
           id="subject"
           name="subject"
           required
+          defaultValue={serviceName ? 'Request a Quote' : ''}
           className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#d4a017] focus:border-transparent bg-white"
         >
           <option value="">Select a subject</option>
@@ -105,6 +115,7 @@ export default function ContactForm() {
           id="message"
           name="message"
           required
+          defaultValue={serviceName ? `I'd like a quote for ${serviceName}.` : ''}
           rows={5}
           className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#d4a017] focus:border-transparent resize-none"
           placeholder="Tell us about your cleaning requirements..."
