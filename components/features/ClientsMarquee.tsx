@@ -50,7 +50,7 @@ export default function ClientsMarquee() {
   return (
     <section className="py-16 bg-gray-50 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10 text-center">
-        <p className="text-xs font-semibold uppercase tracking-widest text-[#d4a017] mb-2">
+        <p className="text-xs font-semibold uppercase tracking-widest text-gold-700 mb-2">
           Trusted By
         </p>
         <h2 className="text-2xl sm:text-3xl font-bold text-[#102a43]">

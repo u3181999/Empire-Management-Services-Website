@@ -27,7 +27,7 @@ export default async function TestimonialsSection() {
     <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#d4a017] mb-2">
+          <p className="text-xs font-semibold uppercase tracking-widest text-gold-700 mb-2">
             What Our Clients Say
           </p>
           <h2 className="text-3xl sm:text-4xl font-bold text-[#102a43]">Reviews & Testimonials</h2>
@@ -44,7 +44,7 @@ export default async function TestimonialsSection() {
             >
               <div className="flex items-center justify-between">
                 <StarRating rating={t.rating} />
-                <span className="text-xs text-gray-400 font-medium">{t.source}</span>
+                <span className="text-xs text-gray-600 font-medium">{t.source}</span>
               </div>
 
               <blockquote className="text-gray-700 text-sm leading-relaxed flex-1">

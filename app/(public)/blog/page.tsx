@@ -107,7 +107,7 @@ export default async function BlogPage(props: PageProps<'/blog'>) {
             <div className="text-center py-20 text-gray-500">
               <p className="text-lg font-medium">No posts found.</p>
               {query && (
-                <Link href="/blog" className="mt-3 text-[#d4a017] hover:underline text-sm">
+                <Link href="/blog" className="mt-3 text-gold-700 underline text-sm">
                   Clear search
                 </Link>
               )}
@@ -131,7 +131,7 @@ export default async function BlogPage(props: PageProps<'/blog'>) {
                   )}
                   <div className="p-6 flex-1 flex flex-col">
                     {post.category && (
-                      <span className="text-xs font-semibold text-[#d4a017] uppercase tracking-wider mb-2">
+                      <span className="text-xs font-semibold text-gold-700 uppercase tracking-wider mb-2">
                         {post.category.name}
                       </span>
                     )}
@@ -141,7 +141,7 @@ export default async function BlogPage(props: PageProps<'/blog'>) {
                     <p className="mt-2 text-sm text-gray-500 line-clamp-3 flex-1">
                       {post.excerpt}
                     </p>
-                    <p className="mt-4 text-xs text-gray-400">
+                    <p className="mt-4 text-xs text-gray-600">
                       {post.publishedAt
                         ? new Date(post.publishedAt).toLocaleDateString('en-AU', {
                             year: 'numeric',

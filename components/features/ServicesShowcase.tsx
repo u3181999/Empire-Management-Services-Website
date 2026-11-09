@@ -64,7 +64,7 @@ export default function ServicesShowcase() {
               <span
                 className={[
                   'rounded-full px-2 py-0.5 text-xs tabular-nums',
-                  isActive ? 'bg-white/15 text-white' : 'bg-gray-100 text-gray-500',
+                  isActive ? 'bg-white/15 text-white' : 'bg-gray-100 text-gray-600',
                 ].join(' ')}
               >
                 {countFor(key)}
@@ -109,7 +109,7 @@ export default function ServicesShowcase() {
               <p className="mt-2 flex-1 text-sm leading-relaxed text-gray-600">{service.shortDescription}</p>
 
               <div className="mt-5 flex items-center justify-between gap-3">
-                <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-gold-600">
+                <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-gold-700">
                   Learn more
                   <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
                 </span>

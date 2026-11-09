@@ -34,13 +34,13 @@ export default function BookingPage() {
                 <h3 className="font-bold text-[#102a43]">Prefer to call?</h3>
                 <a
                   href={`tel:${COMPANY.phone.replace(/\s/g, '')}`}
-                  className="mt-3 flex items-center gap-2 text-[#d4a017] font-semibold hover:underline"
+                  className="mt-3 flex items-center gap-2 text-gold-700 font-semibold underline underline-offset-2 hover:text-gold-800"
                 >
                   <Phone className="w-4 h-4" /> {COMPANY.phone}
                 </a>
                 <a
                   href={`mailto:${COMPANY.email}`}
-                  className="mt-2 flex items-center gap-2 text-gray-600 text-sm hover:text-[#d4a017] transition-colors"
+                  className="mt-2 flex items-center gap-2 py-1 text-gray-600 text-sm hover:text-[#d4a017] transition-colors"
                 >
                   <Mail className="w-4 h-4" /> {COMPANY.email}
                 </a>

@@ -79,7 +79,7 @@ export default function CommercialPage() {
       {/* Hero */}
       <section className="bg-[#102a43] text-white py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <span className="inline-block bg-[#d4a017]/20 text-[#d4a017] text-sm font-semibold px-3 py-1 rounded mb-4">
+          <span className="inline-block bg-[#d4a017]/20 text-gold-400 text-sm font-semibold px-3 py-1 rounded mb-4">
             Commercial Division
           </span>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold max-w-3xl leading-tight">
@@ -152,7 +152,7 @@ export default function CommercialPage() {
                         <div className="w-10 h-10 bg-[#d4a017]/10 rounded-lg flex items-center justify-center">
                           <Icon className="w-5 h-5 text-[#d4a017]" aria-hidden="true" />
                         </div>
-                        <span className="text-sm font-semibold text-[#d4a017] uppercase tracking-wider">
+                        <span className="text-sm font-semibold text-gold-700 uppercase tracking-wider">
                           {cs.sector}
                         </span>
                       </div>
@@ -172,15 +172,15 @@ export default function CommercialPage() {
 
                     <div className="bg-white rounded-xl p-6 h-fit space-y-4 shadow-sm">
                       <div>
-                        <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Location</p>
+                        <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider">Location</p>
                         <p className="text-sm text-gray-700 mt-1">{cs.location}</p>
                       </div>
                       <div>
-                        <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Scope</p>
+                        <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider">Scope</p>
                         <p className="text-sm text-gray-700 mt-1">{cs.scope}</p>
                       </div>
                       <div>
-                        <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Duration</p>
+                        <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider">Duration</p>
                         <p className="text-sm text-gray-700 mt-1">{cs.duration}</p>
                       </div>
                     </div>

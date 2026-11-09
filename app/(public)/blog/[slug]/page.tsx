@@ -32,7 +32,7 @@ export default async function BlogPostPage(props: PageProps<'/blog/[slug]'>) {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link
             href="/blog"
-            className="inline-flex items-center gap-1.5 text-gray-400 hover:text-white text-sm mb-5 transition-colors"
+            className="inline-flex items-center gap-1.5 py-1 text-gray-400 hover:text-white text-sm mb-5 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" /> Back to Blog
           </Link>

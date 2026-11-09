@@ -246,7 +246,7 @@ export default async function LocationPage(props: PageProps<'/locations/[slug]'>
             ))}
           </div>
           <div className="mt-6 text-center">
-            <Link href="/services" className="text-sm text-gold-500 font-medium hover:underline">
+            <Link href="/services" className="text-sm text-gold-700 font-medium underline underline-offset-2 hover:text-gold-800">
               View all services →
             </Link>
           </div>

@@ -73,7 +73,7 @@ export default function TermsPage() {
           <p>
             We understand that genuine emergencies arise. Cancellation fees may be waived at our
             discretion in exceptional circumstances. Contact us as soon as possible at{' '}
-            <a href="mailto:email@empirecleaning.com.au" className="text-gold-500 hover:underline">
+            <a href="mailto:email@empirecleaning.com.au">
               email@empirecleaning.com.au
             </a>
             .
@@ -121,7 +121,7 @@ export default function TermsPage() {
           <h2>7. Privacy</h2>
           <p>
             We handle your personal information in accordance with our{' '}
-            <Link href="/privacy" className="text-gold-500 hover:underline">
+            <Link href="/privacy">
               Privacy Policy
             </Link>
             , which forms part of these Terms.
@@ -161,7 +161,7 @@ export default function TermsPage() {
           <ul>
             <li>
               <strong>Email:</strong>{' '}
-              <a href="mailto:email@empirecleaning.com.au" className="text-gold-500 hover:underline">
+              <a href="mailto:email@empirecleaning.com.au">
                 email@empirecleaning.com.au
               </a>
             </li>
@@ -171,7 +171,7 @@ export default function TermsPage() {
           </ul>
 
           <p className="mt-8 text-sm text-gray-500">
-            <Link href="/privacy" className="text-gold-500 hover:underline">
+            <Link href="/privacy">
               View our Privacy Policy
             </Link>
           </p>

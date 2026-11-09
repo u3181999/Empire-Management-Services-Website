@@ -159,7 +159,7 @@ export default async function ServiceDetailPage(props: PageProps<'/services/[slu
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link
             href="/services"
-            className="inline-flex items-center gap-1.5 text-gray-400 hover:text-white text-sm mb-6 transition-colors"
+            className="inline-flex items-center gap-1.5 py-1 text-gray-400 hover:text-white text-sm mb-6 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" /> All Services
           </Link>
@@ -234,7 +234,7 @@ export default async function ServiceDetailPage(props: PageProps<'/services/[slu
                       </li>
                     ))}
                   <li>
-                    <Link href="/services" className="text-sm text-gold-500 font-medium hover:underline">
+                    <Link href="/services" className="text-sm text-gold-700 font-medium underline underline-offset-2 hover:text-gold-800">
                       View all services →
                     </Link>
                   </li>

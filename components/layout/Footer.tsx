@@ -92,7 +92,7 @@ export default function Footer() {
               <li>
                 <a
                   href={`tel:${COMPANY.phone.replace(/\s/g, '')}`}
-                  className="flex items-center gap-2.5 text-sm hover:text-[#d4a017] transition-colors"
+                  className="flex items-center gap-2.5 py-1 text-sm hover:text-[#d4a017] transition-colors"
                 >
                   <Phone className="w-4 h-4 shrink-0 text-[#d4a017]" />
                   {COMPANY.phone}
@@ -101,7 +101,7 @@ export default function Footer() {
               <li>
                 <a
                   href={`mailto:${COMPANY.email}`}
-                  className="flex items-center gap-2.5 text-sm hover:text-[#d4a017] transition-colors"
+                  className="flex items-center gap-2.5 py-1 text-sm hover:text-[#d4a017] transition-colors"
                 >
                   <Mail className="w-4 h-4 shrink-0 text-[#d4a017]" />
                   {COMPANY.email}
@@ -125,11 +125,11 @@ export default function Footer() {
           </p>
         </div>
 
-        <div className="mt-8 pt-6 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-gray-500">
+        <div className="mt-8 pt-6 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-gray-400">
           <p>© {year} {COMPANY.name}. All rights reserved.</p>
           <div className="flex gap-4">
-            <Link href="/privacy" className="hover:text-[#d4a017] transition-colors">Privacy Policy</Link>
-            <Link href="/terms" className="hover:text-[#d4a017] transition-colors">Terms of Service</Link>
+            <Link href="/privacy" className="inline-block py-1.5 hover:text-[#d4a017] transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className="inline-block py-1.5 hover:text-[#d4a017] transition-colors">Terms of Service</Link>
           </div>
         </div>
       </div>

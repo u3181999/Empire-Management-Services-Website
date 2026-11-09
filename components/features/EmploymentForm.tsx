@@ -82,7 +82,7 @@ export default function EmploymentForm() {
           </legend>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             {DAYS.map((day) => (
-              <label key={day} className="flex items-center gap-2 text-sm cursor-pointer">
+              <label key={day} className="flex items-center gap-2 py-1 text-sm cursor-pointer">
                 <input
                   type="checkbox"
                   name="days"
@@ -103,7 +103,7 @@ export default function EmploymentForm() {
           </legend>
           <div className="flex gap-4">
             {['AM', 'PM', 'Either'].map((shift) => (
-              <label key={shift} className="flex items-center gap-2 text-sm cursor-pointer">
+              <label key={shift} className="flex items-center gap-2 py-1 text-sm cursor-pointer">
                 <input
                   type="radio"
                   name="shift"
@@ -138,7 +138,7 @@ export default function EmploymentForm() {
           </legend>
           <div className="flex gap-4">
             {['Yes', 'No'].map((answer) => (
-              <label key={answer} className="flex items-center gap-2 text-sm cursor-pointer">
+              <label key={answer} className="flex items-center gap-2 py-1 text-sm cursor-pointer">
                 <input
                   type="radio"
                   name="citizen"
@@ -161,7 +161,7 @@ export default function EmploymentForm() {
           </legend>
           <div className="flex flex-wrap gap-x-5 gap-y-2">
             {SECURITY_CLEARANCES.map((level) => (
-              <label key={level} className="flex items-center gap-2 text-sm cursor-pointer">
+              <label key={level} className="flex items-center gap-2 py-1 text-sm cursor-pointer">
                 <input
                   type="radio"
                   name="clearance"
@@ -178,7 +178,7 @@ export default function EmploymentForm() {
       </div>
 
       <div>
-        <label className="flex items-start gap-3 text-sm cursor-pointer">
+        <label className="flex items-start gap-3 py-1 text-sm cursor-pointer">
           <input
             type="checkbox"
             name="hasExperience"
@@ -203,7 +203,7 @@ export default function EmploymentForm() {
       </div>
 
       <div>
-        <label className="flex items-start gap-3 text-sm cursor-pointer">
+        <label className="flex items-start gap-3 py-1 text-sm cursor-pointer">
           <input
             type="checkbox"
             name="privacyConsent"
@@ -215,7 +215,7 @@ export default function EmploymentForm() {
             I consent to Empire Management Services storing and using my personal information to
             process this employment application. Data will be retained for 6 months if unsuccessful.
             Read our{' '}
-            <Link href="/privacy" className="text-[#d4a017] hover:underline">
+            <Link href="/privacy" className="font-medium text-gold-700 underline underline-offset-2 hover:text-gold-800">
               Privacy Policy
             </Link>
             . <span aria-hidden="true">*</span>

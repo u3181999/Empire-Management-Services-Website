@@ -22,7 +22,7 @@ export default function SectionHeading({
   return (
     <div className={[isCenter ? 'text-center' : '', className].filter(Boolean).join(' ')}>
       {eyebrow && (
-        <p className="text-xs font-semibold uppercase tracking-widest text-gold-500 mb-2">
+        <p className={['text-xs font-semibold uppercase tracking-widest mb-2', light ? 'text-gold-400' : 'text-gold-700'].join(' ')}>
           {eyebrow}
         </p>
       )}

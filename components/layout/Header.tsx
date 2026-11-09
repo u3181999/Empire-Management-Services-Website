@@ -13,11 +13,11 @@ export default function Header() {
   return (
     <header className="bg-navy-900 text-white sticky top-0 z-50 shadow-lg">
       {/* Top bar */}
-      <div className="bg-navy-950 py-1.5">
+      <div className="bg-navy-950 py-0.5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center text-sm">
           <a
             href={`tel:${COMPANY.phone.replace(/\s/g, '')}`}
-            className="flex items-center gap-1.5 hover:text-gold-500 transition-colors"
+            className="flex items-center gap-1.5 py-1 hover:text-gold-500 transition-colors"
           >
             <Phone className="w-3.5 h-3.5" />
             {COMPANY.phone}
@@ -25,7 +25,7 @@ export default function Header() {
           <Link
             href="/locations/canberra"
             aria-label="Canberra (Head Office) — view location and map"
-            className="flex items-center gap-1.5 text-gray-400 hover:text-gold-500 transition-colors"
+            className="flex items-center gap-1.5 py-1 text-gray-400 hover:text-gold-500 transition-colors"
           >
             <MapPin className="w-3.5 h-3.5 text-gold-500" />
             Canberra (Head Office)

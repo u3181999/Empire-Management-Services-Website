@@ -126,7 +126,7 @@ export default function AboutPage() {
       {/* ISO Certifications */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-xs font-semibold tracking-[0.25em] text-gray-400 uppercase mb-10">
+          <p className="text-xs font-semibold tracking-[0.25em] text-gray-600 uppercase mb-10">
             ISO Certified Commercial Cleaning Company
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-12">
@@ -170,7 +170,7 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <span className="inline-block text-xs font-semibold tracking-widest uppercase text-green-700 bg-green-100 px-3 py-1 rounded-full mb-4">
+              <span className="inline-block text-xs font-semibold tracking-widest uppercase text-green-800 bg-green-100 px-3 py-1 rounded-full mb-4">
                 Eco-Friendly
               </span>
               <h2 className="text-3xl font-bold text-[#102a43]">
@@ -232,7 +232,7 @@ export default function AboutPage() {
                   <User className="w-9 h-9 text-[#d4a017]" strokeWidth={1.5} aria-hidden="true" />
                 </div>
                 <h3 className="mt-5 text-lg font-bold text-[#102a43]">{member.name}</h3>
-                <p className="text-sm font-medium text-[#d4a017] mt-0.5 mb-3">{member.role}</p>
+                <p className="text-sm font-medium text-gold-700 mt-0.5 mb-3">{member.role}</p>
                 <p className="text-sm text-gray-600 leading-relaxed">{member.bio}</p>
               </div>
             ))}

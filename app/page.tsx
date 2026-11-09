@@ -40,7 +40,7 @@ export default function HomePage() {
           />
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
             <div className="max-w-3xl">
-              <span className="inline-block bg-gold-500/20 text-gold-500 text-sm font-semibold px-3 py-1 rounded mb-4">
+              <span className="inline-block bg-gold-500/20 text-gold-400 text-sm font-semibold px-3 py-1 rounded mb-4">
                 Trusted for 30+ Years
               </span>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
@@ -69,7 +69,7 @@ export default function HomePage() {
         {/* ISO Certifications */}
         <section className="py-12 bg-white border-b border-gray-100">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p className="text-xs font-semibold tracking-[0.25em] text-gray-400 uppercase mb-10">
+            <p className="text-xs font-semibold tracking-[0.25em] text-gray-600 uppercase mb-10">
               ISO Certified Commercial Cleaning Company
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-10 sm:gap-16">
@@ -185,7 +185,7 @@ export default function HomePage() {
         <section className="py-16 bg-gold-500">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl font-bold text-navy-900">Ready to Get Started?</h2>
-            <p className="mt-3 text-navy-900/80">
+            <p className="mt-3 text-navy-900">
               Contact us today for a free consultation and tailored cleaning proposal.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">

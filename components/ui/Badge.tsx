@@ -3,7 +3,7 @@ import { type ReactNode } from 'react'
 type BadgeVariant = 'gold' | 'navy' | 'success' | 'warning' | 'danger' | 'muted'
 
 const variantClasses: Record<BadgeVariant, string> = {
-  gold:    'bg-gold-500/20 text-gold-500',
+  gold:    'bg-gold-500/20 text-gold-400',
   navy:    'bg-navy-900/10 text-navy-900',
   success: 'bg-green-100 text-green-800',
   warning: 'bg-yellow-100 text-yellow-800',
