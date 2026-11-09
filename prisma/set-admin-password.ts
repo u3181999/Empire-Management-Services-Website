@@ -6,9 +6,9 @@ import bcrypt from 'bcryptjs'
 
 // Usage (PowerShell):
 //   $env:NEW_ADMIN_PASSWORD = "your-new-password"; npm run admin:set-password
-// Optional: $env:ADMIN_LOGIN_EMAIL to change a different admin (defaults to the seeded admin).
+// The admin's sign-in email is private, so it is read from ADMIN_LOGIN_EMAIL (put it in your local .env file).
 
-const email = process.env.ADMIN_LOGIN_EMAIL ?? 'admin@empirecleaning.com.au'
+const email = process.env.ADMIN_LOGIN_EMAIL
 const password = process.env.NEW_ADMIN_PASSWORD
 
 const pool = new Pool({ connectionString: process.env.DATABASE_URL })
@@ -16,6 +16,7 @@ const adapter = new PrismaPg(pool)
 const prisma = new PrismaClient({ adapter } as never)
 
 async function main() {
+  if (!email) throw new Error('Set ADMIN_LOGIN_EMAIL (in your local .env file) to the admin sign-in email.')
   if (!password || password.length < 12) {
     throw new Error('Set NEW_ADMIN_PASSWORD to a password of at least 12 characters.')
   }

@@ -123,21 +123,26 @@ async function main() {
     },
   })
 
-  // Admin user
-  const hashedPassword = await bcrypt.hash(process.env.SEED_ADMIN_PASSWORD ?? 'ChangeMe123!', 12)
+  // Admin user. The sign-in email is private, so it comes from the environment (ADMIN_LOGIN_EMAIL) and is never
+  // written in the code. There is deliberately no default password: a default in a public repository is a back door.
+  const adminEmail = process.env.ADMIN_LOGIN_EMAIL
+  const adminPassword = process.env.SEED_ADMIN_PASSWORD
+  if (!adminEmail || !adminPassword || adminPassword.length < 12) {
+    throw new Error('Set ADMIN_LOGIN_EMAIL and SEED_ADMIN_PASSWORD (at least 12 characters) before seeding.')
+  }
   await prisma.admin.upsert({
-    where: { email: 'admin@empirecleaning.com.au' },
+    where: { email: adminEmail },
     update: {},
     create: {
-      email: 'admin@empirecleaning.com.au',
-      password: hashedPassword,
+      email: adminEmail,
+      password: await bcrypt.hash(adminPassword, 12),
       name: 'Empire Admin',
     },
   })
 
   console.log('✅ Seed complete.')
-  console.log('   Admin login: admin@empirecleaning.com.au')
-  console.log(`   Admin password: ${process.env.SEED_ADMIN_PASSWORD ? '(from SEED_ADMIN_PASSWORD env var)' : 'ChangeMe123! — SET SEED_ADMIN_PASSWORD before running in production'}`)
+  console.log('   Admin login: the address in ADMIN_LOGIN_EMAIL')
+  console.log('   Admin password: the value of SEED_ADMIN_PASSWORD')
 }
 
 main()

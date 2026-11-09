@@ -57,7 +57,7 @@ could guess**. Change it before the site is public.
 $env:NEW_ADMIN_PASSWORD = "your-long-unique-password"; npm run admin:set-password
 ```
 
-3. You should see `Password updated for admin@empirecleaning.com.au`.
+3. You should see `Password updated for` followed by your admin email. (The script reads that email from `ADMIN_LOGIN_EMAIL` in your local `.env` file. It is private: it is not shown on the website or written in the code.)
 4. Save the password in a password manager. Never put it in an email or chat.
 
 ### Step 2: Create the website on Vercel

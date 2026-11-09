@@ -11,8 +11,10 @@ The domain lives in one setting: `NEXT_PUBLIC_SITE_URL`. If the domain ever chan
 
 ## 1. Admin password
 
-Done: checked on 9 Nov 2026, the admin account (`admin@empirecleaning.com.au`) no longer uses the default
-seed password. To change it again later (PowerShell, from the project folder):
+Done: checked on 9 Nov 2026, the admin account no longer uses the default seed password, and on 9 Nov 2026 its
+sign-in email was changed from the public contact address to a private one. That email is kept in your local `.env`
+file as `ADMIN_LOGIN_EMAIL` (never in the code or on the website). To change the password later (PowerShell, from the
+project folder):
 
 ```powershell
 $env:NEW_ADMIN_PASSWORD = "choose-a-long-unique-password"; npm run admin:set-password
