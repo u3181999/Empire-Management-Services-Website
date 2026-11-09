@@ -1,8 +1,8 @@
-import { createHmac } from 'node:crypto'
 import { headers } from 'next/headers'
 import { prisma } from '@/lib/prisma'
 import { COMPANY } from '@/lib/constants'
 import { HONEYPOT_FIELD, STARTED_FIELD } from '@/lib/form-guard-fields'
+import { hashKey, ipFromHeaders } from '@/lib/client-ip'
 
 // Anti-spam for the public forms (contact, booking, employment).
 //   1. Honeypot — a field real people never see; bots fill it in.
@@ -24,11 +24,7 @@ const LIMITS: Record<FormKind, { max: number; windowMs: number }> = {
 export type GuardResult = { ok: true } | { ok: false; silent: boolean; error?: string }
 
 async function clientIpHash() {
-  const h = await headers()
-  const ip =
-    h.get('x-real-ip') ?? h.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown'
-  const secret = process.env.NEXTAUTH_SECRET ?? process.env.AUTH_SECRET ?? 'dev-only-salt'
-  return createHmac('sha256', secret).update(ip).digest('hex').slice(0, 32)
+  return hashKey(ipFromHeaders(await headers()))
 }
 
 export async function guardSubmission(kind: FormKind, formData: FormData): Promise<GuardResult> {
