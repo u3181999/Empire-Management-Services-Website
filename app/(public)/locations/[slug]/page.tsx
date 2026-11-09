@@ -1,8 +1,9 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { MapPin, Phone, Mail, Clock, ArrowRight, CheckCircle2 } from 'lucide-react'
+import { MapPin, Phone, Mail, Clock, ArrowRight, CheckCircle2, ExternalLink, Navigation } from 'lucide-react'
 import { LOCATIONS, SERVICES, COMPANY } from '@/lib/constants'
 import { Button, SectionHeading } from '@/components/ui'
+import LocationMap from '@/components/features/LocationMap'
 import type { Metadata } from 'next'
 
 export function generateStaticParams() {
@@ -23,9 +24,12 @@ const LOCATION_CONTENT: Record<string, {
   headline: string
   description: string
   mapQuery: string
+  /** Only set for a single street address — gets the branded pin map. */
+  coordinates?: { lat: number; lng: number }
   areas: string[]
 }> = {
   canberra: {
+    coordinates: { lat: -35.3273894, lng: 149.1860957 }, // 89-91 Tennant St, Fyshwick
     headline: 'Commercial Cleaning in Canberra & the ACT',
     description:
       'Empire Management Services has been delivering professional commercial cleaning across Canberra and the ACT for over 30 years. Our Fyshwick head office serves government departments, commercial buildings, strata complexes, medical centres, and industrial facilities throughout the territory.',
@@ -54,6 +58,11 @@ export default async function LocationPage(props: PageProps<'/locations/[slug]'>
   }
 
   const featuredServices = SERVICES.slice(0, 6)
+
+  // Street address as Google Maps understands it (only used for the head office map)
+  const streetAddress = `${COMPANY.address}, ${COMPANY.suburb} ${COMPANY.state} ${COMPANY.postcode}`
+  const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(streetAddress)}`
+  const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(streetAddress)}`
 
   return (
     <>
@@ -166,16 +175,50 @@ export default async function LocationPage(props: PageProps<'/locations/[slug]'>
             </div>
 
             {/* Map */}
-            <div className="rounded-xl overflow-hidden border border-gray-100 shadow-sm h-80 lg:h-full min-h-[320px]">
-              <iframe
-                title={`Map — ${location.name}`}
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                src={`https://maps.google.com/maps?q=${content.mapQuery}&output=embed&z=15`}
-              />
+            <div>
+              <div className="rounded-xl overflow-hidden border border-gray-100 shadow-sm h-80 lg:h-96 min-h-[320px]">
+                {content.coordinates ? (
+                  <LocationMap
+                    lat={content.coordinates.lat}
+                    lng={content.coordinates.lng}
+                    name={`${COMPANY.name} — Head Office`}
+                    address={streetAddress}
+                    directionsUrl={directionsUrl}
+                  />
+                ) : (
+                  <iframe
+                    title={`Map — ${location.name}`}
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    src={`https://maps.google.com/maps?q=${content.mapQuery}&output=embed&z=15`}
+                  />
+                )}
+              </div>
+              {content.coordinates && (
+                <div className="mt-4 flex flex-wrap gap-3">
+                  <a
+                    href={googleMapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-lg border border-navy-900/15 px-4 py-2.5 text-sm font-semibold text-navy-900 transition-colors hover:border-gold-500 hover:bg-gold-500"
+                  >
+                    <ExternalLink className="h-4 w-4" aria-hidden="true" />
+                    Open in Google Maps
+                  </a>
+                  <a
+                    href={directionsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-lg bg-navy-900 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-navy-800"
+                  >
+                    <Navigation className="h-4 w-4 text-gold-500" aria-hidden="true" />
+                    Get Directions
+                  </a>
+                </div>
+              )}
             </div>
           </div>
         </div>

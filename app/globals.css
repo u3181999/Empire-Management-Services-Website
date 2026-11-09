@@ -49,6 +49,44 @@ body {
   100% { opacity: 1; transform: translateY(0); }
 }
 
+/* Branded map pin (Empire emblem in a gold-ringed teardrop) used by LocationMap */
+.empire-pin {
+  position: relative;
+  width: 52px;
+  height: 64px;
+  filter: drop-shadow(0 4px 6px rgb(0 0 0 / 0.35));
+}
+.empire-pin__head {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 52px;
+  height: 52px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid #d4a017;
+  border-radius: 50%;
+  background: #fff;
+}
+.empire-pin__head img {
+  display: block;
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+}
+.empire-pin::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 14px solid #d4a017;
+}
+
 .animate-marquee {
   animation: marquee 35s linear infinite;
 }
