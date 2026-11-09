@@ -3,7 +3,7 @@
 import { useActionState, useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import DOMPurify from 'isomorphic-dompurify'
+import { sanitizeBlogHtml } from '@/lib/sanitize'
 import { Bold, Italic, Heading2, Heading3, List, Link2, Pilcrow } from 'lucide-react'
 
 type Action = (
@@ -134,7 +134,7 @@ export default function BlogPostForm({
     }
   }
 
-  const previewHtml = DOMPurify.sanitize(
+  const previewHtml = sanitizeBlogHtml(
     /<[a-z][\s\S]*>/i.test(content)
       ? content
       : content

@@ -19,7 +19,6 @@
     "@vercel/analytics": "2.0.1",
     "bcryptjs": "^3.0.3",
     "dotenv": "^17.4.2",
-    "isomorphic-dompurify": "^3.18.0",
     "js-cookie": "^3.0.8",
     "leaflet": "^1.9.4",
     "lucide-react": "^1.21.0",
@@ -30,6 +29,7 @@
     "react-dom": "19.2.4",
     "react-hook-form": "^7.79.0",
     "resend": "^6.14.0",
+    "sanitize-html": "^2.18.1",
     "zod": "^4.4.3"
   },
   "prisma": {
@@ -43,6 +43,7 @@
     "@types/pg": "^8.20.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/sanitize-html": "^2.16.2",
     "eslint": "^9",
     "eslint-config-next": "16.4.5",
     "prisma": "^7.8.0",

@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
-import DOMPurify from 'isomorphic-dompurify'
+import { sanitizeBlogHtml } from '@/lib/sanitize'
 import type { Metadata } from 'next'
 import { fitTitle, fitDescription, pageSeo, blogPostSchema, breadcrumbSchema } from '@/lib/seo'
 import JsonLd from '@/components/seo/JsonLd'
@@ -27,7 +27,7 @@ export default async function BlogPostPage(props: PageProps<'/blog/[slug]'>) {
 
   if (!post) notFound()
 
-  const safeContent = DOMPurify.sanitize(post.content)
+  const safeContent = sanitizeBlogHtml(post.content)
 
   return (
     <>
