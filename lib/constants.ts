@@ -19,7 +19,7 @@ export const COMPANY = {
   clientCount: 80,
   sitesM2: 100000,
   staffCount: 100,
-  weeklyHours: 5000,
+  weeklyHours: 2500,
   // Head office position (89-91 Tennant St, Fyshwick): used by the map and the structured data.
   geo: { latitude: -35.3273894, longitude: 149.1860957 },
   social: {
