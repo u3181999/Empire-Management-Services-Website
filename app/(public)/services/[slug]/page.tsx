@@ -158,7 +158,7 @@ export default async function ServiceDetailPage(props: PageProps<'/services/[slu
   if (!service) notFound()
 
   const details = SERVICE_DETAILS[slug] ?? {
-    benefits: ['Professionally delivered by trained, police-checked staff'],
+    benefits: ['Professionally delivered by trained, screened staff'],
     suitableFor: ['Commercial and industrial clients'],
   }
 

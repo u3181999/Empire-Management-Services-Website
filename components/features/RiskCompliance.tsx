@@ -8,8 +8,8 @@ import { SectionHeading } from '@/components/ui'
 const SITE_DOCUMENTS = [
   {
     icon: ClipboardCheck,
-    title: 'Safe Work Method Statement (SWMS)',
-    desc: 'Before we start on any site, we prepare a SWMS for the cleaning work there. It sets out the tasks involved, the hazards that come with them, and the controls we use to prevent and minimise risk.',
+    title: 'Safe Work Practices',
+    desc: 'Before we start on any site, we prepare our Safe Work Practices for the cleaning work there. They set out the tasks involved, the hazards that come with them, and the controls we use to prevent and minimise risk.',
     points: [
       'Tasks and hazards identified for the site',
       'Controls to prevent and minimise risk',
@@ -48,8 +48,8 @@ const PILLARS = [
   },
   {
     icon: ShieldCheck,
-    title: 'Insured, police-checked people',
-    desc: 'Public liability insurance and police-checked staff, with security-cleared teams available for government and other sensitive sites.',
+    title: 'Insured, screened people',
+    desc: 'Public liability insurance and staff screening matched to each site, with security-cleared teams available for government and other sensitive sites.',
   },
 ] as const
 

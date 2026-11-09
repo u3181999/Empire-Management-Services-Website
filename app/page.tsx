@@ -171,7 +171,7 @@ export default function HomePage() {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 {[
-                  { icon: Shield,    title: 'Police-Checked Staff', desc: 'Cleared teams for sensitive sites' },
+                  { icon: Shield,    title: 'Screened Staff',   desc: 'Checks matched to each site' },
                   { icon: BadgeCheck,title: 'Quality Assured',  desc: 'Practical QA system in place' },
                   { icon: Clock,     title: 'Always On Time',   desc: 'Reliable scheduling, every time' },
                   { icon: Users,     title: 'Dedicated Teams',  desc: 'Consistent staff for your site' },

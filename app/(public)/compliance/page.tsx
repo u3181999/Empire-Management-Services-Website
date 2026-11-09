@@ -90,8 +90,8 @@ export default function CompliancePage() {
               },
               {
                 icon: UserCheck,
-                title: 'Police-checked staff',
-                body: 'Every member of our cleaning team has a current police check.',
+                title: 'Staff screening',
+                body: 'We match staff screening to each site, from background and police checks through to security clearances where a client requires them.',
               },
               {
                 icon: FileText,

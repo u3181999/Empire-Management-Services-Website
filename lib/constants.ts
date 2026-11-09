@@ -156,7 +156,7 @@ export const VALUES = [
   {
     title: 'Security',
     description:
-      'All staff are police-checked and sign strict confidentiality agreements before working on any site. Security-cleared teams are available for government and other sensitive sites.',
+      'We match staff screening to each site, from background and police checks through to security clearances where a client requires them. Security-cleared teams are available for government and other sensitive sites, and we keep client premises and information confidential.',
   },
   {
     title: 'Reliability',
