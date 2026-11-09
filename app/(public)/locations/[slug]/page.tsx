@@ -41,7 +41,7 @@ const LOCATION_CONTENT: Record<string, {
     coordinates: { lat: COMPANY.geo.latitude, lng: COMPANY.geo.longitude }, // 89-91 Tennant St, Fyshwick
     headline: 'Commercial Cleaning in Canberra & the Region',
     description:
-      'Empire Management Services has been delivering professional commercial cleaning across Canberra and the ACT for over 30 years. Our Fyshwick head office serves government departments, commercial buildings, strata complexes, medical centres, and industrial facilities throughout the territory.',
+      'Empire Management Services has been delivering professional commercial cleaning across Canberra and the Region for over 30 years. Our Fyshwick head office serves government departments, commercial buildings, strata complexes, medical centres, and industrial facilities throughout the region.',
     mapQuery: '89-91+Tennant+Street+Fyshwick+ACT+2609+Australia',
     areas: ['Civic', 'Fyshwick', 'Woden', 'Tuggeranong', 'Belconnen', 'Gungahlin', 'Queanbeyan'],
   },
