@@ -1,14 +1,14 @@
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
-import CookieBanner from '@/components/features/CookieBanner'
+import SiteWidgets from '@/components/layout/SiteWidgets'
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Header />
-      <main className="flex-1">{children}</main>
+      <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">{children}</main>
       <Footer />
-      <CookieBanner />
+      <SiteWidgets />
     </>
   )
 }

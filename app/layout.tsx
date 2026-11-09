@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { Plus_Jakarta_Sans } from 'next/font/google'
 import SessionProvider from '@/components/layout/SessionProvider'
-import ChatBot from '@/components/features/ChatBot'
 import { SITE_URL } from '@/lib/site'
 import './globals.css'
 
@@ -62,8 +61,14 @@ export default function RootLayout({
   return (
     <html lang="en-AU" className={`${jakarta.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
+        {/* WCAG 2.4.1: lets keyboard and screen-reader users jump past the header on every page */}
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[100] focus:rounded-lg focus:bg-gold-500 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-navy-900 focus:shadow-lg"
+        >
+          Skip to main content
+        </a>
         <SessionProvider>{children}</SessionProvider>
-        <ChatBot />
       </body>
     </html>
   )

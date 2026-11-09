@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { MapPin, Phone, Mail, Clock, ArrowRight, CheckCircle2, ExternalLink, Navigation } from 'lucide-react'
-import { LOCATIONS, SERVICES, COMPANY } from '@/lib/constants'
+import { LOCATIONS, SERVICES, COMPANY, OFFICE_HOURS } from '@/lib/constants'
 import { Button, SectionHeading } from '@/components/ui'
 import LocationMap from '@/components/features/LocationMap'
 import type { Metadata } from 'next'
@@ -151,9 +151,9 @@ export default async function LocationPage(props: PageProps<'/locations/[slug]'>
                       {location.isHeadOffice ? 'Office Hours' : 'Head Office Hours'}
                     </p>
                     <p className="text-gray-600 text-sm mt-0.5">
-                      Monday – Friday: 7:00am – 5:00pm<br />
-                      Saturday: By appointment<br />
-                      Sunday: Closed
+                      {OFFICE_HOURS.weekdays}<br />
+                      {OFFICE_HOURS.saturday}<br />
+                      {OFFICE_HOURS.sunday}
                     </p>
                   </div>
                 </div>

@@ -11,6 +11,8 @@ export const COMPANY = {
   state: 'ACT',
   postcode: '2609',
   poBox: 'PO Box 105 Fyshwick ACT 2609',
+  // Registered entity for ABN 89 117 860 009 (ABN Lookup); "Empire Management Services" is its registered business name.
+  legalName: 'Ergatis Services Pty Ltd',
   abn: '89 117 860 009',
   founded: 1995,
   yearsExperience: 30,
@@ -18,6 +20,13 @@ export const COMPANY = {
   sitesM2: 100000,
   staffCount: 100,
   weeklyHours: 5000,
+} as const
+
+// Head-office hours. Used by the location page and the chatbot so they cannot drift apart.
+export const OFFICE_HOURS = {
+  weekdays: 'Monday – Friday: 7:00am – 5:00pm',
+  saturday: 'Saturday: By appointment',
+  sunday: 'Sunday: Closed',
 } as const
 
 export const LOCATIONS = [

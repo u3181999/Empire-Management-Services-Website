@@ -4,6 +4,7 @@ import ClientsMarquee from '@/components/features/ClientsMarquee'
 import TestimonialsSection from '@/components/features/TestimonialsSection'
 import RiskCompliance from '@/components/features/RiskCompliance'
 import BackToTop from '@/components/features/BackToTop'
+import SiteWidgets from '@/components/layout/SiteWidgets'
 import StatsTiles from '@/components/features/StatsTiles'
 import ServicesShowcase from '@/components/features/ServicesShowcase'
 import { Button, Card, SectionHeading } from '@/components/ui'
@@ -25,7 +26,7 @@ export default function HomePage() {
   return (
     <>
       <Header />
-      <main className="flex-1">
+      <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
 
         {/* Hero */}
         <section className="relative bg-navy-900 text-white overflow-hidden">
@@ -205,6 +206,7 @@ export default function HomePage() {
       </main>
       <Footer />
       <BackToTop />
+      <SiteWidgets />
     </>
   )
 }
