@@ -2,12 +2,12 @@
 
 import { z } from 'zod'
 import { prisma } from '@/lib/prisma'
-import { sendBookingConfirmationToCustomer, sendBookingNotificationToAdmin } from '@/lib/email'
+import { sendBookingReceivedToCustomer, sendBookingNotificationToAdmin } from '@/lib/email'
 import { SERVICES, LOCATIONS, TIME_SLOTS } from '@/lib/constants'
 import { guardSubmission, describeError } from '@/lib/form-guard'
 
 // Most booking requests one email address can make in 24 hours. Stops the form being used
-// to flood someone else's inbox with confirmation emails.
+// to flood someone else's inbox with acknowledgement emails.
 const MAX_BOOKINGS_PER_EMAIL_PER_DAY = 3
 
 const schema = z.object({
@@ -124,7 +124,7 @@ export async function submitBooking(
     })
 
     const emailResults = await Promise.allSettled([
-      sendBookingConfirmationToCustomer({
+      sendBookingReceivedToCustomer({
         customerName,
         customerEmail,
         service: service.name,
@@ -147,7 +147,7 @@ export async function submitBooking(
     ])
 
     // The booking is saved either way; make a failed email visible in the logs instead of silent.
-    const labels = ['customer confirmation', 'admin notification']
+    const labels = ['customer acknowledgement', 'admin notification']
     emailResults.forEach((result, i) => {
       if (result.status === 'rejected') {
         console.error(`[booking] ${labels[i]} email failed`, { reference: booking.reference, error: describeError(result.reason) })

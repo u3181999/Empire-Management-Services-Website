@@ -32,7 +32,9 @@ function escapeHtml(str: string): string {
     .replace(/'/g, '&#039;')
 }
 
-export async function sendBookingConfirmationToCustomer({
+// This email acknowledges a booking REQUEST only. A booking is not confirmed until staff confirm it in
+// writing (see Terms §2), so the wording must never say "confirmed".
+export async function sendBookingReceivedToCustomer({
   customerName,
   customerEmail,
   service,
@@ -52,19 +54,19 @@ export async function sendBookingConfirmationToCustomer({
   return deliver({
     from: FROM,
     to: customerEmail,
-    subject: `Booking Confirmed – ${service} on ${date}`,
+    subject: `Booking Request Received – ${service} on ${date}`,
     html: `
-      <h2>Booking Confirmed</h2>
+      <h2>Booking Request Received</h2>
       <p>Hi ${escapeHtml(customerName)},</p>
-      <p>Your booking has been received. Here are the details:</p>
+      <p>Thank you — we have received your booking request. <strong>It is not confirmed yet.</strong> Here is what you asked for:</p>
       <ul>
         <li><strong>Service:</strong> ${escapeHtml(service)}</li>
         <li><strong>Location:</strong> ${escapeHtml(location)}</li>
-        <li><strong>Date:</strong> ${escapeHtml(date)}</li>
-        <li><strong>Time:</strong> ${escapeHtml(time)}</li>
+        <li><strong>Requested date:</strong> ${escapeHtml(date)}</li>
+        <li><strong>Requested time:</strong> ${escapeHtml(time)}</li>
         <li><strong>Reference:</strong> ${escapeHtml(bookingRef)}</li>
       </ul>
-      <p>Our team will be in touch to confirm your appointment. If you have any questions, call us on <strong>${COMPANY.phone}</strong>.</p>
+      <p>Our team will email or call you to confirm availability, usually within 1 business day. No booking is made until we confirm it in writing. If you have any questions, quote the reference above or call us on <strong>${COMPANY.phone}</strong>.</p>
       <p>Thank you for choosing ${COMPANY.name}.</p>
     `,
   })
