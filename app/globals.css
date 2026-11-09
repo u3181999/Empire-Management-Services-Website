@@ -25,6 +25,8 @@
   --color-gold-900: #3e2a06;
 
   --font-sans: var(--font-jakarta);
+
+  --animate-fade-up: fade-up 0.5s ease-out both;
 }
 
 :root {
@@ -40,6 +42,11 @@ body {
 @keyframes marquee {
   0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
+}
+
+@keyframes fade-up {
+  0%   { opacity: 0; transform: translateY(14px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
 .animate-marquee {

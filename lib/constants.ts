@@ -16,6 +16,8 @@ export const COMPANY = {
   yearsExperience: 30,
   clientCount: 80,
   sitesM2: 100000,
+  staffCount: 100,
+  weeklyHours: 5000,
 } as const
 
 export const LOCATIONS = [
@@ -49,7 +51,7 @@ export const SERVICES = [
     slug: 'commercial-buildings',
     name: 'Commercial Buildings',
     shortDescription: 'Full-service cleaning for offices, corporate buildings, and commercial spaces.',
-    icon: 'BuildingOffice',
+    icon: 'Building',
     category: 'commercial',
   },
   {
@@ -70,7 +72,7 @@ export const SERVICES = [
     slug: 'medical-centres',
     name: 'Medical Centres',
     shortDescription: 'Infection-control compliant cleaning for clinics, hospitals, and healthcare facilities.',
-    icon: 'Cross',
+    icon: 'Stethoscope',
     category: 'healthcare',
   },
   {
@@ -105,7 +107,7 @@ export const SERVICES = [
     slug: 'carpet-cleaning',
     name: 'Carpet Cleaning',
     shortDescription: 'Deep steam cleaning and stain treatment for commercial carpets and rugs.',
-    icon: 'Wind',
+    icon: 'Brush',
     category: 'specialist',
   },
   {
@@ -119,7 +121,7 @@ export const SERVICES = [
     slug: 'graffiti-removal',
     name: 'Graffiti Removal',
     shortDescription: 'Fast and effective graffiti removal from all surface types with anti-graffiti coating.',
-    icon: 'Eraser',
+    icon: 'SprayCan',
     category: 'specialist',
   },
 ] as const

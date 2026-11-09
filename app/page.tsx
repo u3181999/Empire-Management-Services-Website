@@ -4,14 +4,15 @@ import ClientsMarquee from '@/components/features/ClientsMarquee'
 import TestimonialsSection from '@/components/features/TestimonialsSection'
 import RiskCompliance from '@/components/features/RiskCompliance'
 import BackToTop from '@/components/features/BackToTop'
+import StatsTiles from '@/components/features/StatsTiles'
+import ServicesShowcase from '@/components/features/ServicesShowcase'
 import { Button, Card, SectionHeading } from '@/components/ui'
-import Link from 'next/link'
 import Image from 'next/image'
 import {
-  Shield, Clock, BadgeCheck, Building2, Users, BarChart3,
+  Shield, Clock, BadgeCheck, Users,
   ArrowRight, Phone, CheckCircle2,
 } from 'lucide-react'
-import { COMPANY, SERVICES, VALUES } from '@/lib/constants'
+import { COMPANY, VALUES } from '@/lib/constants'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -19,13 +20,6 @@ export const metadata: Metadata = {
   description:
     'Professional commercial and industrial cleaning across Canberra, NSW and QLD. 30+ years, 80+ clients, 100,000m² serviced. Get a free quote today.',
 }
-
-const STATS = [
-  { value: `${COMPANY.yearsExperience}+`, label: 'Years Experience', icon: Clock },
-  { value: `${COMPANY.clientCount}+`,     label: 'Active Clients',   icon: Users },
-  { value: '100,000m²',                   label: 'Sites Serviced',   icon: Building2 },
-  { value: '2',                           label: 'States',           icon: BarChart3 },
-]
 
 export default function HomePage() {
   return (
@@ -69,19 +63,7 @@ export default function HomePage() {
         </section>
 
         {/* Stats */}
-        <section className="bg-navy-950 text-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-white/10">
-              {STATS.map(({ value, label, icon: Icon }) => (
-                <div key={label} className="flex flex-col items-center py-8 px-4 text-center">
-                  <Icon className="w-6 h-6 text-gold-500 mb-3" aria-hidden="true" />
-                  <span className="text-3xl font-bold text-white">{value}</span>
-                  <span className="mt-1 text-sm text-gray-400">{label}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        <StatsTiles />
 
         {/* ISO Certifications */}
         <section className="py-12 bg-white border-b border-gray-100">
@@ -124,28 +106,18 @@ export default function HomePage() {
         {/* Services */}
         <section className="py-20 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="mb-12">
+            <div className="mb-10">
               <SectionHeading
+                eyebrow="What We Do"
                 heading="Our Services"
-                subtext="Every cleaning schedule is tailor-designed to meet your expectations and deadlines."
+                subtext="Every cleaning schedule is tailor-designed to meet your expectations and deadlines. Filter by sector to find the right fit."
               />
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {SERVICES.map((service) => (
-                <Link key={service.slug} href={`/services/${service.slug}`} className="group">
-                  <Card hover className="h-full">
-                    <h3 className="font-bold text-navy-900 group-hover:text-gold-500 transition-colors">
-                      {service.name}
-                    </h3>
-                    <p className="mt-2 text-sm text-gray-600 leading-relaxed">
-                      {service.shortDescription}
-                    </p>
-                    <span className="mt-4 inline-flex items-center gap-1 text-sm text-gold-500 font-medium">
-                      Learn more <ArrowRight className="w-3.5 h-3.5" />
-                    </span>
-                  </Card>
-                </Link>
-              ))}
+            <ServicesShowcase />
+            <div className="mt-10 text-center">
+              <Button href="/services" variant="secondary" icon={<ArrowRight className="w-4 h-4" />}>
+                View All Services
+              </Button>
             </div>
           </div>
         </section>
