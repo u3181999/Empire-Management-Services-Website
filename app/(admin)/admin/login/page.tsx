@@ -42,8 +42,8 @@ export default function AdminLoginPage() {
     <div className="min-h-screen bg-[#102a43] flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl p-8 w-full max-w-sm shadow-xl">
         <div className="text-center mb-8">
-          <h1 className="text-[#d4a017] font-bold text-xl">Empire</h1>
-          <p className="text-[#102a43] font-semibold text-sm mt-0.5">Admin Portal</p>
+          <p className="text-gold-700 font-bold text-xl">Empire</p>
+          <h1 className="text-[#102a43] font-semibold text-sm mt-0.5">Admin Portal sign in</h1>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-5">

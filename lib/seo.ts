@@ -134,7 +134,7 @@ export function localBusinessSchema(): Thing {
       },
     ],
     areaServed: AREA_SERVED,
-    sameAs: [COMPANY.social.facebook, COMPANY.social.linkedin],
+    sameAs: [COMPANY.social.facebook, COMPANY.social.linkedin].filter(Boolean),
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
       name: 'Commercial cleaning services',

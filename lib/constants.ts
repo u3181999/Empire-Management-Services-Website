@@ -22,9 +22,13 @@ export const COMPANY = {
   weeklyHours: 2500,
   // Head office position (89-91 Tennant St, Fyshwick): used by the map and the structured data.
   geo: { latitude: -35.3273894, longitude: 149.1860957 },
+  // A link is shown (footer icon and search-engine data) only when its address is filled in. Checked 9 Nov 2026:
+  // the old Facebook address (facebook.com/empirecleaningservices) says "content isn't available", so it is blank
+  // until the real page address is added here. Confirm the LinkedIn page is yours: it lists the website
+  // empiremanagementservices.com.au, not this site's address.
   social: {
-    facebook: 'https://www.facebook.com/empirecleaningservices',
-    linkedin: 'https://www.linkedin.com/company/empire-management-services',
+    facebook: '' as string,
+    linkedin: 'https://www.linkedin.com/company/empire-management-services' as string,
   },
 } as const
 
