@@ -2,6 +2,7 @@ import { prisma } from '@/lib/prisma'
 import { updateBookingStatus } from '@/app/actions/admin'
 import type { Metadata } from 'next'
 import { requireAdminPage } from '@/lib/admin-guard'
+import BookingStatusSelect from './BookingStatusSelect'
 
 export const metadata: Metadata = { title: 'Bookings — Admin' }
 
@@ -75,22 +76,12 @@ export default async function AdminBookingsPage(props: PageProps<'/admin/booking
                     <p className="text-xs text-gray-400">{b.timeSlot}</p>
                   </td>
                   <td className="px-4 py-3">
-                    <form action={updateBookingStatus}>
-                      <input type="hidden" name="bookingId" value={b.id} />
-                      <select
-                        name="status"
-                        defaultValue={b.status}
-                        onChange={(e) => {
-                          const form = e.target.closest('form') as HTMLFormElement
-                          form?.requestSubmit()
-                        }}
-                        className="text-xs border border-gray-200 rounded px-2 py-1 bg-white focus:ring-1 focus:ring-[#d4a017] focus:outline-none"
-                      >
-                        {STATUSES.map((s) => (
-                          <option key={s} value={s}>{s}</option>
-                        ))}
-                      </select>
-                    </form>
+                    <BookingStatusSelect
+                      bookingId={b.id}
+                      status={b.status}
+                      customer={b.customerName}
+                      action={updateBookingStatus}
+                    />
                   </td>
                   <td className="px-4 py-3">
                     {b.notes && (
