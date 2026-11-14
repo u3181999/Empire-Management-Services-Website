@@ -56,7 +56,9 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en-AU" className={`${jakarta.variable} h-full antialiased`}>
+    // data-scroll-behavior: the page uses smooth scrolling (globals.css). This tells Next.js to switch it off just while
+    // moving between pages, so a link to a spot on another page (like /testimonials#...) lands in the right place.
+    <html lang="en-AU" data-scroll-behavior="smooth" className={`${jakarta.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         {/* WCAG 2.4.1: lets keyboard and screen-reader users jump past the header on every page */}
         <a
