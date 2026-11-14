@@ -153,6 +153,16 @@ posts you write yourself with the category **Industry News** appear above the he
 Developers: the feed list and filter are in `lib/news.ts`. To add another Australian publisher, add a line
 to the `FEEDS` list there.
 
+### Festive Santa hat on the logo
+
+A Santa hat appears on the logo every year from **1 to 26 December** (Canberra time) and disappears on its own after
+that. Nothing needs changing from year to year. It is decorative and works for every visitor automatically.
+
+- **Preview it any time:** add `?festive=1` to any page address (for example `https://empirecleaning.com.au/?festive=1`).
+  Add `?festive=0` to hide it during the season.
+- **Change the dates:** edit `FESTIVE_START` and `FESTIVE_END` in `lib/festive.ts`. Only the month and day matter.
+- **Switch it off for good:** remove `<FestiveHat ... />` from `components/layout/Header.tsx`.
+
 ### Change text on the website (for example the Meet the Team section)
 1. Open the file on GitHub. The team list is in
    [`app/(public)/about/page.tsx`](https://github.com/u3181999/Empire-Management-Services-Website/blob/main/app/(public)/about/page.tsx).

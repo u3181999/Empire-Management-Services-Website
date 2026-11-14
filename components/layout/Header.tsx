@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { Menu, X, Phone, MapPin } from 'lucide-react'
 import { NAV_ITEMS, COMPANY } from '@/lib/constants'
 import Button from '@/components/ui/Button'
+import FestiveHat from '@/components/layout/FestiveHat'
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -37,16 +38,20 @@ export default function Header() {
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Main navigation">
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center shrink-0">
-            <Image
-              src="/logo.png"
-              alt="Empire Management Services"
-              // The file is 313x332 and shows 64px tall, so declare that shape: the browser then downloads a
-              // small copy instead of one sized for a 220px-wide logo.
-              width={60}
-              height={64}
-              className="h-16 w-auto object-contain"
-              priority
-            />
+            <span className="relative inline-flex">
+              <Image
+                src="/logo.png"
+                alt="Empire Management Services"
+                // The file is 313x332 and shows 64px tall, so declare that shape: the browser then downloads a
+                // small copy instead of one sized for a 220px-wide logo.
+                width={60}
+                height={64}
+                className="h-16 w-auto object-contain"
+                priority
+              />
+              {/* Santa hat, shown 1-26 December every year (dates in lib/festive.ts); nothing the rest of the year. */}
+              <FestiveHat className="-left-2.5 -top-2.5 w-10 -rotate-[16deg]" />
+            </span>
           </Link>
 
           {/* Desktop nav */}
