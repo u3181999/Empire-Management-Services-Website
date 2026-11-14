@@ -76,7 +76,7 @@ export default function CompliancePage() {
           <div className="mt-8 flex flex-col gap-6 rounded-2xl border border-gray-100 bg-white p-6 shadow-sm sm:flex-row sm:items-center sm:gap-10 sm:p-8">
             <div className="flex shrink-0 items-center gap-6">
               <Image src="/certifications/iqc.png" alt="Integrated Quality Certification Pvt Ltd (IQC) logo" width={382} height={192} sizes="160px" className="h-20 w-auto" />
-              <Image src="/certifications/jas-anz.png" alt="JAS-ANZ logo" width={207} height={216} sizes="80px" className="h-20 w-auto" />
+              <Image src="/certifications/jas-anz.png" alt="JAS-ANZ logo" width={295} height={320} sizes="96px" className="h-24 w-auto" />
             </div>
             <div>
               <h2 className="text-lg font-bold text-navy-900">Certification body and register</h2>
