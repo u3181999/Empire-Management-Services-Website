@@ -210,6 +210,7 @@ export async function createTestimonial(
 
   revalidatePath('/admin/testimonials')
   revalidatePath('/')
+  revalidatePath('/testimonials')
   return { success: true }
 }
 
@@ -249,6 +250,7 @@ export async function updateTestimonial(
 
   revalidatePath('/admin/testimonials')
   revalidatePath('/')
+  revalidatePath('/testimonials')
   return { success: true }
 }
 
@@ -258,4 +260,5 @@ export async function deleteTestimonial(formData: FormData) {
   await prisma.testimonial.delete({ where: { id } })
   revalidatePath('/admin/testimonials')
   revalidatePath('/')
+  revalidatePath('/testimonials')
 }

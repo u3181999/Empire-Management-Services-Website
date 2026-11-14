@@ -1,25 +1,21 @@
+import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
 import { prisma } from '@/lib/prisma'
-import { Star, ExternalLink } from 'lucide-react'
+import TestimonialCard from './TestimonialCard'
 
-function StarRating({ rating }: { rating: number }) {
-  return (
-    <div className="flex gap-0.5" role="img" aria-label={`${rating} out of 5 stars`}>
-      {[1, 2, 3, 4, 5].map((i) => (
-        <Star
-          key={i}
-          className={`w-4 h-4 ${i <= rating ? 'fill-[#d4a017] text-[#d4a017]' : 'text-gray-300'}`}
-        />
-      ))}
-    </div>
-  )
-}
+// How many reviews the home page shows. Anything beyond this is on the Reviews page (/testimonials).
+const HOME_LIMIT = 6
 
 export default async function TestimonialsSection() {
-  const testimonials = await prisma.testimonial.findMany({
-    where: { isPublished: true },
-    orderBy: [{ sortOrder: 'asc' }, { createdAt: 'desc' }],
-    take: 6,
-  })
+  const where = { isPublished: true }
+  const [testimonials, total] = await Promise.all([
+    prisma.testimonial.findMany({
+      where,
+      orderBy: [{ sortOrder: 'asc' }, { createdAt: 'desc' }],
+      take: HOME_LIMIT,
+    }),
+    prisma.testimonial.count({ where }),
+  ])
 
   if (testimonials.length === 0) return null
 
@@ -47,44 +43,21 @@ export default async function TestimonialsSection() {
           }`}
         >
           {testimonials.map((t) => (
-            <div
-              key={t.id}
-              className="bg-gray-50 rounded-xl p-6 border border-gray-100 flex flex-col gap-4"
-            >
-              <div className="flex items-center justify-between">
-                <StarRating rating={t.rating} />
-                {/* A platform name is only shown when there is a link to that review, so it can be checked. */}
-                {t.reviewUrl && <span className="text-xs text-gray-600 font-medium">{t.source} review</span>}
-              </div>
-
-              <blockquote className="text-gray-700 text-sm leading-relaxed flex-1">
-                &ldquo;{t.content}&rdquo;
-              </blockquote>
-
-              <div className="flex items-end justify-between gap-2">
-                <div>
-                  <p className="font-semibold text-[#102a43] text-sm">{t.authorName}</p>
-                  {(t.authorTitle || t.company) && (
-                    <p className="text-xs text-gray-500">
-                      {[t.authorTitle, t.company].filter(Boolean).join(', ')}
-                    </p>
-                  )}
-                </div>
-                {t.reviewUrl && (
-                  <a
-                    href={t.reviewUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[#d4a017] hover:text-[#102a43] transition-colors shrink-0"
-                    aria-label="View original review"
-                  >
-                    <ExternalLink className="w-4 h-4" />
-                  </a>
-                )}
-              </div>
-            </div>
+            <TestimonialCard key={t.id} t={t} preview />
           ))}
         </div>
+
+        {/* Only appears once there are more reviews than the home page can show. */}
+        {total > testimonials.length && (
+          <div className="mt-10 text-center">
+            <Link
+              href="/testimonials"
+              className="inline-flex items-center gap-2 rounded-lg border border-[#102a43]/20 bg-white px-6 py-3 text-sm font-semibold text-[#102a43] transition-colors hover:border-gold-500 hover:bg-gold-500/10"
+            >
+              Read all {total} reviews <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   )
