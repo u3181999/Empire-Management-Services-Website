@@ -33,6 +33,32 @@ export async function updateBookingStatus(formData: FormData) {
   revalidatePath('/admin/bookings')
 }
 
+// ── Deleting bookings, enquiries and job applications ─────────────────────────
+// Permanent. Each one checks the admin session itself and only accepts a well-formed id. deleteMany (instead of
+// delete) means a record already removed in another tab is simply a no-op rather than an error page.
+
+export async function deleteBooking(formData: FormData) {
+  await requireAdmin()
+  const id = z.string().cuid().parse(formData.get('id'))
+  await prisma.booking.deleteMany({ where: { id } })
+  revalidatePath('/admin/bookings')
+  revalidatePath('/admin')
+}
+
+export async function deleteEnquiry(formData: FormData) {
+  await requireAdmin()
+  const id = z.string().cuid().parse(formData.get('id'))
+  await prisma.enquiry.deleteMany({ where: { id } })
+  revalidatePath('/admin/enquiries')
+}
+
+export async function deleteJobApplication(formData: FormData) {
+  await requireAdmin()
+  const id = z.string().cuid().parse(formData.get('id'))
+  await prisma.jobApplication.deleteMany({ where: { id } })
+  revalidatePath('/admin/enquiries')
+}
+
 const blogPostSchema = z.object({
   id: z.string().cuid().optional(),
   title: z.string().min(3, 'Title must be at least 3 characters.').max(200, 'Title must be 200 characters or fewer.'),

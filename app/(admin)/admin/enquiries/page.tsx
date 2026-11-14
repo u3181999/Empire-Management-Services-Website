@@ -1,6 +1,8 @@
 import { requireAdminPage } from '@/lib/admin-guard'
 import { prisma } from '@/lib/prisma'
 import type { Metadata } from 'next'
+import { deleteEnquiry, deleteJobApplication } from '@/app/actions/admin'
+import DeleteButton from '@/components/features/DeleteButton'
 
 export const metadata: Metadata = { title: 'Enquiries & Applications — Admin' }
 
@@ -62,7 +64,7 @@ export default async function AdminEnquiriesPage() {
             <table className="w-full text-sm">
               <thead className="border-b border-gray-100 bg-gray-50">
                 <tr>
-                  {['Received', 'From', 'Subject & message', 'Email'].map((h) => (
+                  {['Received', 'From', 'Subject & message', 'Email', 'Actions'].map((h) => (
                     <th key={h} scope="col" className="px-4 py-3 text-left font-medium text-gray-600">
                       {h}
                     </th>
@@ -83,11 +85,21 @@ export default async function AdminEnquiriesPage() {
                       <p className="mt-1 max-w-xl whitespace-pre-wrap text-gray-700">{e.message}</p>
                     </td>
                     <td className="px-4 py-3"><EmailBadge sent={e.emailSent} error={e.emailError} /></td>
+                    <td className="px-4 py-3">
+                      <DeleteButton
+                        action={deleteEnquiry}
+                        id={e.id}
+                        confirmMessage={`Delete the enquiry from ${e.name}? This permanently removes it and cannot be undone.`}
+                        className="rounded px-2 py-1 text-xs font-medium text-red-700 hover:bg-red-50 hover:underline disabled:opacity-40"
+                      >
+                        Delete<span className="sr-only"> the enquiry from {e.name}</span>
+                      </DeleteButton>
+                    </td>
                   </tr>
                 ))}
                 {enquiries.length === 0 && (
                   <tr>
-                    <td colSpan={4} className="px-4 py-10 text-center text-gray-600">No enquiries yet</td>
+                    <td colSpan={5} className="px-4 py-10 text-center text-gray-600">No enquiries yet</td>
                   </tr>
                 )}
               </tbody>
@@ -105,7 +117,7 @@ export default async function AdminEnquiriesPage() {
             <table className="w-full text-sm">
               <thead className="border-b border-gray-100 bg-gray-50">
                 <tr>
-                  {['Received', 'Applicant', 'Availability', 'Eligibility', 'Email'].map((h) => (
+                  {['Received', 'Applicant', 'Availability', 'Eligibility', 'Email', 'Actions'].map((h) => (
                     <th key={h} scope="col" className="px-4 py-3 text-left font-medium text-gray-600">
                       {h}
                     </th>
@@ -137,11 +149,21 @@ export default async function AdminEnquiriesPage() {
                       <p className="text-xs text-gray-600">Clearance: {a.clearance}</p>
                     </td>
                     <td className="px-4 py-3"><EmailBadge sent={a.emailSent} error={a.emailError} /></td>
+                    <td className="px-4 py-3">
+                      <DeleteButton
+                        action={deleteJobApplication}
+                        id={a.id}
+                        confirmMessage={`Delete the job application from ${a.name}? This permanently removes it and cannot be undone.`}
+                        className="rounded px-2 py-1 text-xs font-medium text-red-700 hover:bg-red-50 hover:underline disabled:opacity-40"
+                      >
+                        Delete<span className="sr-only"> the job application from {a.name}</span>
+                      </DeleteButton>
+                    </td>
                   </tr>
                 ))}
                 {applications.length === 0 && (
                   <tr>
-                    <td colSpan={5} className="px-4 py-10 text-center text-gray-600">No applications yet</td>
+                    <td colSpan={6} className="px-4 py-10 text-center text-gray-600">No applications yet</td>
                   </tr>
                 )}
               </tbody>

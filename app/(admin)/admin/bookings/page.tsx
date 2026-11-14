@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma'
-import { updateBookingStatus } from '@/app/actions/admin'
+import { updateBookingStatus, deleteBooking } from '@/app/actions/admin'
+import DeleteButton from '@/components/features/DeleteButton'
 import type { Metadata } from 'next'
 import { requireAdminPage } from '@/lib/admin-guard'
 import BookingStatusSelect from './BookingStatusSelect'
@@ -84,12 +85,22 @@ export default async function AdminBookingsPage(props: PageProps<'/admin/booking
                     />
                   </td>
                   <td className="px-4 py-3">
-                    {b.notes && (
-                      <details className="text-xs">
-                        <summary className="cursor-pointer text-[#d4a017] hover:underline">Notes</summary>
-                        <p className="mt-1 text-gray-600 whitespace-pre-wrap">{b.notes}</p>
-                      </details>
-                    )}
+                    <div className="flex items-center gap-4">
+                      {b.notes && (
+                        <details className="text-xs">
+                          <summary className="cursor-pointer text-[#d4a017] hover:underline">Notes</summary>
+                          <p className="mt-1 text-gray-600 whitespace-pre-wrap">{b.notes}</p>
+                        </details>
+                      )}
+                      <DeleteButton
+                        action={deleteBooking}
+                        id={b.id}
+                        confirmMessage={`Delete the booking from ${b.customerName} (${b.service.name})? This permanently removes it and cannot be undone.`}
+                        className="rounded px-2 py-1 text-xs font-medium text-red-700 hover:bg-red-50 hover:underline disabled:opacity-40"
+                      >
+                        Delete<span className="sr-only"> booking from {b.customerName}</span>
+                      </DeleteButton>
+                    </div>
                   </td>
                 </tr>
               ))}
