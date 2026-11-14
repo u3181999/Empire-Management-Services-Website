@@ -24,7 +24,7 @@ Confirmed by the owner on **9 November 2026** unless stated otherwise.
 | Public liability insurance | Risk & Compliance, service pages, `/compliance` | Current certificate of currency (insurer, policy number, amount, expiry). |
 | Staff screening is matched to each site: background and police checks, and security clearances where a client requires them | Home ("Screened Staff"), Values, Risk & Compliance, `/compliance` | For each site, who was checked, what check (police, clearance level) and when. **Not** "all staff are police-checked": the owner confirmed on 9 Nov 2026 that this is not true, so the site must not say it. |
 | Security-cleared teams available for government and sensitive sites | Services, Values, Risk & Compliance, `/compliance` | Which staff hold which clearance level, and when it was granted. Wording is "available", not "all staff cleared". |
-| Client logos shown (11 organisations) | Home carousel | Written permission from each client (an email is enough). Keep it. |
+| Client logos shown (12 organisations) | Home carousel | Written permission from each client (an email is enough). Keep it. The Mollymook Golf Club was added on 14 Nov 2026: confirm you have its permission too. |
 | 30+ years in business | Home, About, hero, footer | Records showing the business has traded since 1995 (invoices, contracts, accounts). **Note:** the current legal entity (Ergatis Services Pty Ltd) only has its ABN from 2006 and the business name from 2007, so if the 1995 start was under an earlier entity or as a sole trader, keep evidence of that and be ready to explain it. |
 | 80+ active clients | Home, hero, About | A current client list. |
 | 100+ cleaning staff | Stat tile | A current staff or payroll headcount. |

@@ -16,6 +16,7 @@ const CLIENTS = [
   { name: 'APVMA',                                 logo: '/clients/apvma.webp'                },
   { name: 'ACT Cricket',                           logo: '/clients/act-cricket.png'           },
   { name: 'AFL Canberra',                          logo: '/clients/afl-canberra.png'          },
+  { name: 'The Mollymook Golf Club',               logo: '/clients/mollymook-golf-club.png'   },
 ]
 
 // Anyone whose device asks for reduced motion gets a still grid of logos instead of a moving strip.
@@ -34,7 +35,7 @@ function ClientCard({ name, logo, decorative = false }: { name: string; logo: st
 
   return (
     <div
-      className="flex flex-col items-center justify-center gap-3 mx-6 w-36 shrink-0 group"
+      className="flex flex-col items-center justify-center mx-5 w-24 shrink-0 group"
       aria-hidden={decorative || undefined}
     >
       <div className="w-20 h-20 rounded-xl bg-white border border-gray-100 shadow-sm flex items-center justify-center p-2 group-hover:border-[#d4a017] group-hover:shadow-md transition-all">
@@ -51,9 +52,7 @@ function ClientCard({ name, logo, decorative = false }: { name: string; logo: st
           <span className="text-sm font-bold text-[#102a43]">{abbr}</span>
         )}
       </div>
-      <p className="text-xs text-center text-gray-500 leading-tight group-hover:text-[#d4a017] transition-colors line-clamp-2">
-        {name}
-      </p>
+      {/* Names are not shown under the logos. Each logo's alt text still gives screen readers the client's name. */}
     </div>
   )
 }
