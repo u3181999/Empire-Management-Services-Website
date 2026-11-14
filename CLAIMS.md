@@ -20,7 +20,7 @@ Confirmed by the owner on **9 November 2026** unless stated otherwise.
 
 | Claim | Where it appears | Evidence to keep on file |
 |---|---|---|
-| ISO 9001:2015, ISO 14001:2015 and ISO 45001:2018 certified | Home, About, Risk & Compliance, chatbot, location pages, `/compliance` | The three current certificates, with the certifying body, certificate numbers and expiry dates. Diary the renewal dates. |
+| ISO 9001:2015, ISO 14001:2015 and ISO 45001:2018 certified | Home, About, Risk & Compliance, chatbot, location pages, `/compliance` | The three current certificates, with the certifying body, certificate numbers and expiry dates. Diary the renewal dates. Added 14 Nov 2026 from the owner's certification paperwork: certification body IQC, contract number C0136, and the JAS-ANZ register link and logos shown on `/compliance`. Confirm IQC's certification covers all three standards, and that you may use the IQC and JAS-ANZ marks. |
 | Public liability insurance | Risk & Compliance, service pages, `/compliance` | Current certificate of currency (insurer, policy number, amount, expiry). |
 | Staff screening is matched to each site: background and police checks, and security clearances where a client requires them | Home ("Screened Staff"), Values, Risk & Compliance, `/compliance` | For each site, who was checked, what check (police, clearance level) and when. **Not** "all staff are police-checked": the owner confirmed on 9 Nov 2026 that this is not true, so the site must not say it. |
 | Security-cleared teams available for government and sensitive sites | Services, Values, Risk & Compliance, `/compliance` | Which staff hold which clearance level, and when it was granted. Wording is "available", not "all staff cleared". |

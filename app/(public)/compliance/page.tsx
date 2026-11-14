@@ -1,8 +1,9 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, BadgeCheck, FileText, Phone, ShieldCheck, UserCheck } from 'lucide-react'
 import type { Metadata } from 'next'
 import { Button, SectionHeading } from '@/components/ui'
-import { COMPANY, MANAGEMENT_STANDARDS } from '@/lib/constants'
+import { CERTIFICATION, COMPANY, MANAGEMENT_STANDARDS } from '@/lib/constants'
 import { pageSeo } from '@/lib/seo'
 
 export const metadata: Metadata = {
@@ -69,6 +70,32 @@ export default function CompliancePage() {
                 </div>
               )
             })}
+          </div>
+
+          {/* Who certifies us, and where a client can check it */}
+          <div className="mt-8 flex flex-col gap-6 rounded-2xl border border-gray-100 bg-white p-6 shadow-sm sm:flex-row sm:items-center sm:gap-10 sm:p-8">
+            <div className="flex shrink-0 items-center gap-6">
+              <Image src="/certifications/iqc.png" alt="IQC certification mark" width={216} height={201} sizes="72px" className="h-16 w-auto" />
+              <Image src="/certifications/jas-anz.png" alt="JAS-ANZ logo" width={207} height={216} sizes="72px" className="h-16 w-auto" />
+            </div>
+            <div>
+              <h2 className="text-lg font-bold text-navy-900">Certification body and register</h2>
+              <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                Our ISO certification is held with {CERTIFICATION.body}, contract number{' '}
+                <strong className="font-semibold text-navy-900">{CERTIFICATION.contractNumber}</strong>. You can check it
+                on the JAS-ANZ register:
+              </p>
+              <a
+                href={CERTIFICATION.registerUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 inline-flex items-center gap-1.5 py-1 text-sm font-semibold text-gold-700 underline underline-offset-2 hover:text-gold-800"
+              >
+                {CERTIFICATION.registerLabel}
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            </div>
           </div>
         </div>
       </section>
