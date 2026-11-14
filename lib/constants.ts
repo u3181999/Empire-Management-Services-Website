@@ -201,7 +201,7 @@ export type Credential = {
 // From the certification paperwork (supplied by the owner, 14 Nov 2026): the certification body, the contract
 // number it issued, and the public JAS-ANZ register where certified organisations can be checked.
 export const CERTIFICATION = {
-  body: 'IQC',
+  body: 'Integrated Quality Certification Pvt Ltd (IQC)',
   contractNumber: 'C0136',
   registerUrl: 'https://www.jas-anz.org/register',
   registerLabel: 'www.jas-anz.org/register',
