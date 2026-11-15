@@ -1,8 +1,16 @@
 import Link from 'next/link'
-import { CheckCircle2, ArrowRight, User } from 'lucide-react'
+import { CheckCircle2, ArrowRight, User, Leaf, Recycle, ShieldCheck, Sprout } from 'lucide-react'
 import { COMPANY, VALUES } from '@/lib/constants'
 import type { Metadata } from 'next'
 import { pageSeo } from '@/lib/seo'
+
+// The four points shown beside the Eco-Friendly text. Icons are line icons (not emoji) to match the rest of the site.
+const ECO_POINTS = [
+  { icon: Leaf, title: 'Certified Chemicals', desc: 'Only eco-certified, biodegradable cleaning products used on every site.' },
+  { icon: Recycle, title: 'Reduced Waste', desc: 'Waste minimisation practices embedded in every cleaning program.' },
+  { icon: ShieldCheck, title: 'Safe for All Settings', desc: 'Suitable for healthcare, offices, homes, and commercial facilities.' },
+  { icon: Sprout, title: 'Greener Future', desc: 'Committed to responsible cleaning that supports environmental sustainability.' },
+]
 
 const TEAM = [
   {
@@ -164,17 +172,22 @@ export default function AboutPage() {
       </section>
 
       {/* Eco-Friendly */}
-      <section className="py-16 bg-green-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <section className="relative overflow-hidden bg-navy-900 py-16 text-white lg:py-24">
+        {/* Decorative only: a soft gold glow and a faint leaf, in the same navy and gold as the rest of the site */}
+        <div aria-hidden="true" className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-gold-500/10 blur-3xl" />
+        <Leaf aria-hidden="true" strokeWidth={1} className="pointer-events-none absolute -bottom-20 -left-12 h-80 w-80 rotate-12 text-white/[0.03]" />
+
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <div>
-              <span className="inline-block text-xs font-semibold tracking-widest uppercase text-green-800 bg-green-100 px-3 py-1 rounded-full mb-4">
+              <span className="inline-flex items-center gap-2 rounded-full bg-gold-500/15 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-gold-400">
+                <Leaf className="h-3.5 w-3.5" aria-hidden="true" />
                 Eco-Friendly
               </span>
-              <h2 className="text-3xl font-bold text-[#102a43]">
-                We also provide tailored Eco-Friendly Cleaning Services
+              <h2 className="mt-4 text-3xl font-bold leading-tight sm:text-4xl">
+                We also provide tailored <span className="text-gold-500">Eco-Friendly</span> Cleaning Services
               </h2>
-              <div className="mt-5 space-y-4 text-gray-600 leading-relaxed">
+              <div className="mt-6 space-y-4 leading-relaxed text-navy-100">
                 <p>
                   At Empire Management Services, we are committed to delivering exceptional cleaning services
                   while protecting the health of our clients and the environment. We use environmentally
@@ -186,24 +199,25 @@ export default function AboutPage() {
                   safety, making our services suitable for homes, offices, healthcare settings, and commercial
                   facilities.
                 </p>
-                <p>
+                <p className="border-l-4 border-gold-500 pl-4 text-white">
                   By choosing our services, you can enjoy a clean, healthy, and sustainable environment while
                   reducing your environmental footprint. We are dedicated to providing reliable, professional,
                   and responsible cleaning solutions that support a greener future.
                 </p>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-4">
-              {[
-                { icon: '🌿', title: 'Certified Chemicals', desc: 'Only eco-certified, biodegradable cleaning products used on every site.' },
-                { icon: '♻️', title: 'Reduced Waste', desc: 'Waste minimisation practices embedded in every cleaning program.' },
-                { icon: '🏥', title: 'Safe for All Settings', desc: 'Suitable for healthcare, offices, homes, and commercial facilities.' },
-                { icon: '🌍', title: 'Greener Future', desc: 'Committed to responsible cleaning that supports environmental sustainability.' },
-              ].map(({ icon, title, desc }) => (
-                <div key={title} className="bg-white rounded-xl p-5 border border-green-100 shadow-sm">
-                  <span className="text-2xl">{icon}</span>
-                  <h3 className="font-bold text-[#102a43] mt-2 text-sm">{title}</h3>
-                  <p className="text-xs text-gray-500 mt-1 leading-relaxed">{desc}</p>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              {ECO_POINTS.map(({ icon: Icon, title, desc }) => (
+                <div
+                  key={title}
+                  className="group rounded-2xl border border-white/10 bg-white/[0.04] p-6 transition-all duration-300 hover:border-gold-500/50 hover:bg-white/[0.07] motion-safe:hover:-translate-y-0.5"
+                >
+                  <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-gold-500/15 text-gold-500 transition-colors duration-300 group-hover:bg-gold-500 group-hover:text-navy-900">
+                    <Icon className="h-5 w-5" aria-hidden="true" />
+                  </div>
+                  <h3 className="font-bold text-white">{title}</h3>
+                  <p className="mt-1.5 text-sm leading-relaxed text-navy-200">{desc}</p>
                 </div>
               ))}
             </div>
