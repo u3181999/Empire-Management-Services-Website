@@ -7,12 +7,12 @@ import { pageSeo } from '@/lib/seo'
 const TEAM = [
   {
     name: 'Alex',
-    role: 'Director',
+    role: 'Managing Director',
     bio: 'Alex founded Empire Management Services in 1995 with a vision to deliver commercial cleaning services built on integrity and results. With over 30 years at the helm, Alex has grown the company from a local Canberra operation to a trusted name across ACT and NSW, serving 80+ clients and maintaining relationships built on consistent, quality-driven outcomes.',
   },
   {
     name: 'Helen',
-    role: 'Director Accounts',
+    role: 'Director',
     bio: 'Helen oversees the financial operations of Empire Management Services, ensuring fiscal discipline and sustainable growth. With a strong background in business finance, Helen plays a critical role in strategic planning, budgeting, and ensuring the company remains well-positioned to deliver value to both clients and staff.',
   },
   {
