@@ -7,23 +7,23 @@ import { pageSeo } from '@/lib/seo'
 const TEAM = [
   {
     name: 'Alex',
-    role: 'Founder & Chief Executive Officer (CEO)',
+    role: 'Director',
     bio: 'Alex founded Empire Management Services in 1995 with a vision to deliver commercial cleaning services built on integrity and results. With over 30 years at the helm, Alex has grown the company from a local Canberra operation to a trusted name across ACT and NSW, serving 80+ clients and maintaining relationships built on consistent, quality-driven outcomes.',
   },
   {
     name: 'Helen',
-    role: 'Chief Finance Officer (CFO)',
+    role: 'Director Accounts',
     bio: 'Helen oversees the financial operations of Empire Management Services, ensuring fiscal discipline and sustainable growth. With a strong background in business finance, Helen plays a critical role in strategic planning, budgeting, and ensuring the company remains well-positioned to deliver value to both clients and staff.',
   },
   {
     name: 'Felicity Vercera',
     role: 'Chief Operating Officer',
-    bio: "Felicity leads day-to-day operations across Empire's client sites, coordinating cleaning schedules, staff deployment, and quality assurance. Her attention to detail and hands-on management style ensure that every client receives consistent, high-standard service — on time, every time.",
+    bio: "Felicity runs the work on site. That means building the cleaning schedules, deploying and supporting Empire's cleaning teams, and keeping quality assurance on track so that every site meets the standard agreed with the client, on time, every time.",
   },
   {
     name: 'Matthew Kelly',
     role: 'Business Operations Manager',
-    bio: "Matthew oversees daily business operations, ensuring efficient service delivery, high-quality cleaning standards, and strong client satisfaction across a diverse portfolio of commercial facilities. With a focus on operational excellence, team leadership, and continuous improvement, Matthew works closely with staff and clients to maintain reliable, professional, and cost-effective cleaning solutions while supporting the company's ongoing growth and commitment to exceptional service.",
+    bio: "Matthew looks after the business side of Empire's client relationships, acting as the link between clients and the operations team. The role covers client accounts and service agreements, keeping day-to-day business processes running smoothly, and finding ways to make the service more efficient and cost-effective as Empire's portfolio of commercial facilities grows.",
   },
 ]
 
