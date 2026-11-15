@@ -6,7 +6,7 @@ import { pageSeo } from '@/lib/seo'
 
 // The four points shown beside the Eco-Friendly text. Icons are line icons (not emoji) to match the rest of the site.
 const ECO_POINTS = [
-  { icon: Leaf, title: 'Certified Chemicals', desc: 'Only eco-certified, biodegradable cleaning products used on every site.' },
+  { icon: Leaf, title: 'Certified Chemicals', desc: 'We use certified cleaning chemicals from our registered supplier.' },
   { icon: Recycle, title: 'Reduced Waste', desc: 'Waste minimisation practices embedded in every cleaning program.' },
   { icon: ShieldCheck, title: 'Safe for All Settings', desc: 'Suitable for healthcare, offices, homes, and commercial facilities.' },
   { icon: Sprout, title: 'Greener Future', desc: 'Committed to responsible cleaning that supports environmental sustainability.' },

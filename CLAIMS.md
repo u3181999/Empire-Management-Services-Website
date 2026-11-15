@@ -30,6 +30,7 @@ Confirmed by the owner on **9 November 2026** unless stated otherwise.
 | 100+ cleaning staff | Stat tile | A current staff or payroll headcount. |
 | 2,500+ hours serviced each week | Stat tile | Rostered or timesheet hours for a typical week. |
 | 100,000m² serviced | Home, hero, About | Site area schedule across contracts. |
+| We use certified cleaning chemicals from our registered supplier | About (Eco-Friendly), Risk & Compliance | Confirmed by the owner on 15 Nov 2026. Keep the supplier's name and registration details, and the safety data sheet or certification for each product in use. |
 | Hellenic Club testimonial (Michael Haddad) | Home | The client's permission to quote. It is labelled as a direct testimonial, not a Google review. Add the review link if it is also on Google. |
 
 ## Removed because they could not be substantiated
@@ -40,6 +41,7 @@ Confirmed by the owner on **9 November 2026** unless stated otherwise.
 | "All staff vetted and cleared" / "all staff undergo security clearance checks" | Not true: the job application accepts people with no clearance. Replaced with screening matched to each site plus cleared teams available (the first replacement, "police-checked staff", was also withdrawn on 9 Nov 2026 because not all staff are police-checked). |
 | "Google" label on the Hellenic Club testimonial | There was no link to a Google review. |
 | "States" on the stat tile | The ACT is a territory. Now "States & Territories". |
+| "Only eco-certified, biodegradable cleaning products used on every site" | An absolute claim ("only", "every site") with no named certification scheme. Replaced on 15 Nov 2026 with what the owner can stand behind: certified chemicals from the registered supplier. |
 
 ## Still unverified (confirm, soften or remove)
 
@@ -49,7 +51,6 @@ These were not part of the owner's confirmation. They are plausible, but nobody 
 |---|---|---|
 | Staff sign confidentiality agreements before working on any site | Values | Keep a signed copy per staff member, or say "sign confidentiality agreements where required". |
 | Safe Work Practices (renamed from "SWMS" on 9 Nov 2026) and a Duty Statement are prepared "for every site we service" | Risk & Compliance | Confirm this is true for every site, or say "for each contract". |
-| "Only eco-certified, biodegradable cleaning products used on every site" and "eco-certified" products | About (Eco-Friendly), Risk & Compliance | Name the certification scheme, or say "we use environmentally responsible, certified products where possible". |
 | Regular quality audits and reporting; "audit-ready" | Risk & Compliance | Keep sample audit reports. |
 | "Fully insured and OH&S compliant" | Window cleaning service page | Covered by insurance above; "OH&S compliant" is a legal-compliance claim, so keep the evidence. |
 | "Trusted by leading organisations" | Home | A subjective claim; fine while the client list above is current. |

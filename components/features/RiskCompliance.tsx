@@ -44,7 +44,7 @@ const PILLARS = [
   {
     icon: Leaf,
     title: 'Environmental responsibility (ISO 14001)',
-    desc: 'Eco-certified, biodegradable products, responsible chemical use and compliant disposal of waste.',
+    desc: 'Certified chemicals from our registered supplier, responsible chemical use and compliant disposal of waste.',
   },
   {
     icon: ShieldCheck,
