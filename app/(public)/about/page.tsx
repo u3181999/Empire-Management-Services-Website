@@ -172,7 +172,7 @@ export default function AboutPage() {
       </section>
 
       {/* Eco-Friendly */}
-      <section className="relative overflow-hidden bg-navy-900 py-16 text-white lg:py-24">
+      <section id="eco" className="relative scroll-mt-24 overflow-hidden bg-navy-900 py-16 text-white lg:py-24">
         {/* Decorative only: a soft gold glow and a faint leaf, in the same navy and gold as the rest of the site */}
         <div aria-hidden="true" className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-gold-500/10 blur-3xl" />
         <Leaf aria-hidden="true" strokeWidth={1} className="pointer-events-none absolute -bottom-20 -left-12 h-80 w-80 rotate-12 text-white/[0.03]" />

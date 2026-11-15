@@ -12,9 +12,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import {
   Shield, Clock, BadgeCheck, Users,
-  ArrowRight, Phone, CheckCircle2,
+  ArrowRight, Phone, CheckCircle2, Leaf, Recycle, ShieldCheck,
 } from 'lucide-react'
-import { COMPANY, VALUES } from '@/lib/constants'
+import { COMPANY, VALUES, ECO_SUMMARY } from '@/lib/constants'
 import type { Metadata } from 'next'
 import { pageSeo, localBusinessSchema, websiteSchema } from '@/lib/seo'
 import JsonLd from '@/components/seo/JsonLd'
@@ -131,6 +131,49 @@ export default function HomePage() {
               <Button href="/services" variant="secondary" icon={<ArrowRight className="w-4 h-4" />}>
                 View All Services
               </Button>
+            </div>
+          </div>
+        </section>
+
+        {/* Eco-friendly: a short band here; the full story is on the About page (#eco) and the service has its own page */}
+        <section className="bg-white py-12" aria-labelledby="eco-band-heading">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="relative overflow-hidden rounded-2xl border border-gold-200 bg-gold-50 p-6 sm:p-8">
+              <Leaf aria-hidden="true" strokeWidth={1} className="pointer-events-none absolute -right-6 -top-8 h-44 w-44 rotate-12 text-gold-500/10" />
+              <div className="relative flex flex-col gap-6 lg:flex-row lg:items-center lg:gap-10">
+                <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-navy-900 text-gold-500">
+                  <Leaf className="h-7 w-7" aria-hidden="true" />
+                </span>
+                <div className="flex-1">
+                  <h2 id="eco-band-heading" className="text-xl font-bold text-navy-900 sm:text-2xl">
+                    Eco-Friendly Cleaning
+                  </h2>
+                  <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-700 sm:text-base">{ECO_SUMMARY}</p>
+                  <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium text-navy-900">
+                    {[
+                      { icon: Leaf, label: 'Certified chemicals' },
+                      { icon: Recycle, label: 'Reduced waste' },
+                      { icon: ShieldCheck, label: 'Safe for all settings' },
+                    ].map(({ icon: Icon, label }) => (
+                      <li key={label} className="inline-flex items-center gap-2">
+                        <Icon className="h-4 w-4 text-gold-700" aria-hidden="true" />
+                        {label}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="flex shrink-0 flex-col gap-3 sm:flex-row lg:flex-col">
+                  <Button href="/services/eco-friendly-cleaning" icon={<ArrowRight className="w-4 h-4" />}>
+                    Eco-Friendly Cleaning
+                  </Button>
+                  <Link
+                    href="/about#eco"
+                    className="inline-flex min-h-[44px] items-center justify-center px-2 text-sm font-semibold text-gold-700 underline underline-offset-2 hover:text-gold-800"
+                  >
+                    Our eco-friendly approach
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </section>
