@@ -59,8 +59,8 @@ const SERVICE_DETAILS: Record<string, { benefits: string[]; suitableFor: string[
     ],
     suitableFor: ['Owners corporations and strata committees', 'Residential strata complexes', 'Mixed-use developments', 'Commercial strata'],
   },
-  // Delivered today for a university campus and Australian Government buildings. The clients are not named here:
-  // naming a client needs their permission (see CLAIMS.md).
+  // Delivered today for a university campus and Australian Government buildings (those were examples from the owner).
+  // The page deliberately speaks about sites in general and names no client: naming one needs their permission.
   'eco-friendly-cleaning': {
     benefits: [
       "Green cleaning chemicals certified by Good Environmental Choice Australia (GECA), from Agar's Green Cleaning Range",
@@ -69,7 +69,7 @@ const SERVICE_DETAILS: Record<string, { benefits: string[]; suitableFor: string[
       'Effective cleaning and disinfection without compromising safety',
       'Backed by our ISO 14001 environmental management certification',
     ],
-    suitableFor: ['University campuses', 'Australian Government buildings', 'Offices and corporate buildings', 'Healthcare and medical settings'],
+    suitableFor: ['Offices and corporate buildings', 'Healthcare and medical settings', 'Commercial facilities', 'Public and institutional buildings'],
   },
   'government-departments': {
     benefits: [
