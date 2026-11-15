@@ -66,7 +66,7 @@ export const LOCATIONS = [
 
 // The short eco-friendly message used outside the About page (home page band). Keep it in step with the About section.
 export const ECO_SUMMARY =
-  'Certified cleaning chemicals from our registered supplier, environmentally friendly methods and waste minimisation, delivered for university campuses and Australian Government buildings.'
+  'GECA-certified green cleaning chemicals, environmentally friendly methods and waste minimisation, delivered for university campuses and Australian Government buildings.'
 
 export const SERVICES = [
   {

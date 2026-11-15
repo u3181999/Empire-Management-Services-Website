@@ -44,7 +44,7 @@ const PILLARS = [
   {
     icon: Leaf,
     title: 'Environmental responsibility (ISO 14001)',
-    desc: 'Certified chemicals from our registered supplier, responsible chemical use and compliant disposal of waste.',
+    desc: 'GECA-certified green cleaning chemicals from our registered supplier, responsible chemical use and compliant disposal of waste.',
   },
   {
     icon: ShieldCheck,

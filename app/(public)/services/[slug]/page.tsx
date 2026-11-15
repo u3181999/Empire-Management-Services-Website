@@ -63,7 +63,7 @@ const SERVICE_DETAILS: Record<string, { benefits: string[]; suitableFor: string[
   // naming a client needs their permission (see CLAIMS.md).
   'eco-friendly-cleaning': {
     benefits: [
-      'Certified cleaning chemicals from our registered supplier',
+      "Green cleaning chemicals certified by Good Environmental Choice Australia (GECA), from Agar's Green Cleaning Range",
       'Environmentally friendly cleaning methods',
       'Waste minimisation built into the cleaning program',
       'Effective cleaning and disinfection without compromising safety',
