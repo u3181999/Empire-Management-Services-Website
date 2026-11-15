@@ -6,10 +6,9 @@ Code status: `npm run lint`, `npx tsc --noEmit` and `npm run build` pass. Databa
 Already prepared in the repo: Sydney region + `www` → apex redirect (`vercel.json`), sitemap/robots/SEO and the
 link-preview image all read the website address from one place (`lib/site.ts`).
 
-**Two domains, two jobs.** The **website** lives at `empiremanagementservices.com.au` (the address customers already know, and the one
-on your LinkedIn page and in Google). **Email** lives at `empirecleaning.com.au` (`admin@`, and the domain verified in
-Resend). `empirecleaning.com.au` also forwards to the website, exactly as it does today. Both are managed in the same
-Microsoft 365 DNS.
+**The website** lives at `empiremanagementservices.com.au` only (the address customers already know, and the one on your LinkedIn page and
+in Google). `empirecleaning.com.au` is **not** used for the website and is not added to Vercel. It is used for email
+(`admin@`, and the domain set up in Resend). Both domains are managed in the same Microsoft 365 DNS.
 
 The website address lives in one setting: `NEXT_PUBLIC_SITE_URL`. If it ever changes, change that variable
 (and `NEXTAUTH_URL`, and the redirect hosts in `vercel.json`).
@@ -66,15 +65,14 @@ git-ignored and no commit contains a real connection string). Replace the passwo
 
 1. Vercel → **Settings → Domains → Add Existing**. Add `empiremanagementservices.com.au` and `www.empiremanagementservices.com.au`, connected to **Production**.
    **Untick "Redirect apex domains to www"**: this site does the opposite (www forwards to the main address, set in
-   `vercel.json`), and leaving it ticked would make the two redirect to each other forever. When the website is ready
-   to go live, also add `empirecleaning.com.au` and `www.empirecleaning.com.au` the same way: `vercel.json` forwards
-   both to the website.
-2. In the Microsoft 365 admin centre (Settings → Domains → each domain → DNS records), add the records Vercel shows
-   for each: an `A` record for the bare domain and a `CNAME` for `www`. For `empiremanagementservices.com.au` and for
-   `empirecleaning.com.au`, change **only** those: both bare domains currently point at the old web host
-   (`103.152.248.115`, checked 15 Nov 2026), and the `MX`, `TXT`, Resend and `autodiscover`-type records must stay exactly
-   as they are, or staff email stops.
-3. `www` and `empirecleaning.com.au` redirect to `empiremanagementservices.com.au` automatically; HTTPS is issued by Vercel.
+   `vercel.json`), and leaving it ticked would make the two redirect to each other forever.
+2. In the Microsoft 365 admin centre (Settings → Domains → `empiremanagementservices.com.au` → DNS records), make the two changes Vercel
+   shows (values read on 15 Nov 2026; confirm against Vercel's Domains page before sending): **change** the `A` record
+   for the bare domain from the old web host (`103.152.248.115`) to `216.198.79.1`, and **add** a `CNAME` for `www`
+   pointing to `4f47fd9e8d42a136.vercel-dns-017.com`. Change **only** those: the `MX`, `TXT`, Resend and
+   `autodiscover`-type records must stay exactly as they are, or staff email stops.
+3. `www` redirects to `empiremanagementservices.com.au` automatically; HTTPS is issued by Vercel. Keep the old web hosting active until the
+   new site has been checked, so there is something to switch back to.
 
 ## 4. Email (Resend) — contact form and bookings depend on this
 

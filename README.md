@@ -97,12 +97,12 @@ Without this, **the contact form and booking emails will not send.**
 ### Step 4: Connect your domain
 
 1. In Vercel: **Settings**, then **Domains**, then **Add Existing**, and add `empiremanagementservices.com.au` and `www.empiremanagementservices.com.au`.
-   Untick "Redirect apex domains to www". Later add `empirecleaning.com.au` too; it forwards to the website.
+   Untick "Redirect apex domains to www". (`empirecleaning.com.au` is only for email; it is not added here.)
 2. Vercel shows the DNS records to add (usually an `A` record for the main domain and a `CNAME` for `www`).
 3. Add them where your domain's DNS is managed, then wait. This can take a few minutes up to 48 hours.
 4. When Vercel shows a green tick, add one more setting: `NEXTAUTH_URL` = `https://empiremanagementservices.com.au`.
    Then redeploy.
-5. `www.empiremanagementservices.com.au` and `empirecleaning.com.au` automatically forward to `empiremanagementservices.com.au`, and the padlock (HTTPS)
+5. `www.empiremanagementservices.com.au` automatically forwards to `empiremanagementservices.com.au`, and the padlock (HTTPS)
    is set up for you.
 
 ### Step 5: Final check
@@ -113,7 +113,7 @@ Open the live site and tick off each item:
 - [ ] Send a test message through the Contact form; it arrives at `admin@empirecleaning.com.au`
 - [ ] Make a test booking; both the customer confirmation and the admin notification arrive
 - [ ] Log in at `/admin/login` with the new password; the dashboard shows your bookings
-- [ ] `www.empiremanagementservices.com.au` and `empirecleaning.com.au` both forward to `empiremanagementservices.com.au`
+- [ ] `www.empiremanagementservices.com.au` forwards to `empiremanagementservices.com.au`
 - [ ] Paste the site address into WhatsApp or Facebook; a preview image appears
 
 ### DNS explained

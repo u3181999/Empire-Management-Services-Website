@@ -13,18 +13,6 @@
       "has": [{ "type": "host", "value": "www.empiremanagementservices.com.au" }],
       "destination": "https://empiremanagementservices.com.au/:path*",
       "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [{ "type": "host", "value": "empirecleaning.com.au" }],
-      "destination": "https://empiremanagementservices.com.au/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [{ "type": "host", "value": "www.empirecleaning.com.au" }],
-      "destination": "https://empiremanagementservices.com.au/:path*",
-      "permanent": true
     }
   ]
 }
