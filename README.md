@@ -161,6 +161,7 @@ that. Nothing needs changing from year to year. It is decorative and works for e
 - **Preview it any time:** add `?festive=1` to any page address (for example `https://empirecleaning.com.au/?festive=1`).
   Add `?festive=0` to hide it during the season.
 - **Change the dates:** edit `FESTIVE_START` and `FESTIVE_END` in `lib/festive.ts`. Only the month and day matter.
+- **Change the picture:** replace `public/festive/santa-hat.png` with another image (a transparent PNG, about 480 pixels wide).
 - **Switch it off for good:** remove `<FestiveHat ... />` from `components/layout/Header.tsx`.
 
 ### Change text on the website (for example the Meet the Team section)

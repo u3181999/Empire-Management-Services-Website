@@ -50,7 +50,7 @@ export default function Header() {
                 priority
               />
               {/* Santa hat, shown 1-26 December every year (dates in lib/festive.ts); nothing the rest of the year. */}
-              <FestiveHat className="-left-2.5 -top-2.5 w-10 -rotate-[16deg]" />
+              <FestiveHat className="-left-1 -top-[9px] w-10 -rotate-[14deg]" />
             </span>
           </Link>
 
