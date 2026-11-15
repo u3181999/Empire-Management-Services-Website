@@ -3,7 +3,7 @@
 The website for **Empire Management Services**, a commercial cleaning company based in Fyshwick, ACT
 (30+ years, 80+ clients, servicing Canberra and NSW from the Canberra head office).
 
-**Live site:** https://empirecleaning.com.au
+**Live site:** https://empiremanagementservices.com.au
 **Code:** https://github.com/u3181999/Empire-Management-Services-Website
 
 > New to all this? Start with [How the pieces fit together](#how-the-pieces-fit-together), then
@@ -21,7 +21,7 @@ A website like this is made of several services, each doing one job:
 | **Vercel** | Runs the website on the internet and rebuilds it whenever the code changes | The shopfront |
 | **Neon** | Stores the data: bookings, blog posts, testimonials, the admin login | The records room |
 | **Resend** | Sends emails: contact form messages, booking confirmations | The mail room |
-| **Your domain** (`empirecleaning.com.au`) | The address people type to find the site | The street address |
+| **Your domain** (`empiremanagementservices.com.au`) | The address people type to find the site | The street address |
 
 **How changes reach the website:** you (or Claude) change the code, it is saved to GitHub, and Vercel
 automatically rebuilds and publishes the new version within a couple of minutes. You never copy files to a server.
@@ -72,7 +72,7 @@ $env:NEW_ADMIN_PASSWORD = "your-long-unique-password"; npm run admin:set-passwor
 |---|---|---|
 | `DATABASE_URL` | Long text starting `postgresql://` | Copy from the `.env` file in your project folder |
 | `NEXTAUTH_SECRET` | A new random string | Run `node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"` in PowerShell and copy the result |
-| `NEXT_PUBLIC_SITE_URL` | `https://empirecleaning.com.au` | Your domain |
+| `NEXT_PUBLIC_SITE_URL` | `https://empiremanagementservices.com.au` | Your website address |
 | `ADMIN_EMAIL` | `admin@empirecleaning.com.au` | The inbox that receives contact and booking emails |
 
    Add these **later** (steps 3 and 4): `NEXTAUTH_URL` and `RESEND_API_KEY`.
@@ -86,7 +86,7 @@ $env:NEW_ADMIN_PASSWORD = "your-long-unique-password"; npm run admin:set-passwor
 Without this, **the contact form and booking emails will not send.**
 
 1. Sign up at [resend.com](https://resend.com).
-2. **Domains**, then **Add Domain**, and enter `empirecleaning.com.au`.
+2. **Domains**, then **Add Domain**, and enter `empirecleaning.com.au` (the email domain; the website is on `empiremanagementservices.com.au`).
 3. Resend shows a short list of DNS records (SPF and DKIM). Add them where your domain's DNS is managed
    (usually the company you bought the domain from). See [DNS explained](#dns-explained).
 4. Click **Verify** in Resend. It can take from a few minutes up to a day.
@@ -96,12 +96,13 @@ Without this, **the contact form and booking emails will not send.**
 
 ### Step 4: Connect your domain
 
-1. In Vercel: **Settings**, then **Domains**, and add `empirecleaning.com.au` and `www.empirecleaning.com.au`.
+1. In Vercel: **Settings**, then **Domains**, then **Add Existing**, and add `empiremanagementservices.com.au` and `www.empiremanagementservices.com.au`.
+   Untick "Redirect apex domains to www". Later add `empirecleaning.com.au` too; it forwards to the website.
 2. Vercel shows the DNS records to add (usually an `A` record for the main domain and a `CNAME` for `www`).
 3. Add them where your domain's DNS is managed, then wait. This can take a few minutes up to 48 hours.
-4. When Vercel shows a green tick, add one more setting: `NEXTAUTH_URL` = `https://empirecleaning.com.au`.
+4. When Vercel shows a green tick, add one more setting: `NEXTAUTH_URL` = `https://empiremanagementservices.com.au`.
    Then redeploy.
-5. `www.empirecleaning.com.au` automatically forwards to `empirecleaning.com.au`, and the padlock (HTTPS)
+5. `www.empiremanagementservices.com.au` and `empirecleaning.com.au` automatically forward to `empiremanagementservices.com.au`, and the padlock (HTTPS)
    is set up for you.
 
 ### Step 5: Final check
@@ -112,7 +113,7 @@ Open the live site and tick off each item:
 - [ ] Send a test message through the Contact form; it arrives at `admin@empirecleaning.com.au`
 - [ ] Make a test booking; both the customer confirmation and the admin notification arrive
 - [ ] Log in at `/admin/login` with the new password; the dashboard shows your bookings
-- [ ] `www.empirecleaning.com.au` forwards to `empirecleaning.com.au`
+- [ ] `www.empiremanagementservices.com.au` and `empirecleaning.com.au` both forward to `empiremanagementservices.com.au`
 - [ ] Paste the site address into WhatsApp or Facebook; a preview image appears
 
 ### DNS explained
@@ -120,14 +121,14 @@ Open the live site and tick off each item:
 **DNS** is the internet's phone book: it links your domain name to the right server. You edit it at whoever
 manages your domain (the registrar or DNS host). In their dashboard look for "DNS", "DNS records" or
 "Manage DNS", then add each record exactly as Vercel or Resend shows it (Type, Name/Host, Value). If you are
-unsure where your domain is managed, look up `empirecleaning.com.au` at a "whois" website to see the registrar.
+unsure where your domain is managed, look up `empiremanagementservices.com.au` at a "whois" website to see the registrar.
 
 ---
 
 ## Everyday tasks
 
 ### Log in to the admin area
-Go to `https://empirecleaning.com.au/admin/login`. From there you can manage bookings, blog posts
+Go to `https://empiremanagementservices.com.au/admin/login`. From there you can manage bookings, blog posts
 and testimonials.
 
 ### Write or edit a blog post
@@ -158,7 +159,7 @@ to the `FEEDS` list there.
 A Santa hat appears on the logo every year from **1 to 26 December** (Canberra time) and disappears on its own after
 that. Nothing needs changing from year to year. It is decorative and works for every visitor automatically.
 
-- **Preview it any time:** add `?festive=1` to any page address (for example `https://empirecleaning.com.au/?festive=1`).
+- **Preview it any time:** add `?festive=1` to any page address (for example `https://empiremanagementservices.com.au/?festive=1`).
   Add `?festive=0` to hide it during the season.
 - **Change the dates:** edit `FESTIVE_START` and `FESTIVE_END` in `lib/festive.ts`. Only the month and day matter.
 - **Change the picture:** replace `public/festive/santa-hat.png` with another image (a transparent PNG, about 480 pixels wide).
@@ -222,7 +223,7 @@ Other commands: `npm run build`, `npm run lint`, `npx tsc --noEmit`, `npx prisma
 |---|---|---|
 | `DATABASE_URL` | Yes | PostgreSQL connection string (Neon) |
 | `NEXTAUTH_SECRET` | Yes | Random string used to sign admin sessions |
-| `NEXTAUTH_URL` | Production | `https://empirecleaning.com.au` |
+| `NEXTAUTH_URL` | Production | `https://empiremanagementservices.com.au` |
 | `NEXT_PUBLIC_SITE_URL` | Production | Public domain; drives sitemap, SEO and the email sender address |
 | `ADMIN_EMAIL` | Yes | Receives contact and booking notifications |
 | `RESEND_API_KEY` | Yes | Sends email (domain must be verified in Resend) |

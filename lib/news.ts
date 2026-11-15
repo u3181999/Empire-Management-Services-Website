@@ -134,7 +134,7 @@ async function fetchFeedPage(feed: Feed, url: string): Promise<NewsItem[]> {
   try {
     const res = await fetch(url, {
       headers: {
-        'User-Agent': 'Mozilla/5.0 (compatible; EmpireManagementBot/1.0; +https://empirecleaning.com.au)',
+        'User-Agent': 'Mozilla/5.0 (compatible; EmpireManagementBot/1.0; +https://empiremanagementservices.com.au)',
         Accept: 'application/rss+xml, application/xml, text/xml',
       },
       next: { revalidate: REVALIDATE_SECONDS },

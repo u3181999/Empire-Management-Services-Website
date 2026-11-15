@@ -1,6 +1,5 @@
 import { Resend } from 'resend'
 import { COMPANY } from './constants'
-import { SITE_DOMAIN } from './site'
 
 let _resend: Resend | null = null
 
@@ -20,7 +19,10 @@ async function deliver(payload: Parameters<Resend['emails']['send']>[0]) {
   return data
 }
 
-const FROM = `${COMPANY.name} <noreply@${SITE_DOMAIN}>`
+// Sent from the same domain as the contact address (empirecleaning.com.au), because that is the domain verified in Resend.
+// It is NOT taken from the website address, which is a different domain.
+const EMAIL_DOMAIN = COMPANY.email.split('@')[1]
+const FROM = `${COMPANY.name} <noreply@${EMAIL_DOMAIN}>`
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL ?? COMPANY.email
 
 function escapeHtml(str: string): string {

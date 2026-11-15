@@ -10,7 +10,7 @@ if (process.env.VERCEL_ENV === 'production') {
     if (/localhost|127\.0\.0\.1/.test(process.env[name] ?? '')) {
       throw new Error(
         `${name} is "${process.env[name]}" in this production deployment. Set it to the live address ` +
-          '(for example https://empirecleaning.com.au) in Vercel > Settings > Environment Variables, then redeploy.',
+          '(for example https://empiremanagementservices.com.au) in Vercel > Settings > Environment Variables, then redeploy.',
       )
     }
   }

@@ -1,13 +1,18 @@
-# Launch Checklist — empirecleaning.com.au
+# Launch Checklist — empiremanagementservices.com.au
 
 Hosting: Vercel · Database: Neon (PostgreSQL, Sydney) · Email: Resend
 
 Code status: `npm run lint`, `npx tsc --noEmit` and `npm run build` pass. Database migrations are applied.
 Already prepared in the repo: Sydney region + `www` → apex redirect (`vercel.json`), sitemap/robots/SEO and the
-email sender all read the domain from one place (`lib/site.ts`) and a link-preview image.
+link-preview image all read the website address from one place (`lib/site.ts`).
 
-The domain lives in one setting: `NEXT_PUBLIC_SITE_URL`. If the domain ever changes, change that variable
-(and `NEXTAUTH_URL`, and the `www` redirect host in `vercel.json`).
+**Two domains, two jobs.** The **website** lives at `empiremanagementservices.com.au` (the address customers already know, and the one
+on your LinkedIn page and in Google). **Email** lives at `empirecleaning.com.au` (`admin@`, and the domain verified in
+Resend). `empirecleaning.com.au` also forwards to the website, exactly as it does today. Both are managed in the same
+Microsoft 365 DNS.
+
+The website address lives in one setting: `NEXT_PUBLIC_SITE_URL`. If it ever changes, change that variable
+(and `NEXTAUTH_URL`, and the redirect hosts in `vercel.json`).
 
 ## 1. Admin password
 
@@ -44,8 +49,8 @@ git-ignored and no commit contains a real connection string). Replace the passwo
 |---|---|
 | `DATABASE_URL` | Neon connection string (from your local `.env`) |
 | `NEXTAUTH_SECRET` | A **new** random string: `node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"` |
-| `NEXTAUTH_URL` | `https://empirecleaning.com.au` |
-| `NEXT_PUBLIC_SITE_URL` | `https://empirecleaning.com.au` |
+| `NEXTAUTH_URL` | `https://empiremanagementservices.com.au` |
+| `NEXT_PUBLIC_SITE_URL` | `https://empiremanagementservices.com.au` |
 | `ADMIN_EMAIL` | `admin@empirecleaning.com.au` |
 | `RESEND_API_KEY` | From resend.com → API Keys |
 | `CRON_SECRET` | A new random string (same command as `NEXTAUTH_SECRET`). Vercel sends it to the daily clean-up job; without it the job refuses to run (safe, but old enquiries are then never deleted) |
@@ -59,12 +64,17 @@ git-ignored and no commit contains a real connection string). Replace the passwo
 
 ## 3. Domain
 
-1. Vercel → **Settings → Domains** → add `empirecleaning.com.au` and `www.empirecleaning.com.au`.
-2. In the Microsoft 365 admin centre (Settings → Domains → `empirecleaning.com.au` → DNS records), add the records
-   Vercel shows (`A` for the apex, `CNAME` for `www`). Change **only** those two:
-   the apex currently points at the old web host (`103.152.248.115`, checked 9 Nov 2026), and the `MX`, `TXT` and
-   `autodiscover`-type records must stay exactly as they are, or staff email stops.
-3. `www` redirects to the apex automatically; HTTPS is issued by Vercel.
+1. Vercel → **Settings → Domains → Add Existing**. Add `empiremanagementservices.com.au` and `www.empiremanagementservices.com.au`, connected to **Production**.
+   **Untick "Redirect apex domains to www"**: this site does the opposite (www forwards to the main address, set in
+   `vercel.json`), and leaving it ticked would make the two redirect to each other forever. When the website is ready
+   to go live, also add `empirecleaning.com.au` and `www.empirecleaning.com.au` the same way: `vercel.json` forwards
+   both to the website.
+2. In the Microsoft 365 admin centre (Settings → Domains → each domain → DNS records), add the records Vercel shows
+   for each: an `A` record for the bare domain and a `CNAME` for `www`. For `empiremanagementservices.com.au` and for
+   `empirecleaning.com.au`, change **only** those: both bare domains currently point at the old web host
+   (`103.152.248.115`, checked 15 Nov 2026), and the `MX`, `TXT`, Resend and `autodiscover`-type records must stay exactly
+   as they are, or staff email stops.
+3. `www` and `empirecleaning.com.au` redirect to `empiremanagementservices.com.au` automatically; HTTPS is issued by Vercel.
 
 ## 4. Email (Resend) — contact form and bookings depend on this
 
@@ -117,9 +127,9 @@ allow entry for `noreply@empirecleaning.com.au` (Microsoft 365 → Defender → 
       confirm it returns `{"ok":true,...}`
 - [ ] Vercel → **Analytics** shows your own visit after a minute (not if you pressed Decline)
 - [ ] `/admin/login` works with the new password; the dashboard shows your bookings; after signing in the address bar
-      shows `https://empirecleaning.com.au/admin` (not `localhost`)
+      shows `https://empiremanagementservices.com.au/admin` (not `localhost`)
 - [ ] `/sitemap.xml`, `/robots.txt` load; paste the site into a chat app to see the link preview
-- [ ] View-source on a page: the `<link rel="canonical">` shows `https://empirecleaning.com.au/...` (this relies on
+- [ ] View-source on a page: the `<link rel="canonical">` shows `https://empiremanagementservices.com.au/...` (this relies on
       `NEXT_PUBLIC_SITE_URL` being set correctly in Vercel)
 - [ ] Run Google's [Rich Results Test](https://search.google.com/test/rich-results) on the home page, a service page and a
       blog post: each should detect its items (business, service, article, breadcrumbs) with no errors
