@@ -64,6 +64,10 @@ export const LOCATIONS = [
   },
 ] as const
 
+// The short eco-friendly message used outside the About page (home page band). Keep it in step with the About section.
+export const ECO_SUMMARY =
+  'Certified cleaning chemicals from our registered supplier, environmentally friendly methods and waste minimisation, delivered for university campuses and Australian Government buildings.'
+
 export const SERVICES = [
   {
     slug: 'commercial-residential-strata',
@@ -86,6 +90,14 @@ export const SERVICES = [
     shortDescription: 'Practical support for strata schemes, from common-property upkeep to contractor coordination.',
     icon: 'ClipboardCheck',
     category: 'commercial',
+  },
+  {
+    slug: 'eco-friendly-cleaning',
+    name: 'Eco-Friendly Cleaning',
+    // Delivered today for a university campus and Australian Government buildings (owner, 15 Nov 2026; see CLAIMS.md).
+    shortDescription: 'Environmentally responsible cleaning using certified chemicals, with waste minimisation built in.',
+    icon: 'Leaf',
+    category: 'specialist',
   },
   {
     slug: 'government-departments',

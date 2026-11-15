@@ -4,6 +4,7 @@ import ServicesShowcase from '@/components/features/ServicesShowcase'
 import StatsTiles from '@/components/features/StatsTiles'
 import type { Metadata } from 'next'
 import { fitTitle, pageSeo } from '@/lib/seo'
+import { SERVICES } from '@/lib/constants'
 
 export const metadata: Metadata = {
   ...pageSeo('/services'),
@@ -20,7 +21,7 @@ export default function ServicesPage() {
           <h1 className="text-4xl sm:text-5xl font-bold">Our Services</h1>
           <p className="mt-4 text-gray-300 max-w-2xl text-lg">
             Every cleaning schedule is tailor-designed to meet your expectations and deadlines across
-            12 service categories.
+            {SERVICES.length} service categories.
           </p>
         </div>
       </section>

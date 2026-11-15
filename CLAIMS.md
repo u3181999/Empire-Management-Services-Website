@@ -31,6 +31,7 @@ Confirmed by the owner on **9 November 2026** unless stated otherwise.
 | 2,500+ hours serviced each week | Stat tile | Rostered or timesheet hours for a typical week. |
 | 100,000m² serviced | Home, hero, About | Site area schedule across contracts. |
 | We use certified cleaning chemicals from our registered supplier | About (Eco-Friendly), Risk & Compliance | Confirmed by the owner on 15 Nov 2026. Keep the supplier's name and registration details, and the safety data sheet or certification for each product in use. |
+| Eco-Friendly Cleaning is a service we deliver, currently to a university campus and Australian Government buildings | Home (eco band), Services, `/services/eco-friendly-cleaning` | Confirmed by the owner on 15 Nov 2026. Keep the contracts or work orders. The site deliberately does **not** name the clients in this text (the UNSW logo is shown in the client strip under its own permission); get written permission before naming them. The five benefits listed on the service page (certified chemicals from the registered supplier, environmentally friendly methods, waste minimisation, safe effective cleaning and disinfection, ISO 14001 backing) should each be something you can show. |
 | Hellenic Club testimonial (Michael Haddad) | Home | The client's permission to quote. It is labelled as a direct testimonial, not a Google review. Add the review link if it is also on Google. |
 
 ## Removed because they could not be substantiated

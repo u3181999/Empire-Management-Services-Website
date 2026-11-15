@@ -59,6 +59,18 @@ const SERVICE_DETAILS: Record<string, { benefits: string[]; suitableFor: string[
     ],
     suitableFor: ['Owners corporations and strata committees', 'Residential strata complexes', 'Mixed-use developments', 'Commercial strata'],
   },
+  // Delivered today for a university campus and Australian Government buildings. The clients are not named here:
+  // naming a client needs their permission (see CLAIMS.md).
+  'eco-friendly-cleaning': {
+    benefits: [
+      'Certified cleaning chemicals from our registered supplier',
+      'Environmentally friendly cleaning methods',
+      'Waste minimisation built into the cleaning program',
+      'Effective cleaning and disinfection without compromising safety',
+      'Backed by our ISO 14001 environmental management certification',
+    ],
+    suitableFor: ['University campuses', 'Australian Government buildings', 'Offices and corporate buildings', 'Healthcare and medical settings'],
+  },
   'government-departments': {
     benefits: [
       'Security-cleared teams available for sensitive environments',
