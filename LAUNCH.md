@@ -68,8 +68,8 @@ git-ignored and no commit contains a real connection string). Replace the passwo
    `vercel.json`), and leaving it ticked would make the two redirect to each other forever.
 2. In the Microsoft 365 admin centre (Settings → Domains → `empiremanagementservices.com.au` → DNS records), make the two changes Vercel
    shows (values read on 15 Nov 2026; confirm against Vercel's Domains page before sending): **change** the `A` record
-   for the bare domain from the old web host (`103.152.248.115`) to `216.198.79.1`, and **add** a `CNAME` for `www`
-   pointing to `4f47fd9e8d42a136.vercel-dns-017.com`. Change **only** those: the `MX`, `TXT`, Resend and
+   for the bare domain from the old web host (`103.152.248.115`) to `216.198.79.1`, and **change** the existing `www` `CNAME`
+   (currently pointing to `empiremanagementservices.com.au`) to `4f47fd9e8d42a136.vercel-dns-017.com`. Change **only** those: the `MX`, `TXT`, Resend and
    `autodiscover`-type records must stay exactly as they are, or staff email stops.
 3. `www` redirects to `empiremanagementservices.com.au` automatically; HTTPS is issued by Vercel. Keep the old web hosting active until the
    new site has been checked, so there is something to switch back to.
