@@ -93,9 +93,11 @@ on the root domain**: that would break your normal staff email. Do these in orde
    Resend; do not retype. Back in Resend click **Verify**. It can take a few minutes, sometimes a few hours.
    (Vercel's automatic DNS set-up for Resend only works when Vercel hosts your DNS. Moving your DNS to Vercel is not
    recommended: every mail record would have to be recreated by hand, and one mistake stops staff email.)
-4. **DMARC (recommended; none exists today).** Add a `TXT` record named `_dmarc` with the value
-   `v=DMARC1; p=none; rua=mailto:admin@empirecleaning.com.au`. `p=none` only monitors; do not tighten it later
-   without reading the reports first.
+4. **DMARC and DKIM: nothing to add.** Your administrator confirmed on 16 Nov 2026 that Microsoft DKIM is enabled and that
+   DMARC already exists (`v=DMARC1; p=none; rua=mailto:dmarc@empirecleaning.com.au`). **Do not add another `_dmarc` record:**
+   a domain may only have one, and a second breaks it. Resend signs with its own separate `resend._domainkey` key, so it does not
+   touch Microsoft's DKIM. Mail sent through Resend still passes DMARC because that signature is for `empirecleaning.com.au`.
+   Only three records are needed for Resend: `resend._domainkey` (TXT) and `rsend` and `send` (CNAME).
 5. **API key.** Resend → **API Keys → Create API Key** → permission **Sending access**, domain
    `empirecleaning.com.au`. Copy it once. It is a password: paste it only into Vercel, never into a chat or email. If
    it is ever exposed, delete it in Resend and create a new one.
