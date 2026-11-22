@@ -4,7 +4,10 @@ import { useState, useSyncExternalStore } from 'react'
 import Image from 'next/image'
 import { Pause, Play } from 'lucide-react'
 
-const CLIENTS = [
+// `wide` is for a logo much wider than it is tall (a wordmark): it gets a wider card so the lettering stays readable.
+type Client = { name: string; logo: string; wide?: boolean }
+
+const CLIENTS: Client[] = [
   { name: 'UNSW Canberra Campus',                  logo: '/clients/unsw.png'                  },
   { name: 'Hellenic Club',                         logo: '/clients/hellenic-club.webp'        },
   { name: 'CBRE',                                  logo: '/clients/cbre.png'                  },
@@ -17,6 +20,7 @@ const CLIENTS = [
   { name: 'ACT Cricket',                           logo: '/clients/act-cricket.png'           },
   { name: 'AFL Canberra',                          logo: '/clients/afl-canberra.png'          },
   { name: 'The Mollymook Golf Club',               logo: '/clients/mollymook-golf-club.png'   },
+  { name: 'Nikias Diamond',                        logo: '/clients/nikias-diamond.png',        wide: true },
 ]
 
 // Anyone whose device asks for reduced motion gets a still grid of logos instead of a moving strip.
@@ -29,21 +33,21 @@ function subscribeToMotionPreference(onChange: () => void) {
 const prefersReducedMotion = () => window.matchMedia(REDUCED_MOTION).matches
 
 /** `decorative` is for the repeated second copy that makes the strip loop: hidden from screen readers. */
-function ClientCard({ name, logo, decorative = false }: { name: string; logo: string; decorative?: boolean }) {
+function ClientCard({ name, logo, wide = false, decorative = false }: Client & { decorative?: boolean }) {
   const [imgFailed, setImgFailed] = useState(false)
   const abbr = name.split(' ').map(w => w[0]).join('').slice(0, 4).toUpperCase()
 
   return (
     <div
-      className="flex flex-col items-center justify-center mx-5 w-24 shrink-0 group"
+      className={`flex flex-col items-center justify-center mx-5 shrink-0 group ${wide ? 'w-44' : 'w-24'}`}
       aria-hidden={decorative || undefined}
     >
-      <div className="w-20 h-20 rounded-xl bg-white border border-gray-100 shadow-sm flex items-center justify-center p-2 group-hover:border-[#d4a017] group-hover:shadow-md transition-all">
+      <div className={`${wide ? 'w-40' : 'w-20'} h-20 rounded-xl bg-white border border-gray-100 shadow-sm flex items-center justify-center p-2 group-hover:border-[#d4a017] group-hover:shadow-md transition-all`}>
         {!imgFailed ? (
           <Image
             src={logo}
             alt={decorative ? '' : name}
-            width={64}
+            width={wide ? 144 : 64}
             height={64}
             className="object-contain w-full h-full"
             onError={() => setImgFailed(true)}
