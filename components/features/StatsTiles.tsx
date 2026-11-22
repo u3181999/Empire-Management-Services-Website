@@ -1,5 +1,6 @@
 import { Award, Briefcase, UsersRound, CalendarClock, Ruler, MapPin } from 'lucide-react'
 import { COMPANY } from '@/lib/constants'
+import HygieiaBowl from '@/components/ui/HygieiaBowl'
 import AnimatedCounter from './AnimatedCounter'
 
 const STATS = [
@@ -13,8 +14,12 @@ const STATS = [
 
 export default function StatsTiles() {
   return (
-    <section className="bg-navy-950 text-white" aria-label="Empire Management Services at a glance">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-12">
+    <section className="relative overflow-hidden bg-navy-950 text-white" aria-label="Empire Management Services at a glance">
+      {/* Decorative only: a soft gold glow and a faint Bowl of Hygieia, the emblem of health and hygiene (same treatment as the Eco-Friendly section) */}
+      <div aria-hidden="true" className="pointer-events-none absolute -left-24 -top-24 h-80 w-80 rounded-full bg-gold-500/10 blur-3xl" />
+      <HygieiaBowl strokeWidth={0.8} className="pointer-events-none absolute right-2 top-1/2 h-72 w-72 -translate-y-1/2 -rotate-[8deg] text-white/[0.06] xl:right-[2%]" />
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-12">
         <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3 sm:gap-4">
           {STATS.map(({ end, suffix, label, icon: Icon }) => (
             <div
