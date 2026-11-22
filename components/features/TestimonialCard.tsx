@@ -1,19 +1,10 @@
-import Link from 'next/link'
-import { Star, ExternalLink } from 'lucide-react'
+'use client'
 
-export type TestimonialData = {
-  id: string
-  rating: number
-  content: string
-  authorName: string
-  authorTitle: string | null
-  company: string | null
-  source: string
-  reviewUrl: string | null
-}
+import { useId, useState } from 'react'
+import { ChevronDown, ExternalLink, Quote, Star } from 'lucide-react'
+import { PREVIEW_CHARS, type TestimonialData } from '@/lib/testimonials'
 
-// A quote longer than this is cut short on the home page, with a link to read all of it.
-export const PREVIEW_CHARS = 300
+export type { TestimonialData }
 
 function StarRating({ rating }: { rating: number }) {
   return (
@@ -21,62 +12,106 @@ function StarRating({ rating }: { rating: number }) {
       {[1, 2, 3, 4, 5].map((i) => (
         <Star
           key={i}
-          className={`w-4 h-4 ${i <= rating ? 'fill-[#d4a017] text-[#d4a017]' : 'text-gray-300'}`}
+          aria-hidden="true"
+          className={`h-4 w-4 ${i <= rating ? 'fill-[#d4a017] text-[#d4a017]' : 'fill-gray-100 text-gray-300'}`}
         />
       ))}
     </div>
   )
 }
 
+// "Michael Haddad" -> "MH". Gives each review a quiet visual anchor without needing a photo.
+function initials(name: string) {
+  const parts = name.trim().split(' ').filter(Boolean)
+  if (parts.length === 0) return ''
+  const first = parts[0][0]
+  const last = parts.length > 1 ? parts[parts.length - 1][0] : ''
+  return (first + last).toUpperCase()
+}
+
 /**
- * One review. `preview` is for the home page: a long quote is shortened and links through to the full review on
- * the Reviews page. On the Reviews page itself the whole quote is shown.
+ * One review. A long quote starts shortened and opens in place with "Read more", so nobody has to leave the page.
+ * `featured` is a larger version for when there is only one review to show.
  */
-export default function TestimonialCard({ t, preview = false }: { t: TestimonialData; preview?: boolean }) {
-  const isLong = preview && t.content.length > PREVIEW_CHARS
+export default function TestimonialCard({ t, featured = false }: { t: TestimonialData; featured?: boolean }) {
+  const [open, setOpen] = useState(false)
+  const quoteId = useId()
+  const isLong = t.content.length > PREVIEW_CHARS
+  const byline = [t.authorTitle, t.company].filter(Boolean).join(', ')
 
   return (
-    <div
+    <figure
       id={`t-${t.id}`}
-      className="scroll-mt-28 bg-gray-50 rounded-xl p-6 border border-gray-100 flex flex-col gap-4"
+      className={`group relative flex h-full scroll-mt-28 flex-col overflow-hidden rounded-2xl bg-white text-left shadow-sm ring-1 ring-gray-100 transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:ring-[#d4a017]/40 motion-reduce:transition-none motion-reduce:hover:translate-y-0 ${
+        featured ? 'p-7 sm:p-10' : 'p-6 sm:p-7'
+      }`}
     >
-      <div className="flex items-center justify-between">
-        <StarRating rating={t.rating} />
-        {/* A platform name is only shown when there is a link to that review, so it can be checked. */}
-        {t.reviewUrl && <span className="text-xs text-gray-600 font-medium">{t.source} review</span>}
-      </div>
+      {/* Gold line that grows across the top on hover */}
+      <span
+        aria-hidden="true"
+        className="absolute inset-x-0 top-0 h-1 origin-left scale-x-25 bg-[#d4a017] transition-transform duration-500 group-hover:scale-x-100 motion-reduce:transition-none"
+      />
+      <Quote
+        aria-hidden="true"
+        className={`absolute right-5 top-5 fill-[#d4a017]/15 text-[#d4a017]/15 ${featured ? 'h-14 w-14' : 'h-10 w-10'}`}
+      />
 
-      <blockquote className="text-gray-700 text-sm leading-relaxed flex-1">
-        <p className={isLong ? 'line-clamp-6' : undefined}>&ldquo;{t.content}&rdquo;</p>
+      <StarRating rating={t.rating} />
+
+      <blockquote className="mt-4 flex-1">
+        <p
+          id={quoteId}
+          className={`leading-relaxed text-gray-700 ${featured ? 'text-lg sm:text-xl' : 'text-[15px]'} ${
+            isLong && !open ? 'line-clamp-5' : ''
+          }`}
+        >
+          &ldquo;{t.content}&rdquo;
+        </p>
         {isLong && (
-          <Link
-            href={`/testimonials#t-${t.id}`}
-            className="mt-2 inline-block py-1 text-sm font-semibold text-gold-700 underline underline-offset-2 hover:text-gold-800"
+          <button
+            type="button"
+            onClick={() => setOpen((o) => !o)}
+            aria-expanded={open}
+            aria-controls={quoteId}
+            className="mt-2 inline-flex min-h-[44px] items-center gap-1 text-sm font-semibold text-gold-700 transition-colors hover:text-[#102a43] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d4a017]"
           >
-            Read full review<span className="sr-only"> from {t.authorName}</span>
-          </Link>
+            {open ? 'Show less' : 'Read more'}
+            <span className="sr-only"> of {t.authorName}&apos;s review</span>
+            <ChevronDown
+              aria-hidden="true"
+              className={`h-4 w-4 transition-transform duration-300 motion-reduce:transition-none ${open ? 'rotate-180' : ''}`}
+            />
+          </button>
         )}
       </blockquote>
 
-      <div className="flex items-end justify-between gap-2">
-        <div>
-          <p className="font-semibold text-[#102a43] text-sm">{t.authorName}</p>
-          {(t.authorTitle || t.company) && (
-            <p className="text-xs text-gray-600">{[t.authorTitle, t.company].filter(Boolean).join(', ')}</p>
-          )}
+      <figcaption className="mt-6 flex items-center gap-3 border-t border-gray-100 pt-5">
+        <span
+          aria-hidden="true"
+          className={`flex shrink-0 items-center justify-center rounded-full bg-[#102a43] font-bold text-[#d4a017] ${
+            featured ? 'h-12 w-12 text-base' : 'h-10 w-10 text-sm'
+          }`}
+        >
+          {initials(t.authorName)}
+        </span>
+        <div className="min-w-0 flex-1">
+          <p className="truncate text-sm font-semibold text-[#102a43]">{t.authorName}</p>
+          {byline && <p className="text-xs leading-snug text-gray-600">{byline}</p>}
         </div>
+        {/* A platform name is only shown when there is a link to that review, so it can be checked. */}
         {t.reviewUrl && (
           <a
             href={t.reviewUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gold-700 hover:text-[#102a43] transition-colors shrink-0 p-1"
-            aria-label={`View ${t.authorName}'s original review (opens in a new tab)`}
+            className="inline-flex min-h-[44px] shrink-0 items-center gap-1.5 rounded-full px-2 text-xs font-medium text-gray-600 transition-colors hover:text-[#102a43]"
+            aria-label={`View ${t.authorName}'s original ${t.source} review (opens in a new tab)`}
           >
-            <ExternalLink className="w-4 h-4" aria-hidden="true" />
+            {t.source}
+            <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
           </a>
         )}
-      </div>
-    </div>
+      </figcaption>
+    </figure>
   )
 }

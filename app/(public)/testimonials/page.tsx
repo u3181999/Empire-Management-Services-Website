@@ -1,7 +1,8 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
-import { ArrowLeft, ArrowRight, Search } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Search, X } from 'lucide-react'
 import { prisma } from '@/lib/prisma'
+import { toTestimonialData } from '@/lib/testimonials'
 import TestimonialCard from '@/components/features/TestimonialCard'
 import { fitTitle, pageSeo } from '@/lib/seo'
 
@@ -29,6 +30,9 @@ function href(q: string, page: number) {
   return s ? `/testimonials?${s}` : '/testimonials'
 }
 
+const pagerLink =
+  'inline-flex min-h-[44px] items-center gap-2 rounded-full border border-gray-300 bg-white px-5 py-2.5 text-sm font-semibold text-[#102a43] transition-colors hover:border-[#d4a017] hover:bg-[#d4a017]/10'
+
 export default async function TestimonialsPage(props: PageProps<'/testimonials'>) {
   const searchParams = await props.searchParams
   const q = cleanQuery(searchParams?.q)
@@ -55,31 +59,38 @@ export default async function TestimonialsPage(props: PageProps<'/testimonials'>
   const pages = Math.max(1, Math.ceil(total / PAGE_SIZE))
   const page = Math.min(requestedPage, pages)
 
-  const testimonials = await prisma.testimonial.findMany({
+  const rows = await prisma.testimonial.findMany({
     where,
     orderBy: [{ sortOrder: 'asc' }, { createdAt: 'desc' }],
     skip: (page - 1) * PAGE_SIZE,
     take: PAGE_SIZE,
   })
+  const testimonials = rows.map(toTestimonialData)
 
   return (
     <>
-      <section className="bg-navy-900 text-white py-14 lg:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl sm:text-5xl font-bold">Client Reviews</h1>
-          <p className="mt-4 text-gray-300 max-w-2xl text-lg">
+      <section className="relative overflow-hidden bg-navy-900 py-14 text-white lg:py-20">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -top-32 right-0 h-72 w-[36rem] max-w-full rounded-full bg-[#d4a017]/10 blur-3xl"
+        />
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-gold-300">What Our Clients Say</p>
+          <h1 className="text-4xl font-bold sm:text-5xl">Client Reviews</h1>
+          <span aria-hidden="true" className="mt-5 block h-1 w-12 rounded-full bg-[#d4a017]" />
+          <p className="mt-5 max-w-2xl text-lg text-gray-300">
             What our clients say about working with Empire Management Services.
           </p>
         </div>
       </section>
 
-      <section className="py-12 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="bg-gray-50 py-12 lg:py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {/* Search: only worth showing once there are enough reviews to need it */}
           {totalAll > 3 && (
-            <form method="GET" role="search" className="mb-8 flex max-w-xl gap-3">
+            <form method="GET" role="search" className="mx-auto mb-8 flex max-w-xl items-center gap-2">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" aria-hidden="true" />
+                <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" aria-hidden="true" />
                 <input
                   name="q"
                   type="search"
@@ -87,24 +98,34 @@ export default async function TestimonialsPage(props: PageProps<'/testimonials'>
                   maxLength={80}
                   aria-label="Search reviews by name, company or keyword"
                   placeholder="Search by name, company or keyword"
-                  className="w-full rounded-lg border border-gray-300 py-2.5 pl-10 pr-4 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-[#d4a017]"
+                  className="min-h-[44px] w-full rounded-full border border-gray-300 bg-white py-2.5 pl-11 pr-4 text-sm shadow-sm transition focus:border-transparent focus:outline-none focus:ring-2 focus:ring-[#d4a017]"
                 />
               </div>
               <button
                 type="submit"
-                className="rounded-lg bg-[#102a43] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#0b1f31]"
+                className="min-h-[44px] rounded-full bg-[#102a43] px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#d4a017] hover:text-[#102a43]"
               >
                 Search
               </button>
             </form>
           )}
 
-          <p className="mb-6 text-sm text-gray-600" aria-live="polite">
-            {q
-              ? `${total} ${total === 1 ? 'review matches' : 'reviews match'} “${q}”`
-              : `${total} ${total === 1 ? 'review' : 'reviews'}`}
-            {pages > 1 && ` · page ${page} of ${pages}`}
-          </p>
+          <div className="mb-8 flex flex-wrap items-center justify-center gap-3 text-sm text-gray-600" aria-live="polite">
+            <span className="rounded-full bg-white px-4 py-1.5 font-medium shadow-sm ring-1 ring-gray-100">
+              {q
+                ? `${total} ${total === 1 ? 'review matches' : 'reviews match'} “${q}”`
+                : `${total} ${total === 1 ? 'review' : 'reviews'}`}
+              {pages > 1 && ` · page ${page} of ${pages}`}
+            </span>
+            {q && (
+              <Link
+                href="/testimonials"
+                className="inline-flex min-h-[44px] items-center gap-1 rounded-full px-3 font-semibold text-gold-700 hover:text-[#102a43]"
+              >
+                <X className="h-4 w-4" aria-hidden="true" /> Clear search
+              </Link>
+            )}
+          </div>
 
           {testimonials.length === 0 ? (
             <div className="py-16 text-center text-gray-600">
@@ -115,14 +136,12 @@ export default async function TestimonialsPage(props: PageProps<'/testimonials'>
                 </Link>
               )}
             </div>
+          ) : testimonials.length === 1 ? (
+            <div className="mx-auto max-w-3xl">
+              <TestimonialCard t={testimonials[0]} featured />
+            </div>
           ) : (
-            <div
-              className={`grid gap-6 ${
-                testimonials.length === 1
-                  ? 'grid-cols-1 max-w-xl'
-                  : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
-              }`}
-            >
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
               {testimonials.map((t) => (
                 <TestimonialCard key={t.id} t={t} />
               ))}
@@ -133,37 +152,37 @@ export default async function TestimonialsPage(props: PageProps<'/testimonials'>
           {pages > 1 && (
             <nav aria-label="Review pages" className="mt-10 flex items-center justify-between">
               {page > 1 ? (
-                <Link
-                  href={href(q, page - 1)}
-                  className="inline-flex items-center gap-2 rounded-lg border border-gray-300 px-5 py-2.5 text-sm font-semibold text-[#102a43] hover:border-gold-500"
-                >
+                <Link href={href(q, page - 1)} className={pagerLink}>
                   <ArrowLeft className="h-4 w-4" aria-hidden="true" /> Newer
                 </Link>
               ) : (
                 <span />
               )}
               {page < pages && (
-                <Link
-                  href={href(q, page + 1)}
-                  className="inline-flex items-center gap-2 rounded-lg border border-gray-300 px-5 py-2.5 text-sm font-semibold text-[#102a43] hover:border-gold-500"
-                >
+                <Link href={href(q, page + 1)} className={pagerLink}>
                   Older <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </Link>
               )}
             </nav>
           )}
 
-          <div className="mt-14 rounded-2xl bg-gray-50 p-8 text-center">
-            <h2 className="text-xl font-bold text-[#102a43]">Ready to talk about your site?</h2>
-            <p className="mx-auto mt-2 max-w-xl text-sm text-gray-600">
-              Tell us what you need cleaned and how often, and we&apos;ll come back with a quote.
-            </p>
-            <Link
-              href="/contact"
-              className="mt-5 inline-flex items-center gap-2 rounded-lg bg-[#d4a017] px-6 py-3 text-sm font-bold text-[#102a43] hover:bg-[#e8b81a]"
-            >
-              Get a Free Quote <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
+          <div className="relative mt-16 overflow-hidden rounded-3xl bg-navy-900 p-8 text-center text-white sm:p-12">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -bottom-24 left-1/2 h-56 w-[30rem] max-w-full -translate-x-1/2 rounded-full bg-[#d4a017]/15 blur-3xl"
+            />
+            <div className="relative">
+              <h2 className="text-2xl font-bold">Ready to talk about your site?</h2>
+              <p className="mx-auto mt-2 max-w-xl text-sm text-gray-300">
+                Tell us what you need cleaned and how often, and we&apos;ll come back with a quote.
+              </p>
+              <Link
+                href="/contact"
+                className="mt-6 inline-flex min-h-[44px] items-center gap-2 rounded-full bg-[#d4a017] px-7 py-3 text-sm font-bold text-[#102a43] transition-colors hover:bg-[#e8b81a]"
+              >
+                Get a Free Quote <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+            </div>
           </div>
         </div>
       </section>
