@@ -9,7 +9,7 @@ type Client = { name: string; logo: string; wide?: boolean }
 
 const CLIENTS: Client[] = [
   { name: 'UNSW Canberra Campus',                  logo: '/clients/unsw.png'                  },
-  { name: 'Hellenic Club',                         logo: '/clients/hellenic-club.webp'        },
+  { name: 'Hellenic Club',                         logo: '/clients/hellenic-club.png',         wide: true },
   { name: 'CBRE',                                  logo: '/clients/cbre.png'                  },
   { name: 'JLL',                                   logo: '/clients/jll.png'                   },
   { name: 'Evri Group',                            logo: '/clients/evri-group.webp'           },
