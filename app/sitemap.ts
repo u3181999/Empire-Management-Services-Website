@@ -5,6 +5,10 @@ import { SITE_URL } from '@/lib/site'
 
 const BASE_URL = SITE_URL
 
+// Rebuilt at most once an hour, so a blog post added any way at all (not only through the admin portal, which
+// refreshes it immediately) reaches the sitemap without waiting for the next deployment.
+export const revalidate = 3600
+
 // Pages and services come from the code (the same lists that build the pages), so they are always in the sitemap,
 // whatever state the database is in. Only blog posts come from the database.
 //
