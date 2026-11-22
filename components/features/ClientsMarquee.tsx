@@ -21,6 +21,10 @@ const CLIENTS: Client[] = [
   { name: 'AFL Canberra',                          logo: '/clients/afl-canberra.png'          },
   { name: 'The Mollymook Golf Club',               logo: '/clients/mollymook-golf-club.png'   },
   { name: 'Nikias Diamond',                        logo: '/clients/nikias-diamond.png',        wide: true },
+  { name: 'St Nicks',                              logo: '/clients/st-nicks.png',              wide: true },
+  { name: 'LJ Hooker',                             logo: '/clients/lj-hooker.png',             wide: true },
+  { name: 'McDonald Jones',                        logo: '/clients/mcdonald-jones.png',        wide: true },
+  { name: 'Calwell Shopping Centre',               logo: '/clients/calwell-shopping-centre.png' },
 ]
 
 // Anyone whose device asks for reduced motion gets a still grid of logos instead of a moving strip.

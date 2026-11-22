@@ -89,7 +89,8 @@ body {
 }
 
 .animate-marquee {
-  animation: marquee 35s linear infinite;
+  /* 17 logos (some in wider cards) make the strip long; 55s keeps the scrolling speed about what it was with 11 logos. */
+  animation: marquee 55s linear infinite;
 }
 
 .animate-marquee:hover {
