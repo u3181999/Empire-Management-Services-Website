@@ -16,7 +16,7 @@ const CLIENTS: Client[] = [
   { name: 'Velocity Conveyancing',                 logo: '/clients/velocity-conveyancing.svg' },
   { name: 'WOTSO Spaces',                          logo: '/clients/wotso.webp'                },
   { name: 'Pharmaceutical Society of Australia',   logo: '/clients/psa.png'                   },
-  { name: 'APVMA',                                 logo: '/clients/apvma.webp'                },
+  { name: 'Australian Government',                 logo: '/clients/australian-government.png', wide: true },
   { name: 'ACT Cricket',                           logo: '/clients/act-cricket.png'           },
   { name: 'AFL Canberra',                          logo: '/clients/afl-canberra.png'          },
   { name: 'The Mollymook Golf Club',               logo: '/clients/mollymook-golf-club.png'   },
