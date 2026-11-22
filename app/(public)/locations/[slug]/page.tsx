@@ -36,6 +36,8 @@ const LOCATION_CONTENT: Record<string, {
   /** Only set for a single street address — gets the branded pin map. */
   coordinates?: { lat: number; lng: number }
   areas: string[]
+  /** Suburbs and towns by district. When set, shown as a compact grouped list instead of the short checklist. */
+  areaGroups?: { label: string; places: string[] }[]
 }> = {
   canberra: {
     coordinates: { lat: COMPANY.geo.latitude, lng: COMPANY.geo.longitude }, // 89-91 Tennant St, Fyshwick
@@ -43,7 +45,33 @@ const LOCATION_CONTENT: Record<string, {
     description:
       'Empire Management Services has been delivering professional commercial cleaning across Canberra and the Region for over 30 years. Our Fyshwick head office serves government departments, commercial buildings, strata complexes, medical centres, and industrial facilities throughout the region.',
     mapQuery: '89-91+Tennant+Street+Fyshwick+ACT+2609+Australia',
-    areas: ['Civic', 'Fyshwick', 'Woden', 'Tuggeranong', 'Belconnen', 'Gungahlin', 'Queanbeyan'],
+    areas: [],
+    areaGroups: [
+      {
+        label: 'Canberra Central',
+        places: ['Civic', 'Acton', 'Braddon', 'Turner', "O'Connor", 'Lyneham', 'Dickson', 'Downer', 'Watson', 'Ainslie', 'Hackett', 'Campbell', 'Reid', 'Parkes', 'Barton', 'Kingston', 'Manuka', 'Griffith', 'Forrest', 'Red Hill', 'Deakin', 'Yarralumla', 'Narrabundah', 'Fyshwick', 'Symonston', 'Pialligo'],
+      },
+      {
+        label: 'Belconnen',
+        places: ['Belconnen', 'Bruce', 'Aranda', 'Cook', 'Macquarie', 'Hawker', 'Weetangera', 'Page', 'Scullin', 'Holt', 'Florey', 'Flynn', 'Fraser', 'Charnwood', 'Dunlop', 'Evatt', 'McKellar', 'Giralang', 'Kaleen', 'Lawson', 'Latham', 'Melba', 'Spence', 'Higgins', 'Macgregor'],
+      },
+      {
+        label: 'Gungahlin',
+        places: ['Gungahlin', 'Mitchell', 'Franklin', 'Harrison', 'Forde', 'Bonner', 'Casey', 'Crace', 'Palmerston', 'Ngunnawal', 'Nicholls', 'Amaroo', 'Jacka', 'Taylor', 'Throsby', 'Moncrieff'],
+      },
+      {
+        label: 'Woden Valley & Weston Creek',
+        places: ['Woden', 'Phillip', 'Mawson', 'Lyons', 'Curtin', 'Hughes', 'Garran', 'Chifley', 'Pearce', 'Torrens', 'Farrer', 'Isaacs', "O'Malley", 'Weston', 'Duffy', 'Holder', 'Rivett', 'Stirling', 'Chapman', 'Fisher', 'Waramanga', 'Wright', 'Coombs', 'Denman Prospect', 'Whitlam'],
+      },
+      {
+        label: 'Tuggeranong',
+        places: ['Tuggeranong', 'Greenway', 'Kambah', 'Wanniassa', 'Fadden', 'Gowrie', 'Macarthur', 'Monash', 'Gilmore', 'Isabella Plains', 'Richardson', 'Calwell', 'Theodore', 'Conder', 'Banks', 'Gordon', 'Bonython', 'Chisholm', 'Oxley', 'Erindale'],
+      },
+      {
+        label: 'Queanbeyan & surrounding region',
+        places: ['Queanbeyan', 'Jerrabomberra', 'Googong', 'Hume', 'Bungendore', 'Sutton', 'Murrumbateman', 'Yass', 'Goulburn', 'Braidwood', 'Cooma'],
+      },
+    ],
   },
   nsw: {
     headline: 'Commercial Cleaning in New South Wales',
@@ -175,6 +203,23 @@ export default async function LocationPage(props: PageProps<'/locations/[slug]'>
                   </div>
                 </div>
               </div>
+
+              {content.areaGroups && (
+                <div className="mt-8">
+                  <h3 className="font-bold text-navy-900 mb-1">Areas We Service</h3>
+                  <p className="text-xs text-gray-500 mb-4">
+                    From the city centre to the outer suburbs and surrounding towns. If your site is not listed, just ask.
+                  </p>
+                  <dl className="space-y-3">
+                    {content.areaGroups.map((group) => (
+                      <div key={group.label}>
+                        <dt className="text-xs font-semibold uppercase tracking-wide text-gold-700">{group.label}</dt>
+                        <dd className="mt-0.5 text-xs leading-relaxed text-gray-600">{group.places.join(' · ')}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </div>
+              )}
 
               {content.areas.length > 0 && (
                 <div className="mt-8">
