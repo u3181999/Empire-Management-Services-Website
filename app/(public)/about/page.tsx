@@ -26,12 +26,12 @@ const TEAM = [
   {
     name: 'Felicity Vercera',
     role: 'Chief Operating Officer',
-    bio: "Felicity runs the work on site. That means building the cleaning schedules, deploying and supporting Empire's cleaning teams, and keeping quality assurance on track so that every site meets the standard agreed with the client, on time, every time.",
+    bio: "Felicity looks after the business side of Empire's client relationships, acting as the link between clients and the operations team. The role covers client accounts and service agreements, keeping day-to-day business processes running smoothly, and finding ways to make the service more efficient and cost-effective as Empire's portfolio of commercial facilities grows.",
   },
   {
     name: 'Matthew Kelly',
     role: 'Business Operations Manager',
-    bio: "Matthew looks after the business side of Empire's client relationships, acting as the link between clients and the operations team. The role covers client accounts and service agreements, keeping day-to-day business processes running smoothly, and finding ways to make the service more efficient and cost-effective as Empire's portfolio of commercial facilities grows.",
+    bio: "Matthew runs the work on site. That means building the cleaning schedules, deploying and supporting Empire's cleaning teams, and keeping quality assurance on track so that every site meets the standard agreed with the client, on time, every time.",
   },
 ]
 
