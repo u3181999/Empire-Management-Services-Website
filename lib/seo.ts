@@ -19,12 +19,21 @@ export function absoluteUrl(path: string) {
  * `openGraph` replaces (rather than merges with) the layout's.
  *
  * Pass `article` for a blog post so it is described as an article with its dates.
+ *
+ * Every page also names its share picture. The picture generated in app/opengraph-image.tsx only reaches a page
+ * that says so: a page's own `openGraph` replaces the layout's, and without `images` a link shared on LinkedIn,
+ * Facebook or Teams shows a bare title. A blog post can pass its own picture; everything else gets the branded card.
  */
+const SHARE_IMAGE_ALT = `${COMPANY.name}: commercial cleaning in Canberra and NSW`
 export function pageSeo(
   path: string,
   article?: { publishedTime?: Date | null; modifiedTime?: Date | null },
-): Pick<Metadata, 'alternates' | 'openGraph'> {
+  image?: string | null,
+): Pick<Metadata, 'alternates' | 'openGraph' | 'twitter'> {
   const base = { url: path, siteName: COMPANY.name, locale: 'en_AU' }
+  const picture = image
+    ? [{ url: image, alt: SHARE_IMAGE_ALT }]
+    : [{ url: '/opengraph-image', width: 1200, height: 630, alt: SHARE_IMAGE_ALT }]
   return {
     alternates: { canonical: path },
     openGraph: article
@@ -33,8 +42,10 @@ export function pageSeo(
           type: 'article',
           publishedTime: article.publishedTime?.toISOString(),
           modifiedTime: article.modifiedTime?.toISOString(),
+          images: picture,
         }
-      : { ...base, type: 'website' },
+      : { ...base, type: 'website', images: picture },
+    twitter: { card: 'summary_large_image', images: picture.map((p) => p.url) },
   }
 }
 

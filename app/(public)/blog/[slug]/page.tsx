@@ -12,7 +12,7 @@ export async function generateMetadata(props: PageProps<'/blog/[slug]'>): Promis
   const post = await prisma.blogPost.findUnique({ where: { slug } })
   if (!post) return {}
   return {
-    ...pageSeo(`/blog/${slug}`, { publishedTime: post.publishedAt, modifiedTime: post.updatedAt }),
+    ...pageSeo(`/blog/${slug}`, { publishedTime: post.publishedAt, modifiedTime: post.updatedAt }, post.imageUrl),
     title: fitTitle(post.title),
     description: fitDescription(post.excerpt),
   }
