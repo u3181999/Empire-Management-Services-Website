@@ -1,10 +1,12 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { ArrowLeft, ArrowRight, CheckCircle2, Phone } from 'lucide-react'
+import { ArrowLeft, ArrowRight, CalendarClock, CheckCircle2, ChevronDown, Phone } from 'lucide-react'
 import { SERVICES, COMPANY } from '@/lib/constants'
+import { SERVICE_CONTENT } from '@/lib/service-content'
+import { SERVICE_ICONS, FALLBACK_SERVICE_ICON } from '@/components/features/service-icons'
 import { Button, Badge, Card } from '@/components/ui'
 import type { Metadata } from 'next'
-import { fitTitle, fitDescription, pageSeo, serviceSchema, breadcrumbSchema } from '@/lib/seo'
+import { fitTitle, fitDescription, pageSeo, serviceSchema, breadcrumbSchema, faqSchema } from '@/lib/seo'
 import JsonLd from '@/components/seo/JsonLd'
 
 export function generateStaticParams() {
@@ -163,6 +165,27 @@ const SERVICE_DETAILS: Record<string, { benefits: string[]; suitableFor: string[
   },
 }
 
+// How every program starts. It mirrors what the home page already promises: a written scope for every site (the
+// Site Duty Statement), a briefing before work starts, and a review when the site or the work changes.
+const PROCESS_STEPS = [
+  {
+    title: 'Tell us about your site',
+    text: 'Share the type of building, its size, your opening hours and anything special about it. A short call or the contact form is enough.',
+  },
+  {
+    title: 'We plan the work',
+    text: 'We prepare a cleaning schedule and a Site Duty Statement for your site: what is cleaned, how often and who is responsible.',
+  },
+  {
+    title: 'Your team starts',
+    text: 'Our team is briefed on your site before they begin, then the program runs to the agreed schedule.',
+  },
+  {
+    title: 'We keep it on track',
+    text: 'We check the work regularly and review the plan when your site or your needs change.',
+  },
+]
+
 export default async function ServiceDetailPage(props: PageProps<'/services/[slug]'>) {
   const { slug } = await props.params
   const service = SERVICES.find((s) => s.slug === slug)
@@ -173,6 +196,13 @@ export default async function ServiceDetailPage(props: PageProps<'/services/[slu
     benefits: ['Professionally delivered by trained, screened staff'],
     suitableFor: ['Commercial and industrial clients'],
   }
+  const content = SERVICE_CONTENT[slug]
+  const related = (content?.related ?? [])
+    .map((relatedSlug) => SERVICES.find((s) => s.slug === relatedSlug))
+    .filter((s): s is (typeof SERVICES)[number] => Boolean(s))
+  // The contact form opens with this service already chosen.
+  const quoteHref = `/contact?service=${slug}`
+  const phoneHref = `tel:${COMPANY.phone.replace(/\s/g, '')}`
 
   return (
     <>
@@ -184,6 +214,7 @@ export default async function ServiceDetailPage(props: PageProps<'/services/[slu
             { name: 'Services', path: '/services' },
             { name: service.name, path: `/services/${slug}` },
           ]),
+          ...(content ? [faqSchema(content.faqs)] : []),
         ]}
       />
       <section className="bg-navy-900 text-white py-16">
@@ -197,24 +228,48 @@ export default async function ServiceDetailPage(props: PageProps<'/services/[slu
           <Badge variant="gold" className="mb-3 capitalize">{service.category}</Badge>
           <h1 className="text-4xl sm:text-5xl font-bold">{service.name}</h1>
           <p className="mt-4 text-gray-300 max-w-2xl text-lg">{service.shortDescription}</p>
+          {/* Visible straight away, on a phone too, rather than only in the sidebar further down */}
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Button href={quoteHref} icon={<ArrowRight className="w-4 h-4" />}>
+              Request a Quote
+            </Button>
+            <a
+              href={phoneHref}
+              className="inline-flex min-h-[44px] items-center gap-2 rounded-lg border border-white/30 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
+            >
+              <Phone className="w-4 h-4" aria-hidden="true" /> Call {COMPANY.phone}
+            </a>
+          </div>
         </div>
       </section>
 
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-3 gap-12">
-            <div className="lg:col-span-2 space-y-10">
+            <div className="lg:col-span-2 space-y-12">
+              {content && <p className="text-lg leading-relaxed text-gray-700">{content.intro}</p>}
+
               <div>
                 <h2 className="text-2xl font-bold text-navy-900 mb-4">What&apos;s Included</h2>
                 <ul className="space-y-3">
                   {details.benefits.map((b) => (
                     <li key={b} className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-gold-500 mt-0.5 shrink-0" />
+                      <CheckCircle2 className="w-5 h-5 text-gold-500 mt-0.5 shrink-0" aria-hidden="true" />
                       <span className="text-gray-600">{b}</span>
                     </li>
                   ))}
                 </ul>
               </div>
+
+              {content && (
+                <div className="flex gap-4 rounded-2xl border border-gold-200 bg-gold-50 p-5 sm:p-6">
+                  <CalendarClock className="mt-0.5 h-6 w-6 shrink-0 text-gold-700" aria-hidden="true" />
+                  <div>
+                    <h2 className="text-lg font-bold text-navy-900">How often?</h2>
+                    <p className="mt-1.5 text-sm leading-relaxed text-gray-700">{content.frequency}</p>
+                  </div>
+                </div>
+              )}
 
               <div>
                 <h2 className="text-2xl font-bold text-navy-900 mb-4">Suitable For</h2>
@@ -224,28 +279,64 @@ export default async function ServiceDetailPage(props: PageProps<'/services/[slu
                   ))}
                 </div>
               </div>
+
+              <div>
+                <h2 className="text-2xl font-bold text-navy-900 mb-5">How It Works</h2>
+                <ol className="grid gap-4 sm:grid-cols-2">
+                  {PROCESS_STEPS.map((step, i) => (
+                    <li key={step.title} className="flex gap-4 rounded-xl border border-gray-100 bg-gray-50 p-4">
+                      <span
+                        aria-hidden="true"
+                        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-navy-900 text-sm font-bold text-gold-500"
+                      >
+                        {i + 1}
+                      </span>
+                      <div>
+                        <h3 className="font-semibold text-navy-900">{step.title}</h3>
+                        <p className="mt-1 text-sm leading-relaxed text-gray-600">{step.text}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+
+              {content && (
+                <div>
+                  <h2 className="text-2xl font-bold text-navy-900 mb-5">Common Questions</h2>
+                  <div className="space-y-3">
+                    {content.faqs.map((faq) => (
+                      <details key={faq.q} className="group rounded-xl border border-gray-200 bg-white open:border-gold-500/60 open:shadow-sm">
+                        <summary className="flex min-h-[48px] cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 font-semibold text-navy-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-500 [&::-webkit-details-marker]:hidden">
+                          {faq.q}
+                          <ChevronDown
+                            className="h-5 w-5 shrink-0 text-gold-600 transition-transform duration-200 group-open:rotate-180 motion-reduce:transition-none"
+                            aria-hidden="true"
+                          />
+                        </summary>
+                        <p className="px-4 pb-4 text-sm leading-relaxed text-gray-600">{faq.a}</p>
+                      </details>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
-            <aside className="space-y-6">
+            <aside className="space-y-6 lg:sticky lg:top-28 lg:self-start">
               <Card variant="navy">
                 <h3 className="font-bold text-lg">Get a Free Quote</h3>
                 <p className="mt-2 text-gray-300 text-sm">
-                  Every schedule is custom-designed. Contact us to discuss your requirements.
+                  Every schedule is custom-designed. Tell us about your site and we will come back with a quote.
                 </p>
                 {/* PRIMARY CTA for this page */}
-                <Button
-                  href="/booking"
-                  className="mt-5 w-full"
-                  icon={<ArrowRight className="w-4 h-4" />}
-                >
-                  Book Now
+                <Button href={quoteHref} className="mt-5 w-full" icon={<ArrowRight className="w-4 h-4" />}>
+                  Request a Quote
                 </Button>
-                {/* Phone — plain link, not a competing button */}
+                {/* Phone: a plain link, not a competing button */}
                 <a
-                  href={`tel:${COMPANY.phone.replace(/\s/g, '')}`}
+                  href={phoneHref}
                   className="mt-3 flex items-center justify-center gap-2 text-sm text-gray-300 hover:text-white transition-colors py-2"
                 >
-                  <Phone className="w-4 h-4" /> {COMPANY.phone}
+                  <Phone className="w-4 h-4" aria-hidden="true" /> {COMPANY.phone}
                 </a>
               </Card>
 
@@ -258,14 +349,14 @@ export default async function ServiceDetailPage(props: PageProps<'/services/[slu
                       <li key={s.slug}>
                         <Link
                           href={`/services/${s.slug}`}
-                          className="text-sm text-gray-600 hover:text-gold-500 transition-colors"
+                          className="inline-block py-1 text-sm text-gray-600 hover:text-gold-700 transition-colors"
                         >
                           {s.name}
                         </Link>
                       </li>
                     ))}
                   <li>
-                    <Link href="/services" className="text-sm text-gold-700 font-medium underline underline-offset-2 hover:text-gold-800">
+                    <Link href="/services" className="inline-block py-1 text-sm text-gold-700 font-medium underline underline-offset-2 hover:text-gold-800">
                       View all services →
                     </Link>
                   </li>
@@ -273,6 +364,35 @@ export default async function ServiceDetailPage(props: PageProps<'/services/[slu
               </Card>
             </aside>
           </div>
+
+          {related.length > 0 && (
+            <div className="mt-16 border-t border-gray-100 pt-12">
+              <h2 className="text-2xl font-bold text-navy-900">Often Combined With</h2>
+              <p className="mt-2 text-sm text-gray-600">Clients often add these to {service.name.toLowerCase()}, so one team looks after the site.</p>
+              <ul className="mt-6 grid gap-4 sm:grid-cols-3">
+                {related.map((r) => {
+                  const Icon = SERVICE_ICONS[r.icon] ?? FALLBACK_SERVICE_ICON
+                  return (
+                    <li key={r.slug}>
+                      <Link
+                        href={`/services/${r.slug}`}
+                        className="group flex h-full flex-col rounded-2xl border border-gray-200 bg-white p-5 transition duration-200 hover:-translate-y-0.5 hover:border-gold-500 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-500 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+                      >
+                        <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-navy-900 text-gold-500 transition-colors group-hover:bg-gold-500 group-hover:text-navy-900">
+                          <Icon className="h-5 w-5" aria-hidden="true" />
+                        </span>
+                        <span className="mt-4 font-bold text-navy-900">{r.name}</span>
+                        <span className="mt-1 flex-1 text-sm leading-relaxed text-gray-600">{r.shortDescription}</span>
+                        <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-gold-700">
+                          Learn more <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                        </span>
+                      </Link>
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
+          )}
         </div>
       </section>
     </>

@@ -178,6 +178,18 @@ export function serviceSchema(service: { slug: string; name: string; shortDescri
   }
 }
 
+/** Questions and answers exactly as shown on the page (structured data must match the visible text). */
+export function faqSchema(faqs: { q: string; a: string }[]): Thing {
+  return {
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  }
+}
+
 /** Breadcrumb trail, e.g. Home > Services > Carpet Cleaning. Paths are the clean page paths. */
 export function breadcrumbSchema(crumbs: { name: string; path: string }[]): Thing {
   return {
