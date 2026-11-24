@@ -15,7 +15,7 @@ const LABELS = {
   days: 'Days available',
   shift: 'Preferred shift',
   startDate: 'Available start date',
-  citizen: 'Australian citizen',
+  citizen: 'Right to work in Australia', // the form field and database column are still called "citizen"
   clearance: 'Highest security clearance',
   message: 'Additional information',
   privacyConsent: 'Privacy consent',
@@ -169,7 +169,7 @@ export default function EmploymentForm() {
       <div>
         <fieldset {...group('citizen')}>
           <legend className="block text-sm font-medium text-gray-700 mb-2">
-            Australian Citizen? <span aria-hidden="true">*</span>
+            Do you have the right to work in Australia? <span aria-hidden="true">*</span>
           </legend>
           <div className="flex gap-4">
             {['Yes', 'No'].map((answer) => (
@@ -179,7 +179,7 @@ export default function EmploymentForm() {
                   name="citizen"
                   value={answer}
                   required
-                  defaultChecked={(text('citizen') ?? 'Yes') === answer}
+                  defaultChecked={text('citizen') === answer}
                   className={radioClass}
                 />
                 <span className="text-gray-600">{answer}</span>

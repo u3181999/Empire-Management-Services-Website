@@ -119,7 +119,7 @@ allow entry for `noreply@empirecleaning.com.au` (Microsoft 365 → Defender → 
 - [ ] Contact form → email arrives at `admin@empirecleaning.com.au`, **and** the message appears in
       `/admin/enquiries` marked "Emailed". If it shows "Email failed — follow up", the message is safe but
       the email setup (step 4) is wrong; fix that before launch
-- [ ] Employment application → same two checks (including the citizenship / clearance answers)
+- [ ] Employment application → same two checks (including the right-to-work / clearance answers)
 - [ ] Booking (use your own personal email as the customer) → the acknowledgement arrives there, the notification
       arrives at `admin@`, pressing **Reply** on it addresses the customer, and replying to the acknowledgement
       reaches `admin@`

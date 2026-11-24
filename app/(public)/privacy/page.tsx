@@ -46,7 +46,7 @@ export default function PrivacyPage() {
             <li>
               <strong>Employment applications</strong> — your contact details, the days and shift you
               are available for, your available start date, whether you have cleaning experience,
-              whether you are an Australian citizen, your highest security clearance level, and
+              whether you have the right to work in Australia, your highest security clearance level, and
               anything else you choose to tell us. The website does not collect résumés; if you email
               one to us we will receive and handle it under this policy.
             </li>

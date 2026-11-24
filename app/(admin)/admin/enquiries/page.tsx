@@ -145,7 +145,7 @@ export default async function AdminEnquiriesPage() {
                       )}
                     </td>
                     <td className="px-4 py-3 text-gray-700">
-                      <p>Citizen: {a.citizen}</p>
+                      <p>Right to work in Australia: {a.citizen}</p>
                       <p className="text-xs text-gray-600">Clearance: {a.clearance}</p>
                     </td>
                     <td className="px-4 py-3"><EmailBadge sent={a.emailSent} error={a.emailError} /></td>
