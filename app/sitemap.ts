@@ -22,6 +22,7 @@ const STATIC_PATHS: { path: string; changeFrequency: 'weekly' | 'monthly' | 'yea
   { path: '/booking', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/contact', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/blog', changeFrequency: 'weekly', priority: 0.7 },
+  { path: '/testimonials', changeFrequency: 'monthly', priority: 0.5 },
   { path: '/employment', changeFrequency: 'monthly', priority: 0.5 },
   { path: '/compliance', changeFrequency: 'yearly', priority: 0.5 },
   { path: '/accessibility', changeFrequency: 'yearly', priority: 0.3 },
