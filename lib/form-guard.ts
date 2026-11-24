@@ -28,14 +28,17 @@ export function screenSubmission(formData: FormData): GuardResult {
 
   // The form stamps itself when it loads in the browser.
   const age = Date.now() - Number(formData.get(STARTED_FIELD))
-  if (!Number.isFinite(age) || age < 0) {
+  if (!Number.isFinite(age)) {
     return {
       ok: false,
       silent: false,
       error: `Something went wrong sending the form. Please try again, or call us on ${COMPANY.phone}.`,
     }
   }
-  if (age < MIN_FILL_MS) {
+  // A negative age means the visitor's own clock is ahead of the server's. That is an honest device setting, not a
+  // bot, and we cannot tell how long they took, so the fill-time check is skipped (the honeypot and the rate limit
+  // still apply). Rejecting it would lock out anyone whose clock runs fast.
+  if (age >= 0 && age < MIN_FILL_MS) {
     return { ok: false, silent: false, error: 'That was very quick — please check your details and submit again.' }
   }
   return { ok: true }
