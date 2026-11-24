@@ -31,7 +31,7 @@ const TEAM = [
   {
     name: 'Matthew Kelly',
     role: 'Business Operations Manager',
-    bio: "Matthew runs the work on site. That means building the cleaning schedules, deploying and supporting Empire's cleaning teams, and keeping quality assurance on track so that every site meets the standard agreed with the client, on time, every time.",
+    bio: "Matthew leads the business operations behind Empire's cleaning services. That means the systems, processes and reporting that keep the company running smoothly, the coordination of contracts, compliance records and resources across sites, and the continuous improvement work that keeps the service consistent, efficient and cost-effective as Empire's portfolio of commercial facilities grows.",
   },
 ]
 
