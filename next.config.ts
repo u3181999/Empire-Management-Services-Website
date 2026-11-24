@@ -42,6 +42,34 @@ const contentSecurityPolicy = [
   "upgrade-insecure-requests",
 ].join('; ')
 
+// Old page address -> its replacement. Taken from the old site's own navigation (it has no sitemap).
+const OLD_SITE_PAGES: Record<string, string> = {
+  '/index.html': '/',
+  '/index-2.html': '/',
+  '/about.html': '/about',
+  '/services.html': '/services',
+  '/contact.html': '/contact',
+  '/employment.html': '/employment',
+  '/commercialresidential.html': '/services/commercial-residential-strata',
+  '/commercialbuildings.html': '/services/commercial-buildings',
+  '/governmentdepartments.html': '/services/government-departments',
+  '/medicalcentres.html': '/services/medical-centres',
+  '/shoppingcentres.html': '/services/shopping-centres',
+  '/shoppingcentres%20.html': '/services/shopping-centres', // the old page name really did end in a space
+  '/commercialwindowcleaning.html': '/services/commercial-window-cleaning',
+  '/highpressurecleaning.html': '/services/high-pressure-cleaning',
+  '/wasteremovalhygieneservices.html': '/services/waste-removal-hygiene',
+  '/carpetcleaning.html': '/services/carpet-cleaning',
+  '/carparkwarehousesweeping.html': '/services/car-park-warehouse-sweeping',
+  '/graffitiremoval.html': '/services/graffiti-removal',
+  '/industrialcleaning.html': '/services', // no longer offered
+}
+const OLD_SITE_REDIRECTS = Object.entries(OLD_SITE_PAGES).map(([source, destination]) => ({
+  source,
+  destination,
+  permanent: true,
+}))
+
 const nextConfig: NextConfig = {
   serverExternalPackages: ['@prisma/client', 'prisma'],
   poweredByHeader: false, // don't advertise "X-Powered-By: Next.js"
@@ -53,6 +81,9 @@ const nextConfig: NextConfig = {
       { source: '/commercial', destination: '/services', permanent: true },
       // Industrial Cleaning is no longer offered; keep any old link or search result working.
       { source: '/services/industrial-cleaning', destination: '/services', permanent: true },
+      // The previous empiremanagementservices.com.au website used .html addresses (Google has them indexed). Without
+      // these permanent redirects every one of them becomes a 404 the day the DNS moves, and the rankings go with them.
+      ...OLD_SITE_REDIRECTS,
     ]
   },
   async headers() {
