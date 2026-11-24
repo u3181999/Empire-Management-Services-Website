@@ -6,7 +6,7 @@ import RiskCompliance from '@/components/features/RiskCompliance'
 import BackToTop from '@/components/features/BackToTop'
 import SiteWidgets from '@/components/layout/SiteWidgets'
 import StatsTiles from '@/components/features/StatsTiles'
-import ServicesShowcase from '@/components/features/ServicesShowcase'
+import ServicesQuickGrid from '@/components/features/ServicesQuickGrid'
 import { Button, Card, SectionHeading } from '@/components/ui'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -117,19 +117,19 @@ export default function HomePage() {
         </section>
 
         {/* Services */}
-        <section className="py-20 bg-gray-50">
+        <section className="py-16 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="mb-10">
+            <div className="mb-8">
               <SectionHeading
                 eyebrow="What We Do"
                 heading="Our Services"
-                subtext="Every cleaning schedule is tailor-designed to meet your expectations and deadlines. Filter by sector to find the right fit."
+                subtext="Every cleaning schedule is tailor-designed to meet your expectations and deadlines. Choose a service to see what is included."
               />
             </div>
-            <ServicesShowcase />
-            <div className="mt-10 text-center">
+            <ServicesQuickGrid />
+            <div className="mt-8 text-center">
               <Button href="/services" variant="secondary" icon={<ArrowRight className="w-4 h-4" />}>
-                View All Services
+                Compare All Services
               </Button>
             </div>
           </div>

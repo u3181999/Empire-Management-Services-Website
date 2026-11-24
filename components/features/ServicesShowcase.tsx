@@ -3,17 +3,11 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import {
-  ArrowRight, Building2, Building, ClipboardCheck, Factory, Landmark, Leaf, Stethoscope, ShoppingBag,
-  Sparkles, Droplets, Recycle, Brush, Car, SprayCan, LayoutGrid,
+  ArrowRight, Building2, Factory, Landmark, Stethoscope, ShoppingBag, Sparkles, LayoutGrid,
   type LucideIcon,
 } from 'lucide-react'
 import { SERVICES } from '@/lib/constants'
-
-// Keys match the `icon` field on each entry in SERVICES.
-const SERVICE_ICONS: Record<string, LucideIcon> = {
-  Building2, Building, ClipboardCheck, Landmark, Leaf, Stethoscope, ShoppingBag,
-  Sparkles, Droplets, Recycle, Brush, Car, SprayCan,
-}
+import { SERVICE_ICONS, FALLBACK_SERVICE_ICON } from './service-icons'
 
 const FILTERS: { key: string; label: string; icon: LucideIcon }[] = [
   { key: 'all',        label: 'All Services', icon: LayoutGrid },
@@ -81,7 +75,7 @@ export default function ServicesShowcase() {
       {/* Remounting on filter change replays the staggered entrance */}
       <div key={active} className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {visible.map((service, i) => {
-          const Icon = SERVICE_ICONS[service.icon] ?? Sparkles
+          const Icon = SERVICE_ICONS[service.icon] ?? FALLBACK_SERVICE_ICON
           return (
             <div
               key={service.slug}
