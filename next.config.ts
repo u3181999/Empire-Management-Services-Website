@@ -101,6 +101,14 @@ const nextConfig: NextConfig = {
           ...(isProd ? [{ key: 'Content-Security-Policy', value: contentSecurityPolicy }] : []),
         ],
       },
+      // The same site is also reachable at Vercel's own *.vercel.app addresses (the project address, and one per
+      // deployment). Search engines found them and list them beside the real domain, which splits the ranking. This
+      // tells them to leave every vercel.app address out of results. The real domain is never affected.
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: '.*[.]vercel[.]app' }],
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
+      },
     ]
   },
 };
