@@ -1,6 +1,8 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "regions": ["syd1"],
+  "regions": [
+    "syd1"
+  ],
   "crons": [
     {
       "path": "/api/cron/cleanup",
@@ -9,8 +11,24 @@
   ],
   "redirects": [
     {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.empiremanagementservices.com.au"
+        }
+      ],
+      "destination": "https://empiremanagementservices.com.au/",
+      "permanent": true
+    },
+    {
       "source": "/:path*",
-      "has": [{ "type": "host", "value": "www.empiremanagementservices.com.au" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "www.empiremanagementservices.com.au"
+        }
+      ],
       "destination": "https://empiremanagementservices.com.au/:path*",
       "permanent": true
     }
