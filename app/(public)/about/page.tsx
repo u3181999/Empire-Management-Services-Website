@@ -1,3 +1,4 @@
+import FleetShowcase from '@/components/features/FleetShowcase'
 import Link from 'next/link'
 import { CheckCircle2, ArrowRight, User, Leaf, Recycle, ShieldCheck, Sprout } from 'lucide-react'
 import { COMPANY, VALUES } from '@/lib/constants'
@@ -252,6 +253,9 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      {/* Fleet photo and video */}
+      <FleetShowcase />
 
       {/* Quality */}
       <section className="py-16 bg-white">
