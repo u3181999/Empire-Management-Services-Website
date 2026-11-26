@@ -2,7 +2,9 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, ArrowRight, CalendarClock, CheckCircle2, ChevronDown, Phone } from 'lucide-react'
 import { SERVICES, COMPANY } from '@/lib/constants'
+import Image from 'next/image'
 import { SERVICE_CONTENT } from '@/lib/service-content'
+import { SERVICE_PHOTOS } from '@/lib/photos'
 import { SERVICE_ICONS, FALLBACK_SERVICE_ICON } from '@/components/features/service-icons'
 import { Button, Badge, Card } from '@/components/ui'
 import type { Metadata } from 'next'
@@ -197,6 +199,7 @@ export default async function ServiceDetailPage(props: PageProps<'/services/[slu
     suitableFor: ['Commercial and industrial clients'],
   }
   const content = SERVICE_CONTENT[slug]
+  const photo = SERVICE_PHOTOS[slug]
   const related = (content?.related ?? [])
     .map((relatedSlug) => SERVICES.find((s) => s.slug === relatedSlug))
     .filter((s): s is (typeof SERVICES)[number] => Boolean(s))
@@ -248,6 +251,21 @@ export default async function ServiceDetailPage(props: PageProps<'/services/[slu
           <div className="grid lg:grid-cols-3 gap-12">
             <div className="lg:col-span-2 space-y-12">
               {content && <p className="text-lg leading-relaxed text-gray-700">{content.intro}</p>}
+
+              {photo && (
+                <figure>
+                  <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-gray-100 shadow-sm ring-1 ring-gray-100">
+                    <Image
+                      src={photo.src}
+                      alt={photo.alt}
+                      fill
+                      sizes="(min-width: 1024px) 790px, 100vw"
+                      className="object-cover"
+                    />
+                  </div>
+                  <figcaption className="mt-2 text-xs text-gray-600">{photo.caption}</figcaption>
+                </figure>
+              )}
 
               <div>
                 <h2 className="text-2xl font-bold text-navy-900 mb-4">What&apos;s Included</h2>

@@ -5,6 +5,7 @@ import type { Metadata } from 'next'
 import { Button, SectionHeading } from '@/components/ui'
 import { CERTIFICATION, COMPANY, MANAGEMENT_STANDARDS } from '@/lib/constants'
 import { pageSeo } from '@/lib/seo'
+import { PHOTOS } from '@/lib/photos'
 
 export const metadata: Metadata = {
   ...pageSeo('/compliance'),
@@ -96,6 +97,34 @@ export default function CompliancePage() {
                 <span className="sr-only"> (opens in a new tab)</span>
               </a>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Safety in practice */}
+      <section className="border-t border-gray-100 bg-white pb-16 pt-4">
+        <div className="mx-auto grid max-w-5xl items-center gap-8 px-4 sm:px-6 md:grid-cols-2 lg:gap-12 lg:px-8">
+          <figure className="mx-auto w-full max-w-md">
+            <div className="overflow-hidden rounded-2xl bg-gray-100 shadow-sm ring-1 ring-gray-100">
+              <Image
+                src={PHOTOS.safetyDataSheets.src}
+                alt={PHOTOS.safetyDataSheets.alt}
+                width={PHOTOS.safetyDataSheets.width}
+                height={PHOTOS.safetyDataSheets.height}
+                sizes="(min-width: 768px) 448px, 100vw"
+                className="h-auto w-full"
+              />
+            </div>
+            <figcaption className="mt-2 text-xs text-gray-600">{PHOTOS.safetyDataSheets.caption}</figcaption>
+          </figure>
+          <div>
+            <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-gold-700">Safety in practice</p>
+            <h2 className="text-2xl font-bold text-navy-900 sm:text-3xl">Standards that are used on site</h2>
+            <p className="mt-4 text-sm leading-relaxed text-gray-600">
+              Our occupational health and safety system, certified to ISO 45001, covers how we keep our people, your
+              staff and your visitors safe. That includes knowing what is in the products we use and how to handle
+              them.
+            </p>
           </div>
         </div>
       </section>

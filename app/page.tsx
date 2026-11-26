@@ -1,3 +1,5 @@
+import PhotoGallery from '@/components/features/PhotoGallery'
+import { PHOTOS } from '@/lib/photos'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import ClientsMarquee from '@/components/features/ClientsMarquee'
@@ -231,6 +233,15 @@ export default function HomePage() {
         </section>
 
         {/* Clients */}
+        <PhotoGallery
+          id="at-work-heading"
+          eyebrow="At Work"
+          heading="Our Team on Site"
+          subtext="Our own people, equipment and vehicles."
+          photos={[PHOTOS.fleet, PHOTOS.glassDoorCleaning, PHOTOS.carParkClearing, PHOTOS.floorScrubber]}
+          cta={{ href: '/about#fleet-heading', label: 'See our team and fleet' }}
+        />
+
         <ClientsMarquee />
 
         {/* Testimonials */}
