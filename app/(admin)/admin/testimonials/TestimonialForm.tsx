@@ -111,6 +111,7 @@ export default function TestimonialForm({
             {[5, 4, 3, 2, 1].map((r) => (
               <option key={r} value={r}>{r} star{r !== 1 ? 's' : ''}</option>
             ))}
+            <option value={0}>No star rating (the client did not give one)</option>
           </select>
         </div>
         <div>

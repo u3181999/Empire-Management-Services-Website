@@ -52,7 +52,8 @@ export default async function AdminTestimonialsPage() {
                 </td>
                 <td className="px-4 py-3">
                   <div className="flex gap-0.5">
-                    {[1,2,3,4,5].map((i) => (
+                    {t.rating === 0 && <span className="text-xs text-gray-600">No rating</span>}
+                    {t.rating > 0 && [1,2,3,4,5].map((i) => (
                       <Star key={i} className={`w-3.5 h-3.5 ${i <= t.rating ? 'fill-[#d4a017] text-[#d4a017]' : 'text-gray-300'}`} />
                     ))}
                   </div>

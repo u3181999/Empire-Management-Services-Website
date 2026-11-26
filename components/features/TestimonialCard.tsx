@@ -56,7 +56,8 @@ export default function TestimonialCard({ t, featured = false }: { t: Testimonia
         className={`absolute right-5 top-5 fill-[#d4a017]/15 text-[#d4a017]/15 ${featured ? 'h-14 w-14' : 'h-10 w-10'}`}
       />
 
-      <StarRating rating={t.rating} />
+      {/* Stars only when the client actually gave a rating; the spacer keeps the text clear of the quote mark. */}
+      {t.rating > 0 ? <StarRating rating={t.rating} /> : <div aria-hidden="true" className="h-5" />}
 
       <blockquote className="mt-4 flex-1">
         <p

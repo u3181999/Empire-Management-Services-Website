@@ -172,7 +172,8 @@ const testimonialSchema = z.object({
   authorTitle: z.string().max(100).optional().or(z.literal('')),
   company: z.string().max(100).optional().or(z.literal('')),
   content: z.string().min(10).max(1000),
-  rating: z.coerce.number().int().min(1).max(5).default(5),
+  // 0 means the client gave words but no star rating: the site then shows no stars rather than inventing them.
+  rating: z.coerce.number().int().min(0).max(5).default(5),
   source: z.string().min(1).max(50).default('Google'),
   reviewUrl: z.string().url().optional().or(z.literal('')),
   isPublished: z.preprocess((v) => v === 'true' || v === true, z.boolean()).default(false),
