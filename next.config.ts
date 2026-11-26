@@ -81,6 +81,8 @@ const nextConfig: NextConfig = {
       { source: '/commercial', destination: '/services', permanent: true },
       // Industrial Cleaning is no longer offered; keep any old link or search result working.
       { source: '/services/industrial-cleaning', destination: '/services', permanent: true },
+      // The service was renamed: the business does building management, not strata management.
+      { source: '/services/strata-management', destination: '/services/building-management', permanent: true },
       // The previous empiremanagementservices.com.au website used .html addresses (Google has them indexed). Without
       // these permanent redirects every one of them becomes a 404 the day the DNS moves, and the rankings go with them.
       ...OLD_SITE_REDIRECTS,

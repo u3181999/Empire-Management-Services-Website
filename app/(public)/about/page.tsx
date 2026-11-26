@@ -79,7 +79,7 @@ export default function AboutPage() {
                 </p>
                 <p>
                   We maintain constant communication with our clients through regular telephone and in-person
-                  contact with an Operations Manager or Contract Coordinator — because we believe partnership
+                  contact with our Chief Operating Officer or a Contract Coordinator — because we believe partnership
                   is the foundation of every great result.
                 </p>
               </div>

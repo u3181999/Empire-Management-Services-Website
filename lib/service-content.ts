@@ -36,7 +36,7 @@ export const SERVICE_CONTENT: Record<string, ServiceContent> = {
         a: 'Tell us about the building and how often you would like it cleaned, and we will come back with a quote for your site.',
       },
     ],
-    related: ['strata-management', 'carpet-cleaning', 'commercial-window-cleaning'],
+    related: ['building-management', 'carpet-cleaning', 'commercial-window-cleaning'],
   },
 
   'commercial-buildings': {
@@ -61,26 +61,26 @@ export const SERVICE_CONTENT: Record<string, ServiceContent> = {
     related: ['carpet-cleaning', 'commercial-window-cleaning', 'waste-removal-hygiene'],
   },
 
-  'strata-management': {
+  'building-management': {
     intro:
-      'Running a strata scheme means many small jobs and many contractors. Our strata management support gives you one point of contact for common-property upkeep, coordination of cleaning and maintenance, and regular site inspections, working alongside your existing strata manager and committee.',
+      'Keeping a building running means many small jobs and several contractors. Our building management gives you one point of contact for day-to-day upkeep, coordination of cleaning and maintenance, and regular site inspections.',
     frequency:
-      'Support is usually set up as an ongoing arrangement with regular inspections. We will agree how often with your committee or strata manager, based on the size and needs of the scheme.',
+      'Building management is usually set up as an ongoing arrangement with regular inspections. We will agree how often with you, based on the size and needs of the building.',
     faqs: [
       {
-        q: 'Does this replace our strata manager?',
-        a: 'No. We work alongside your existing strata manager and committee, and focus on the practical upkeep and coordination of common property.',
+        q: 'Is this the same as strata management?',
+        a: 'No. We provide building management: the practical upkeep of the building and the coordination of cleaning, maintenance and contractors. Strata management is a separate service provided by a strata managing agent, and we can work alongside yours.',
       },
       {
         q: 'What do the site inspections cover?',
-        a: 'Inspections look at the condition and cleanliness of common property, with reports to the committee or strata manager.',
+        a: 'Inspections look at the condition and cleanliness of the building and its common areas, with reports to the building owner or manager.',
       },
       {
         q: 'What happens when something needs attention?',
         a: 'We respond promptly to building and common-area issues. Tell us what you expect and we will agree how requests are raised and handled.',
       },
     ],
-    related: ['commercial-residential-strata', 'graffiti-removal', 'high-pressure-cleaning'],
+    related: ['commercial-buildings', 'graffiti-removal', 'high-pressure-cleaning'],
   },
 
   'eco-friendly-cleaning': {
@@ -300,6 +300,6 @@ export const SERVICE_CONTENT: Record<string, ServiceContent> = {
         a: 'An anti-graffiti protective coating can be applied, which makes later removal easier. No coating prevents graffiti entirely.',
       },
     ],
-    related: ['high-pressure-cleaning', 'commercial-residential-strata', 'strata-management'],
+    related: ['high-pressure-cleaning', 'commercial-residential-strata', 'building-management'],
   },
 }

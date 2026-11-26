@@ -84,10 +84,10 @@ export const SERVICES = [
     category: 'commercial',
   },
   {
-    slug: 'strata-management',
-    name: 'Strata Management',
-    // Wording to confirm with the business: say only what Empire really provides (see CLAIMS.md).
-    shortDescription: 'Practical support for strata schemes, from common-property upkeep to contractor coordination.',
+    slug: 'building-management',
+    name: 'Building Management',
+    // Building management only. Strata management is a different, licensed service the business does not provide (owner, 26 Nov 2026).
+    shortDescription: 'Practical building management, from day-to-day upkeep to cleaning and contractor coordination.',
     icon: 'ClipboardCheck',
     category: 'commercial',
   },
@@ -178,7 +178,7 @@ export const VALUES = [
   {
     title: 'Accountability',
     description:
-      'Clear lines of responsibility and regular communication through Operations Managers and Contract Coordinators ensure quality outcomes.',
+      'Clear lines of responsibility and regular communication through our Chief Operating Officer and Contract Coordinators ensure quality outcomes.',
   },
 ] as const
 
@@ -222,16 +222,19 @@ export const CERTIFICATION = {
 export const MANAGEMENT_STANDARDS: Credential[] = [
   {
     code: 'ISO 9001:2015',
+    certificateNumber: 'AUS/IMS-QEO/JAS-C0136/1513',
     name: 'Quality management',
     summary: 'How we plan, deliver, audit and continually improve the quality of our cleaning services.',
   },
   {
     code: 'ISO 14001:2015',
+    certificateNumber: 'AUS/IMS-QEO/JAS-C0136/0638',
     name: 'Environmental management',
     summary: 'How we manage chemicals, waste and our environmental impact on every site.',
   },
   {
     code: 'ISO 45001:2018',
+    certificateNumber: 'AUS/IMS-QEO/JAS-C0136/0693',
     name: 'Occupational health & safety',
     summary: 'How we keep our people, your staff and your visitors safe, and keep us OH&S compliant.',
   },

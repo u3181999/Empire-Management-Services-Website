@@ -50,16 +50,16 @@ const SERVICE_DETAILS: Record<string, { benefits: string[]; suitableFor: string[
     ],
     suitableFor: ['Office buildings', 'Corporate headquarters', 'Multi-tenanted buildings'],
   },
-  // Wording to confirm with the business: list only what Empire really provides (see CLAIMS.md).
-  'strata-management': {
+  // Building management, not strata management (owner, 26 Nov 2026). List only what Empire really provides (see CLAIMS.md).
+  'building-management': {
     benefits: [
-      'One point of contact for your strata scheme',
-      'Coordination of cleaning, maintenance and contractors for common property',
-      'Regular site inspections with reports to the committee or strata manager',
+      'One point of contact for the upkeep of your building',
+      'Coordination of cleaning, maintenance and contractors',
+      'Regular site inspections with reports to the building owner or manager',
       'Prompt response to building and common-area issues',
-      'Works alongside your existing strata manager and committee',
+      'Works alongside your property or strata managing agent',
     ],
-    suitableFor: ['Owners corporations and strata committees', 'Residential strata complexes', 'Mixed-use developments', 'Commercial strata'],
+    suitableFor: ['Commercial and office buildings', 'Multi-tenanted buildings', 'Mixed-use developments', 'Residential complexes'],
   },
   // Delivered today for a university campus and Australian Government buildings (those were examples from the owner).
   // The page deliberately speaks about sites in general and names no client: naming one needs their permission.

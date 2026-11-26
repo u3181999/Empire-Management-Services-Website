@@ -59,9 +59,9 @@ export default function CompliancePage() {
                   {details.length > 0 && (
                     <dl className="mt-4 space-y-1 text-sm">
                       {details.map(([label, value]) => (
-                        <div key={label} className="flex gap-2">
+                        <div key={label}>
                           <dt className="text-gray-600">{label}:</dt>
-                          <dd className="font-medium text-navy-900">{value}</dd>
+                          <dd className="break-words font-medium text-navy-900">{value}</dd>
                         </div>
                       ))}
                     </dl>

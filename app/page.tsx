@@ -189,7 +189,7 @@ export default function HomePage() {
                 <SectionHeading
                   align="left"
                   heading="Why Choose Empire?"
-                  subtext="We build genuine partnerships with our clients, resulting in long-term relationships and numerous repeat projects. Our operations manager maintains constant communication to ensure the right work is always being done."
+                  subtext="We build genuine partnerships with our clients, resulting in long-term relationships and numerous repeat projects. Our Chief Operating Officer maintains constant communication to ensure the right work is always being done."
                 />
                 <ul className="mt-8 space-y-4">
                   {VALUES.map((v) => (
