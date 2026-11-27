@@ -237,8 +237,13 @@ export default function HomePage() {
           id="at-work-heading"
           eyebrow="At Work"
           heading="Our Team on Site"
-          subtext="Our own people, equipment and vehicles."
-          photos={[PHOTOS.fleet, PHOTOS.glassDoorCleaning, PHOTOS.carParkClearing, PHOTOS.floorScrubber]}
+          subtext="Our own people, equipment and vehicles. Choose a photo to see more."
+          photos={[
+            { ...PHOTOS.fleet, href: '/about#fleet-heading', linkLabel: 'See our fleet' },
+            { ...PHOTOS.shopfrontWindows, href: '/services/commercial-window-cleaning', linkLabel: 'Window cleaning' },
+            { ...PHOTOS.pressureWashingYard, href: '/services/high-pressure-cleaning', linkLabel: 'High pressure cleaning' },
+            { ...PHOTOS.carpetSteamCleaning, href: '/services/carpet-cleaning', linkLabel: 'Carpet cleaning' },
+          ]}
           cta={{ href: '/about#fleet-heading', label: 'See our team and fleet' }}
         />
 

@@ -1,5 +1,3 @@
-import PhotoGallery from '@/components/features/PhotoGallery'
-import { PHOTOS } from '@/lib/photos'
 import FleetShowcase from '@/components/features/FleetShowcase'
 import Link from 'next/link'
 import { CheckCircle2, ArrowRight, User, Leaf, Recycle, ShieldCheck, Sprout } from 'lucide-react'
@@ -258,13 +256,6 @@ export default function AboutPage() {
 
       {/* Fleet photo and video */}
       <FleetShowcase />
-
-      <PhotoGallery
-        id="on-site-heading"
-        eyebrow="At Work"
-        heading="Our Team on Site"
-        photos={[PHOTOS.commonAreaSweeping, PHOTOS.entranceGlass, PHOTOS.footpathAndVan]}
-      />
 
       {/* Quality */}
       <section className="py-16 bg-white">

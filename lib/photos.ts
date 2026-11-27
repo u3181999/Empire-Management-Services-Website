@@ -1,6 +1,9 @@
-// The company's own photos (supplied by the owner, 26 Nov 2026), prepared for the web in public/photos and public/fleet.
-// Names of other businesses visible in the originals were blurred or cropped out. See CLAIMS.md before adding more.
-// Alt text and captions describe only what the picture shows, and name no client or site.
+// The company's own photos (supplied by the owner, 26 and 27 Nov 2026), prepared for the web in public/photos and
+// public/fleet. Names of other businesses, one number plate and a member of the public's face are blurred or cropped
+// out. See CLAIMS.md before adding more, including why some supplied photos are deliberately not used.
+//
+// Rules: alt text and captions describe only what the picture shows and never name a client or site. Each photo
+// appears once on the site; the only repeats are the home page tiles, which link to where that photo lives.
 
 export type SitePhoto = {
   src: string
@@ -8,9 +11,12 @@ export type SitePhoto = {
   height: number
   alt: string
   caption: string
+  /** Which part to keep when a frame is wider than the photo (CSS object-position). Centre if not set. */
+  focus?: string
 }
 
-const wide = (file: string, alt: string, caption: string): SitePhoto => ({
+const wide = (file: string, alt: string, caption: string, focus?: string): SitePhoto => ({
+  focus,
   src: `/photos/${file}.webp`,
   width: 1200,
   height: 900,
@@ -26,50 +32,54 @@ export const PHOTOS = {
     alt: 'A row of white Empire Management Services vehicles, with the blue and gold Empire logo on a utility and a van',
     caption: 'Our branded vehicles',
   },
-  glassDoorCleaning: wide(
-    'glass-door-cleaning',
-    'Two team members washing glass entrance doors, one seen through the soapy glass',
-    'Glass entrance cleaning',
+  carpetSteamCleaning: wide(
+    'carpet-steam-cleaning',
+    'A team member in an Empire cap steam cleaning the carpet of a bright, empty room',
+    'Carpet steam cleaning',
+    '50% 35%',
   ),
-  windowCleaning: wide(
-    'window-cleaning',
-    'A team member in Empire uniform washing a glass entrance door with a window mop',
-    'Window and glass cleaning',
+  pressureWashingYard: wide(
+    'pressure-washing-yard',
+    'Three team members pressure washing and squeegeeing a concrete service yard beside an Empire van',
+    'Pressure washing a service yard',
   ),
-  entranceGlass: wide(
-    'entrance-glass',
-    'A team member preparing a pole and cloth to clean the glass front of a building entrance',
-    'Building entrance glass',
+  graffitiWall: wide(
+    'graffiti-removal-wall',
+    'A team member in an Empire jacket removing yellow spray paint from a white wall',
+    'Removing graffiti from a rendered wall',
   ),
-  floorScrubber: wide(
-    'floor-scrubber',
-    'A floor scrubbing machine in a clean tiled corridor, with a wet floor sign behind it',
-    'Machine floor scrubbing',
+  stairwellCleaning: wide(
+    'stairwell-cleaning',
+    'Two team members in Empire jackets cleaning a door and handrail on a stairwell landing',
+    'Stairwell doors and handrails',
   ),
-  carParkClearing: wide(
-    'car-park-clearing',
-    'A team member with a backpack blower walking through a clean car park under a blue sky',
-    'Car park clean-up',
+  plantRoom: wide(
+    'plant-room-dusting',
+    'A team member in a dust mask, gloves and high-visibility shirt dusting overhead pipes in a building plant room',
+    'Plant room cleaning',
+    '50% 15%',
   ),
-  commonAreaSweeping: wide(
-    'common-area-sweeping',
-    'Two team members sweeping and collecting litter in a paved outdoor area beside a building',
-    'Shared outdoor areas',
+  warehouseScrubbing: wide(
+    'warehouse-floor-scrubbing',
+    'A team member scrubbing a concrete warehouse floor with a rotary floor machine',
+    'Machine scrubbing a concrete floor',
   ),
-  groundsBlower: wide(
-    'grounds-blower',
-    'A team member with a backpack blower crossing the street in front of an office building',
-    'Leaf and debris clean-up',
+  lobbyFloor: wide(
+    'lobby-floor-cleaning',
+    'Two team members machine cleaning the tiled floor of a building lobby, with a wet floor sign in place',
+    'Lobby floor cleaning',
+    '50% 10%',
+  ),
+  shopfrontWindows: wide(
+    'shopfront-window-team',
+    'Team members in navy and gold Empire jackets cleaning the glass front of a two-storey building',
+    'Ground-floor glass frontage',
+    '50% 30%',
   ),
   wasteTrailer: wide(
     'waste-trailer',
     'An Empire van towing a covered cage trailer loaded for waste removal',
     'Waste ready for removal',
-  ),
-  footpathAndVan: wide(
-    'footpath-and-van',
-    'A tidy footpath and trimmed verge beside a building, with an Empire van parked at the kerb',
-    'Tidy street frontage',
   ),
   safetyDataSheets: {
     src: '/photos/safety-data-sheets.webp',
@@ -80,12 +90,18 @@ export const PHOTOS = {
   },
 } satisfies Record<string, SitePhoto>
 
-/** The photo shown on a service page. Only services with a picture of that actual work have one. */
+/**
+ * The one photo shown on a service page. Only services with a strong picture of that actual work have one: the
+ * government, medical, shopping centre and eco-friendly pages deliberately have none.
+ */
 export const SERVICE_PHOTOS: Partial<Record<string, SitePhoto>> = {
-  'commercial-residential-strata': PHOTOS.commonAreaSweeping,
-  'commercial-buildings': PHOTOS.floorScrubber,
-  'building-management': PHOTOS.groundsBlower,
-  'commercial-window-cleaning': PHOTOS.windowCleaning,
+  'commercial-residential-strata': PHOTOS.stairwellCleaning,
+  'commercial-buildings': PHOTOS.lobbyFloor,
+  'building-management': PHOTOS.plantRoom,
+  'commercial-window-cleaning': PHOTOS.shopfrontWindows,
+  'high-pressure-cleaning': PHOTOS.pressureWashingYard,
   'waste-removal-hygiene': PHOTOS.wasteTrailer,
-  'car-park-warehouse-sweeping': PHOTOS.carParkClearing,
+  'carpet-cleaning': PHOTOS.carpetSteamCleaning,
+  'car-park-warehouse-sweeping': PHOTOS.warehouseScrubbing,
+  'graffiti-removal': PHOTOS.graffitiWall,
 }

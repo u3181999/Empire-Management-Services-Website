@@ -259,8 +259,11 @@ export default async function ServiceDetailPage(props: PageProps<'/services/[slu
                       src={photo.src}
                       alt={photo.alt}
                       fill
+                      // Often on screen as the page opens, so it is not held back.
+                      loading="eager"
                       sizes="(min-width: 1024px) 790px, 100vw"
                       className="object-cover"
+                      style={{ objectPosition: photo.focus ?? '50% 50%' }}
                     />
                   </div>
                   <figcaption className="mt-2 text-xs text-gray-600">{photo.caption}</figcaption>
